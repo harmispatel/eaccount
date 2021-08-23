@@ -407,7 +407,12 @@ Route::group(['middleware' => 'auth'], function () {
             'uses' => 'Cost_itemsController@trashedAction',
             'as' => 'cost_item.trashed.action'
         ]);
-    
+
+        Route::post('/cost_item/get_sub_activity', [
+            'uses' => 'Cost_itemsController@get_sub_activity',
+            'as' => 'cost_item.get_sub_activity'            
+        ]);
+
         //end Cost_item
 
     //    department start
@@ -637,6 +642,11 @@ Route::group(['middleware' => 'auth'], function () {
         'uses' => 'SettingsController@supportDonor_show',
         'as' => 'settings.supportDonor'
     ])->middleware('settings.show');
+
+    Route::post('/settings/supportDonor/addnew', [
+        'uses' => 'SettingsController@supportDonor_addnew',
+        'as' => 'settings.supportDonor.addnew'
+    ]);
 
     Route::post('/settings/supportDonor/update', [
         'uses' => 'SettingsController@supportDonor_update',

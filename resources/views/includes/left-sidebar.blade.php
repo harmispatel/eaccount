@@ -447,7 +447,7 @@
 
                 {{--Cost_item cost_item Start--}}
 
-                <li @if ( config('role_manage.Cost_item.All')==0 and  config('role_manage.Cost_item.TrashShow')==0 and config('role_manage.Cost_item.Create')==0  )
+                <!-- <li @if ( config('role_manage.Cost_item.All')==0 and  config('role_manage.Cost_item.TrashShow')==0 and config('role_manage.Cost_item.Create')==0  )
                     class="dis-none"
                     @endif  @if(Request::url() === route('cost_item') or Request::url() === route('cost_item.create') or Request::url() === route('cost_item.trashed') or Request::url() === route('cost_item.active.search') or Request::url() === route('cost_item.trashed.search') )
                     class="active "
@@ -459,7 +459,7 @@
                         <span>Cost Item</span>
                     </a>
 
-                </li>
+                </li> -->
                 {{--Activity End--}}
 
                 {{--Report Start--}}

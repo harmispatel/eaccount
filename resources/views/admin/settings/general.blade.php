@@ -913,7 +913,8 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 </div>
                                             </div>
 
-                                            
+
+                                          
 
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
@@ -1283,7 +1284,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                         <!-- bank account setting start -->
 
-                        <div id="bankaccountsetting" class="tab-pane fade in active">
+                        <div id="bankaccountsetting" class="tab-pane fade ">
                             <div class="header">
                                 <h2>
                                     {{ $createItemNamebankaccount  }}
@@ -1412,7 +1413,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                         <!-- Donor setting start -->
 
-                        <div id="supportDonorsetting" class="tab-pane fade in active">
+                        <div id="supportDonorsetting" class="tab-pane fade ">
                             <div class="header">
                                 <h2>
                                     {{ $createItemNamesupportDonor  }}
@@ -1420,7 +1421,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                 <br>
                                 <div class="body">
                                     <form enctype="multipart/form-data" class="form" id="form_validation" method="post"
-                                          action="{{ route($ParentRouteNamesupportDonor.'.update') }}">
+                                          action="{{ route($ParentRouteNamesupportDonor.'.addnew') }}">
 
                                         {{ csrf_field() }}
                                         <div class="row clearfix">
@@ -1439,7 +1440,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                        Update
+                                                        Add New
                                                     </button>
                                                 </div>
                                             </div>
@@ -1451,6 +1452,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
 
                                 <div>
+                                    <!-- <form enctype="multipart/form-data" class="form" id="form_validation" method="post" action="{{ route($ParentRouteNamesupportDonor.'.update') }}"> -->
                                     <table class="table table-hover table-bordered table-sm">
                                         <thead>
                                         <tr>
@@ -1460,15 +1462,15 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                         </tr>
                                         </thead>
                                         <tbody>
-
+                                            
 
                                         <?php $i = 1; ?>
                                         @if(!empty($supportdonor))
                                             @foreach($supportdonor as $donor)
                                                     
                                             <tr>
-                                                <td>{{ $donor->id }}</td>
-                                                <td>{{ $donor->supportDonor }}</td>
+                                                <td> {{ $donor->id }}</td>
+                                                <td><!-- <input name="supportDonor" type="text" class="form-control" value="{{ $donor->supportDonor }}"> -->{{ $donor->supportDonor }} </td>
                                                 <td class="tdTrashAction">
                                                     <a 
                                                         class="btn btn-xs btn-danger waves-effect"
@@ -1493,7 +1495,14 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                                         </tbody>
                                     </table>
-
+                                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-line">
+                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </div> -->
+                                        <!-- </form> -->
                                 </div>
 
                             </div>
@@ -1505,7 +1514,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                         <!-- Orgenization leadership setting start -->
 
-                        <div id="orgenizationLeader" class="tab-pane fade in active">
+                        <div id="orgenizationLeader" class="tab-pane fade ">
                             <div class="header">
                                 <h2>
                                     {{ $createItemNameorgenozationLeader  }}
@@ -1542,7 +1551,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                        Update
+                                                        Add New
                                                     </button>
                                                 </div>
                                             </div>
@@ -1553,7 +1562,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                 </div>
 
 
-                                <<div>
+                                <div>
                                     <table class="table table-hover table-bordered table-sm">
                                         <thead>
                                         <tr>
@@ -1742,5 +1751,13 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        // alert(location.hash); return false;
+        if (location.hash) {
+            $("a[href='" + location.hash + "']").tab("show");
+        }
+    });
+</script>
 
 @endpush

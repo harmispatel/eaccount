@@ -103,7 +103,8 @@ class SettingsController extends Controller
 
         Session::flash('success', 'Successfully Update');
 
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect('settings/general#generalsetting');
 
     }
 
@@ -142,7 +143,8 @@ class SettingsController extends Controller
         $setting_system->save();
 
         Session::flash('success', 'Successfully Update');
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect('settings/general#systemsetting');
 
     }
 
@@ -205,7 +207,8 @@ class SettingsController extends Controller
 
         Session::flash('success', 'Successfully Update');
 
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect('settings/general#Quatersetting');
 
     }
 
@@ -267,7 +270,8 @@ class SettingsController extends Controller
 
         Session::flash('success', 'Successfully Update');
 
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect('settings/general#smtpsetting');
 
     }
 
@@ -316,7 +320,8 @@ class SettingsController extends Controller
 
         Session::flash('success', 'Successfully Update');
 
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect('settings/general#bankaccountsetting');
 
     }
 
@@ -332,7 +337,7 @@ class SettingsController extends Controller
 
     }
 
-    public function supportDonor_update(Request $request)
+    public function supportDonor_addnew(Request $request)
     { 
 
         // echo "<pre>"; print_r($request->all()); die;
@@ -361,26 +366,26 @@ class SettingsController extends Controller
         // $setting_general->save();
 
         Session::flash('success', 'Successfully Update');
-
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect('settings/general#supportDonorsetting');
 
     }
 
 
-    // public function supportDonor_edit($id)
-    // { 
+    public function supportDonor_update(Request $request)
+    { 
 
-    //     // echo "<pre>"; print_r($request->all()); die;
+        echo "<pre>"; print_r($request->all()); die;
         
 
-    //    DB::table('supportDonor')->where('id',$id)->delete();
+       DB::table('supportDonor')->where('id',$id)->delete();
 
 
-    //     Session::flash('success', 'Successfully Update');
+        Session::flash('success', 'Successfully Update');
 
-    //     return redirect()->back();
+        return redirect()->back();
 
-    // }
+    }
 
     public function supportDonor_destroy($id)
     { 
@@ -392,7 +397,8 @@ class SettingsController extends Controller
 
         Session::flash('success', 'Successfully Delete');
 
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect('settings/general#supportDonorsetting');
 
     }
 
@@ -429,7 +435,8 @@ class SettingsController extends Controller
 
         Session::flash('success', 'Successfully Update');
 
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect('settings/general#orgenizationLeader');
 
     }
 
@@ -444,7 +451,8 @@ class SettingsController extends Controller
 
         Session::flash('success', 'Successfully Delete');
 
-        return redirect()->back();
+        // return redirect()->back();
+        return redirect('settings/general#orgenizationLeader');
 
     }
 

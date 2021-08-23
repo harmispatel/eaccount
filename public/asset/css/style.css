@@ -11120,7 +11120,7 @@ body.modal-open {
 .tdTrashAction i{
     top:0 !important;
 }
-.form-control:focus{
+.search:focus{
     border-color:#018738 !important;
     border-color: #018738;
     outline: 0;
