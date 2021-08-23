@@ -913,36 +913,6 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 </div>
                                             </div>
 
-
-                                            <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-4">
-                                                <p>Organization Leadership</p>
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <select class="form-control show-tick"
-                                                                name="organizationLeader"
-                                                                id="">
-                                                            <option @if ($systemdata['organizationLeader']=='1' )
-                                                                    selected=""
-                                                                    @endif value="Prefix">Head of Program
-                                                            </option>
-                                                            <option @if ( $systemdata['organizationLeader']=='2' )
-                                                                    selected=""
-                                                                    @endif value="Suffix">Director Of Program
-                                                            </option>
-                                                            <option @if ( $systemdata['organizationLeader']=='3' )
-                                                                    selected=""
-                                                                    @endif value="Suffix">Head Of Fincance
-                                                            </option>
-                                                            <option @if ( $systemdata['organizationLeader']=='4' )
-                                                                    selected=""
-                                                                    @endif value="Suffix">Executive Direction
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div> -->
-
-
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
