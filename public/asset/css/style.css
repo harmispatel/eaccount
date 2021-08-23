@@ -5108,11 +5108,13 @@ section.content {
 }
 
 .switch label input[type=checkbox]:checked + .lever.switch-col-cyan {
-    background-color: rgba(0, 188, 212, 0.5);
+    /*background-color: rgba(0, 188, 212, 0.5);*/
+    background-color: #018738;
 }
 
 .switch label input[type=checkbox]:checked + .lever.switch-col-cyan:after {
-    background-color: #00BCD4;
+    /*background-color: #00BCD4;*/
+    background-color: #018738;
 }
 
 .switch label input[type=checkbox]:checked:not(:disabled) ~ .lever.switch-col-teal:active:after {
@@ -10592,7 +10594,8 @@ fieldset[disabled] .form-control {
 
 /* Profile Page ================================ */
 .profile-card .profile-header {
-    background-color: #ad1455;
+    /*background-color: #ad1455;*/
+    background-color: #018738;
     padding: 42px 0;
 }
 
@@ -11114,4 +11117,6 @@ body.modal-open {
 .breadcrumb li:nth-child(3) i.material-icons {
     color: #018738;
 }
-
+.tdTrashAction i{
+    top:0 !important;
+}

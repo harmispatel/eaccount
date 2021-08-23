@@ -60,7 +60,7 @@
                                     <a class="" @if ( config('role_manage.Branch.All')==0 )
                                                 class="dis-none"
                                                 @endif href="{{ route('branch') }}">
-                                        <i class="fas fa-project-diagram"></i>
+                                        <i class="fas fa-code-branch"></i>
                                         <span>Branch </span>
                                     </a>
                                 </li>
