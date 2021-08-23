@@ -355,7 +355,7 @@ class SettingsController extends Controller
         //     'supportDonor' => $request->supportDonor,
         // );
 
-        DB::table('supportDonor')->insert([
+        DB::table(' supportdonor')->insert([
             'supportDonor' => $request->supportDonor,
         ]);
 
@@ -378,7 +378,7 @@ class SettingsController extends Controller
         echo "<pre>"; print_r($request->all()); die;
         
 
-       DB::table('supportDonor')->where('id',$id)->delete();
+       DB::table('supportdonor')->where('id',$id)->delete();
 
 
         Session::flash('success', 'Successfully Update');
@@ -393,7 +393,7 @@ class SettingsController extends Controller
         // echo "<pre>"; print_r($request->all()); die;
         
 
-       DB::table('supportDonor')->where('id',$id)->delete();
+       DB::table('supportdonor')->where('id',$id)->delete();
 
         Session::flash('success', 'Successfully Delete');
 
