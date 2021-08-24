@@ -118,7 +118,6 @@ $ParentRouteName = 'user';
                                         </div>
 
                                         <div id="sikika_field">
-
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
@@ -219,17 +218,15 @@ $ParentRouteName = 'user';
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
-                                                    <div class="form-line focused" style="display:flex;">
-                                                        <input name="legal_documents" type="file" class="form-control">
-                                                        <label class="form-label">Legal documents</label>
-                                                        @if($item->profile->legal_documents != "")<img height="50px" src="{{ url('/').'/'.$item->profile->legal_documents }}" />@endif
+                                                    <div class="form-line">
+                                                        <input name="vat_number" type="text" class="form-control" value="{{ $item->profile->vat_number }}">
+                                                        <label class="form-label">VAT Number</label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            
+
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line focused" style="display:flex;">
@@ -240,11 +237,12 @@ $ParentRouteName = 'user';
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                 <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input name="vat_number" type="text" class="form-control" value="{{ $item->profile->vat_number }}">
-                                                        <label class="form-label">VAT Number</label>
+                                                    <div class="form-line focused" style="display:flex;">
+                                                        <input name="legal_documents" type="file" class="form-control">
+                                                        <label class="form-label">Legal documents</label>
+                                                        @if($item->profile->legal_documents != "")<img height="50px" src="{{ url('/').'/'.$item->profile->legal_documents }}" />@endif
                                                     </div>
                                                 </div>
                                             </div>

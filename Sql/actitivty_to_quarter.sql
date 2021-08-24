@@ -1,0 +1,1 @@
+CREATE TABLE `eaccount`.`actitivty_to_quarter` ( `id` INT NOT NULL AUTO_INCREMENT , `activity_id` INT NOT NULL , `quarter_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

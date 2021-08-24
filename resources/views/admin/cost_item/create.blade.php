@@ -65,14 +65,14 @@ $ParentRouteName = 'cost_item';
                                             <div class="form-group form-float">
                                                 <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick"
-                                                            name="parent_id"
-                                                            id="parent_id">
+                                                            name="main_activity_id"
+                                                            id="main_activity_id" onchange="getSubActivity()">
                                                         <option value="0">Select Activity</option>
-                                                        @foreach($items as $item)
+                                                        @foreach($activitys as $activity)
                                                         <?php
-                                                            if ($item->parent_id == 0) { 
+                                                            if ($activity->parent_id == 0) { 
                                                         ?>
-                                                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                                            <option value="{{ $activity->id }}" @if(old('frequency') == $activity->id) selected @endif>{{ $activity->title }}</option>
                                                         <?php
                                                             } 
                                                         ?>
@@ -82,24 +82,14 @@ $ParentRouteName = 'cost_item';
                                                 </div>
                                             </div>
                                         </div>
-
+                                        
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick"
-                                                            name="parent_id"
-                                                            id="parent_id">
-                                                        <option value="0">Select Sub Activity</option>
-                                                        @foreach($items as $item)
-                                                        <?php
-                                                            if ($item->parent_id == 0) { 
-                                                        ?>
-                                                            <option value="{{ $item->id }}">{{ $item->title }}</option>
-                                                        <?php
-                                                            } 
-                                                        ?>
+                                                            name="sub_activity_id"
+                                                            id="sub_activity_id">
                                                         
-                                                        @endforeach
                                                     </select>
                                                 </div>
                                             </div>
@@ -129,7 +119,7 @@ $ParentRouteName = 'cost_item';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ old('unit')  }}" name="unit" type="text"
+                                                    <input autofocus value="{{ old('unit')  }}" name="unit" type="number"
                                                            class="form-control">
                                                     <label class="form-label">Unit</label>
                                                 </div>
@@ -139,7 +129,7 @@ $ParentRouteName = 'cost_item';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ old('cost')  }}" name="cost" type="text"
+                                                    <input autofocus value="{{ old('cost')  }}" name="cost" type="number"
                                                            class="form-control">
                                                     <label class="form-label">Cost</label>
                                                 </div>
@@ -149,22 +139,13 @@ $ParentRouteName = 'cost_item';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ old('frequency')  }}" name="frequency" type="text"
-                                                           class="form-control">
+                                                    <input autofocus value="{{ old('frequency')  }}" name="frequency" type="number"
+                                                    class="form-control">
                                                     <label class="form-label">Frequency</label>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <input autofocus value="{{ old('quater')  }}" name="quater" type="text"
-                                                           class="form-control">
-                                                    <label class="form-label">Quater</label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <input value="" name="submitType" id="submitType" type="hidden" value="">
 
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
@@ -197,8 +178,17 @@ $ParentRouteName = 'cost_item';
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                    Create
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save & New
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save & Copy
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save & Close
                                                 </button>
                                             </div>
                                         </div>
@@ -295,7 +285,30 @@ $ParentRouteName = 'cost_item';
         @endforeach
         @endif
 
-
+    function changeSubmitType(submitType){
+        jQuery("#submitType").val(submitType);
+        $("#form_validation").submit();
+    }
+    function getSubActivity(){
+        var main_act_id = $('#main_activity_id').val();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "{{ route('cost_item.get_sub_activity') }}",
+            data: {'main_act_id':main_act_id},     
+            success: function (data) {
+                $('#sub_activity_id').html(data.result);
+                $('#sub_activity_id').selectpicker('refresh');           
+            },
+            error: function (data) {
+                console.log(data);
+            }
+        });
+    }
 
         // Validation and calculation
         var UiController = (function () {

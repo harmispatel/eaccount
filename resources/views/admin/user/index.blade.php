@@ -167,7 +167,7 @@ $trash_show = config('role_manage.User.TrashShow');
                                                        class="chk-col-cyan selects "/>
                                                 <label for="md_checkbox_{{ $i }}"></label>
                                             </th>
-                                            <td>{{ $item->name }}</td>
+                                            <td><a href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}">{{ $item->name }}</a></td>
                                             <td>{{ $item->email }}</td>
                                             <td>
                                                 {{ App\RoleManage::find($item->role_manage_id)->name  }}
@@ -196,6 +196,7 @@ $trash_show = config('role_manage.User.TrashShow');
                                                    data-toggle="tooltip"
                                                    data-placement="top" title="Preview"><i
                                                             class="material-icons">pageview</i></a>
+
 
                                                 <a @if ($delete==0)
 

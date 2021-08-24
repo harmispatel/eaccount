@@ -6963,7 +6963,7 @@ section.content {
 }
 
 .form-group .form-line.focused .form-label {
-    top: -10px;
+    top: -15px;
     left: 0;
     font-size: 12px;
 }
@@ -11120,7 +11120,7 @@ body.modal-open {
 .tdTrashAction i{
     top:0 !important;
 }
-.form-control:focus{
+.search:focus{
     border-color:#018738 !important;
     border-color: #018738;
     outline: 0;

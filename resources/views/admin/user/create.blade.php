@@ -56,7 +56,7 @@ $ParentRouteName = 'user';
 
                             <div class="body">
                                 <form class="form" id="form_validation" method="post"
-                                      action="{{ route($ParentRouteName.'.store') }}">
+                                      action="{{ route($ParentRouteName.'.store') }}" enctype="multipart/form-data">
 
                                     {{ csrf_field() }}
                                     <div class="row clearfix">
@@ -154,7 +154,6 @@ $ParentRouteName = 'user';
                                                     <label for="department_head">Is Head of Department</label>
                                                 </div>
                                             </div>
-
                                         </div>
 
                                         <div id="vendor_field">
@@ -213,6 +212,15 @@ $ParentRouteName = 'user';
                                                 </div>
                                             </div>
 
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input name="vat_number" type="text" class="form-control" value="">
+                                                        <label class="form-label">VAT Number</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line focused" style="display:fled;">
@@ -231,15 +239,6 @@ $ParentRouteName = 'user';
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input name="vat_number" type="text" class="form-control" value="">
-                                                        <label class="form-label">VAT Number</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float" style="margin-top:10px">
                                                     <input type="checkbox" id="physical_verified" name="physical_verified" class="filled-in">

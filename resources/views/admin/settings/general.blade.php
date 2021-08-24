@@ -121,7 +121,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                             <!-- <li><a data-toggle="tab" href="#smtpsetting">SMTP</a></li> -->
                             <li><a data-toggle="tab" href="#bankaccountsetting">Bank account</a></li>
                             <li><a data-toggle="tab" href="#supportDonorsetting">Support Donors</a></li>
-                            <li><a data-toggle="tab" href="#orgenizationLeader">Orgenization Leader</a></li>
+                            <li><a data-toggle="tab" href="#orgenizationLeader">Organization Leader</a></li>
                         </ul>
                     <div class="tab-content">
                          <!-- general setting start -->
@@ -913,7 +913,8 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 </div>
                                             </div>
 
-                                            
+
+                                          
 
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
@@ -951,7 +952,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                         <div class="col-md-6">
                                                             <div class="form-line focused">
                                                                 <label>Start</label>
-                                                                <select id="Quarter1_Start" name="Quarter1_Start" onchange="quarter1(this.value)" placeholder="Start">
+                                                                <select id="Quarter1_Start" name="Quarter1_Start"  placeholder="Start">
                                                                     <option value="January" <?php if($quarterdata['Quarter1_Start'] == "January") { echo 'selected'; } ?>>January</option>
                                                                     <option value="February" <?php if($quarterdata['Quarter1_Start'] == "February") { echo 'selected'; } ?>>February</option>
                                                                     <option value="March" <?php if($quarterdata['Quarter1_Start'] == "March") { echo 'selected'; } ?>>March</option>
@@ -970,7 +971,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                         <div class="col-md-6">
                                                             <div class="form-line focused">
                                                                 <label>End</label>
-                                                                <select id="Quarter1_End" name="Quarter1_End">
+                                                                <select id="Quarter1_End" name="Quarter1_End" >
                                                                     <option value="January" <?php if($quarterdata['Quarter1_End'] == "January") { echo 'selected'; } ?>>January</option>
                                                                     <option value="February" <?php if($quarterdata['Quarter1_End'] == "February") { echo 'selected'; } ?>>February</option>
                                                                     <option value="March" <?php if($quarterdata['Quarter1_End'] == "March") { echo 'selected'; } ?>>March</option>
@@ -997,7 +998,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                         <div class="col-md-6">
                                                             <div class="form-line focused">
                                                                 <label>Start</label>
-                                                                <select id="Quarter2_Start" name="Quarter2_Start" onchange="quarter2(this.value)">
+                                                                <select id="Quarter2_Start" name="Quarter2_Start" onchange="quarter1(this.value)">
                                                                     <option value="January" <?php if($quarterdata['Quarter2_Start'] == "January") { echo 'selected'; } ?>>January</option>
                                                                     <option value="February" <?php if($quarterdata['Quarter2_Start'] == "February") { echo 'selected'; } ?>>February</option>
                                                                     <option value="March" <?php if($quarterdata['Quarter2_Start'] == "March") { echo 'selected'; } ?>>March</option>
@@ -1016,7 +1017,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                         <div class="col-md-6">
                                                             <div class="form-line focused">
                                                                 <label>End</label>
-                                                                <select id="Quarter2_End" name="Quarter2_End">
+                                                                <select id="Quarter2_End" name="Quarter2_End" onchange="quarter1(this.value)">
                                                                     <option value="January" <?php if($quarterdata['Quarter2_End'] == "January") { echo 'selected'; } ?>>January</option>
                                                                     <option value="February" <?php if($quarterdata['Quarter2_End'] == "February") { echo 'selected'; } ?>>February</option>
                                                                     <option value="March" <?php if($quarterdata['Quarter2_End'] == "March") { echo 'selected'; } ?>>March</option>
@@ -1043,7 +1044,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                         <div class="col-md-6">
                                                             <div class="form-line focused">
                                                                 <label>Start</label>
-                                                                <select id="Quarter3_Start" name="Quarter3_Start">
+                                                                <select id="Quarter3_Start" name="Quarter3_Start" onchange="quarter1(this.value)">
                                                                     <option value="January" <?php if($quarterdata['Quarter3_Start'] == "January") { echo 'selected'; } ?>>January</option>
                                                                     <option value="February" <?php if($quarterdata['Quarter3_Start'] == "February") { echo 'selected'; } ?>>February</option>
                                                                     <option value="March" <?php if($quarterdata['Quarter3_Start'] == "March") { echo 'selected'; } ?>>March</option>
@@ -1062,7 +1063,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                         <div class="col-md-6">
                                                             <div class="form-line focused">
                                                                 <label>End</label>
-                                                                <select id="Quarter3_End" name="Quarter3_End">
+                                                                <select id="Quarter3_End" name="Quarter3_End" onchange="quarter1(this.value)">
                                                                     <option value="January" <?php if($quarterdata['Quarter3_End'] == "January") { echo 'selected'; } ?>>January</option>
                                                                     <option value="February" <?php if($quarterdata['Quarter3_End'] == "February") { echo 'selected'; } ?>>February</option>
                                                                     <option value="March" <?php if($quarterdata['Quarter3_End'] == "March") { echo 'selected'; } ?>>March</option>
@@ -1089,7 +1090,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                         <div class="col-md-6">
                                                             <div class="form-line focused">
                                                                 <label>Start</label>
-                                                                <select id="Quarter4_Start" name="Quarter4_Start">
+                                                                <select id="Quarter4_Start" name="Quarter4_Start" onchange="quarter1(this.value)">
                                                                     <option value="January" <?php if($quarterdata['Quarter4_Start'] == "January") { echo 'selected'; } ?>>January</option>
                                                                     <option value="February" <?php if($quarterdata['Quarter4_Start'] == "February") { echo 'selected'; } ?>>February</option>
                                                                     <option value="March" <?php if($quarterdata['Quarter4_Start'] == "March") { echo 'selected'; } ?>>March</option>
@@ -1108,7 +1109,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                         <div class="col-md-6">
                                                             <div class="form-line focused">
                                                                 <label>End</label>
-                                                                <select id="Quarter4_End" name="Quarter4_End">
+                                                                <select id="Quarter4_End" name="Quarter4_End" onchange="quarter1(this.value)">
                                                                     <option value="January" <?php if($quarterdata['Quarter4_End'] == "January") { echo 'selected'; } ?>>January</option>
                                                                     <option value="February" <?php if($quarterdata['Quarter4_End'] == "February") { echo 'selected'; } ?>>February</option>
                                                                     <option value="March" <?php if($quarterdata['Quarter4_End'] == "March") { echo 'selected'; } ?>>March</option>
@@ -1283,7 +1284,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                         <!-- bank account setting start -->
 
-                        <div id="bankaccountsetting" class="tab-pane fade in active">
+                        <div id="bankaccountsetting" class="tab-pane fade ">
                             <div class="header">
                                 <h2>
                                     {{ $createItemNamebankaccount  }}
@@ -1293,13 +1294,16 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                     <form enctype="multipart/form-data" class="form" id="form_validation" method="post"
                                           action="{{ route($ParentRouteNamebankaccount.'.update') }}">
 
+                                          <?php //echo "<pre>"; print_r($Bankaccountsedit); die; ?>
+
                                         {{ csrf_field() }}
+                                        <input value="@if(!empty($Bankaccountsedit)) {{ $Bankaccountsedit->id }} @endif" name="bankid" type="hidden" >
                                         <div class="row clearfix">
 
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input value="{{ $bankAccountdata['bankName']  }}" name="bankName" type="text"
+                                                        <input value="@if(!empty($Bankaccountsedit)) {{ $Bankaccountsedit->bankName }} @endif" name="bankName" type="text"
                                                                class="form-control">
                                                         <label class="form-label">Bank Name</label>
                                                     </div>
@@ -1313,10 +1317,10 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                         <select name="donors" data-live-search="true"
                                                                 class="form-control show-tick"
                                                         >
-
+                                                        <option value="0">Select Donor</option>
                                                         @if($supportdonor) 
                                                             @foreach($supportdonor as $donor)
-                                                                <option value="{{ $donor->id }}" @if($bankAccountdata['donors'] == $donor->id) {{ "selected" }} @endif>{{ $donor->supportDonor }}</option>
+                                                                <option value="{{ $donor->id }}" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->donors == $donor->id)) {{ "Selected" }} @endif @endif>{{ $donor->supportDonor }}</option>
                                                             @endforeach
                                                         @endif
 
@@ -1331,7 +1335,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input value="{{ $bankAccountdata['bankCode']  }}" name="bankCode" type="text" class="form-control" maxlength="5">
+                                                        <input value="@if(!empty($Bankaccountsedit) && $Bankaccountsedit->bankCode) {{ $Bankaccountsedit->bankCode }} @endif" name="bankCode" type="text" class="form-control" maxlength="5">
                                                         <label class="form-label">Bank code</label>
                                                     </div>
                                                 </div>
@@ -1344,30 +1348,19 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                         <select name="bankcurrency_code" data-live-search="true"
                                                                 class="form-control show-tick"
                                                         >
-                                                            <option @if ($bankAccountdata['bankcurrency_code']=='BDT')
-                                                                    selected=""
-                                                                    @endif value="BDT">BDT
+                                                            <option value="0">Select Currency Code</option>
+                                                            <option value="BDT" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->bankcurrency_code == "BDT")) {{ "Selected" }} @endif @endif>BDT
                                                             </option>
 
-                                                            <option @if ($bankAccountdata['bankcurrency_code']=='USD')
-                                                                    selected=""
-                                                                    @endif value="USD">USD
+                                                            <option value="USD" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->bankcurrency_code == "USD")) {{ "Selected" }} @endif @endif>USD
                                                             </option>
-                                                            <option @if ($bankAccountdata['bankcurrency_code']=='INR')
-                                                                    selected=""
-                                                                    @endif value="INR">INR
+                                                            <option value="INR" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->bankcurrency_code == "INR")) {{ "Selected" }} @endif @endif>INR
                                                             </option>
-                                                            <option @if ($bankAccountdata['bankcurrency_code']=='GBP')
-                                                                    selected=""
-                                                                    @endif value="GBP">GBP
+                                                            <option value="GBP" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->bankcurrency_code == "GBP")) {{ "Selected" }} @endif @endif>GBP
                                                             </option>
-                                                            <option @if ($bankAccountdata['bankcurrency_code']=='JPY')
-                                                                    selected=""
-                                                                    @endif value="JPY">JPY
+                                                            <option value="JPY" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->bankcurrency_code == "JPY")) {{ "Selected" }} @endif @endif>JPY
                                                             </option>
-                                                            <option @if ($bankAccountdata['bankcurrency_code']=='TZS')
-                                                                    selected=""
-                                                                    @endif value="TZS">TZS
+                                                            <option value="TZS" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->bankcurrency_code == "TZS")) {{ "Selected" }} @endif @endif>TZS
                                                             </option>
                                                         </select>
                                                     </div>
@@ -1376,13 +1369,13 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
 
                                             <div class="col-lg-4 col-md-4 col-sm-6 col-xs-4">
-                                                <p>Currency Code</p>
+                                                <p>Status</p>
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
                                                         <select data-live-search="true" class="form-control show-tick" name="bankStatus" id="bankStatus">
                                                             <option value="0">Select Status</option>
-                                                            <option @if($bankAccountdata['bankStatus'] == "1") {{ "selected" }} @endif value="1">Active</option>
-                                                            <option @if($bankAccountdata['bankStatus'] == "2") {{ "selected" }} @endif value="2">Closed</option>
+                                                            <option value="1" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->bankStatus == "1")) {{ "Selected" }} @endif @endif>Active</option>
+                                                            <option value="2" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->bankStatus == "2")) {{ "Selected" }} @endif @endif>Closed</option>
                                                             
                                                         </select>
                                                     </div>
@@ -1393,9 +1386,15 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
+                                                    @if(!empty($Bankaccountsedit)) 
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
                                                         Update
                                                     </button>
+                                                    @else()
+                                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                        Add New
+                                                    </button>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -1403,6 +1402,85 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                     </form>
 
                                 </div>
+
+
+                                <div>
+                                    <!-- <form enctype="multipart/form-data" class="form" id="form_validation" method="post" action="{{ route($ParentRouteNamesupportDonor.'.update') }}"> -->
+                                    <table class="table table-hover table-bordered table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Bank Name</th>
+                                            <th>Donor</th>
+                                            <th>Bank Code</th>
+                                            <th>Currency Code</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                        <?php
+                                        // echo "<pre>"; print_r($Bankaccounts); die;
+                                         $i = 1; ?>
+                                        @if(!empty($Bankaccounts))
+                                            @foreach($Bankaccounts as $Bankaccount)
+                                                    
+                                            <tr>
+                                                <td> {{ $Bankaccount->id }}</td>
+                                                <td><!-- <input name="supportDonor" type="text" class="form-control" value="{{ $donor->supportDonor }}"> -->{{ $Bankaccount->bankName }} </td>
+                                                <td> {{ $Bankaccount->donors }}</td>
+                                                <td> {{ $Bankaccount->bankCode }}</td>
+                                                <td> {{ $Bankaccount->bankcurrency_code }}</td>
+                                                <td> 
+                                                    @if($Bankaccount->bankStatus == "1")
+                                                        {{ "Active" }}    
+                                                    @else 
+                                                        {{ "Closed" }}    
+                                                    @endif
+                                                    </td>
+
+                                                <td class="tdTrashAction">
+                                                    <a class="btn btn-xs btn-info waves-effect"
+                                                       href="{{ route($ParentRouteNamebankaccount.'.edit',['id'=>$Bankaccount->id]) }}/#bankaccountsetting" data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                                class="material-icons">mode_edit</i></a>
+
+                                                    <a class="btn btn-xs btn-danger waves-effect"
+                                                       href="{{ route($ParentRouteNamebankaccount.'.destroy',['id'=>$Bankaccount->id]) }}"
+                                                       data-toggle="tooltip"
+                                                       data-placement="top" title="Trash"> <i
+                                                                class="material-icons">delete</i></a>
+
+
+                                                </td>
+                                            </tr>
+                                        <?php $i++; ?>
+                                            @endforeach
+                                        @endif
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Bank Name</th>
+                                            <th>Donor</th>
+                                            <th>Bank Code</th>
+                                            <th>Currency Code</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+
+                                        </tbody>
+                                    </table>
+                                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-line">
+                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </div> -->
+                                        <!-- </form> -->
+                                </div>
+
                             </div>
                         </div>
 
@@ -1412,7 +1490,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                         <!-- Donor setting start -->
 
-                        <div id="supportDonorsetting" class="tab-pane fade in active">
+                        <div id="supportDonorsetting" class="tab-pane fade ">
                             <div class="header">
                                 <h2>
                                     {{ $createItemNamesupportDonor  }}
@@ -1420,7 +1498,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                 <br>
                                 <div class="body">
                                     <form enctype="multipart/form-data" class="form" id="form_validation" method="post"
-                                          action="{{ route($ParentRouteNamesupportDonor.'.update') }}">
+                                          action="{{ route($ParentRouteNamesupportDonor.'.addnew') }}">
 
                                         {{ csrf_field() }}
                                         <div class="row clearfix">
@@ -1439,7 +1517,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                        Update
+                                                        Add New
                                                     </button>
                                                 </div>
                                             </div>
@@ -1451,6 +1529,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
 
                                 <div>
+                                    <!-- <form enctype="multipart/form-data" class="form" id="form_validation" method="post" action="{{ route($ParentRouteNamesupportDonor.'.update') }}"> -->
                                     <table class="table table-hover table-bordered table-sm">
                                         <thead>
                                         <tr>
@@ -1460,15 +1539,15 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                         </tr>
                                         </thead>
                                         <tbody>
-
+                                            
 
                                         <?php $i = 1; ?>
                                         @if(!empty($supportdonor))
                                             @foreach($supportdonor as $donor)
                                                     
                                             <tr>
-                                                <td>{{ $donor->id }}</td>
-                                                <td>{{ $donor->supportDonor }}</td>
+                                                <td> {{ $donor->id }}</td>
+                                                <td><!-- <input name="supportDonor" type="text" class="form-control" value="{{ $donor->supportDonor }}"> -->{{ $donor->supportDonor }} </td>
                                                 <td class="tdTrashAction">
                                                     <a 
                                                         class="btn btn-xs btn-danger waves-effect"
@@ -1493,7 +1572,14 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                                         </tbody>
                                     </table>
-
+                                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-line">
+                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </div> -->
+                                        <!-- </form> -->
                                 </div>
 
                             </div>
@@ -1505,7 +1591,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                         <!-- Orgenization leadership setting start -->
 
-                        <div id="orgenizationLeader" class="tab-pane fade in active">
+                        <div id="orgenizationLeader" class="tab-pane fade ">
                             <div class="header">
                                 <h2>
                                     {{ $createItemNameorgenozationLeader  }}
@@ -1523,7 +1609,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                     <div class="form-line">
                                                         <input value="" name="orgenizationLeader" type="text"
                                                                class="form-control">
-                                                        <label class="form-label">Orgenization Leadership</label>
+                                                        <label class="form-label">Organization Leadership</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1542,7 +1628,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                        Update
+                                                        Add New
                                                     </button>
                                                 </div>
                                             </div>
@@ -1553,7 +1639,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                 </div>
 
 
-                                <<div>
+                                <div>
                                     <table class="table table-hover table-bordered table-sm">
                                         <thead>
                                         <tr>
@@ -1686,32 +1772,401 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
     <script>
 
-        function quarter1(month)
-        {
-            // var a = month;
-            // alert(a); return false;
+        // function quarter1(month)
+        // {
+
+        //     var Quarter1_Start = $("#Quarter1_Start").val();
+        //     // alert(month);
+        //     // alert(Quarter1_Start); return false;
+
+        //     if(month == Quarter1_Start){
+        //         alert("This month already selected"); return false;
+        //     }
+
+
+
+        //     // var a = month;
+        //     // alert(a); return false;
             
-            // $("#quarter2 option[value='"+month+"']").attr("disabled","disabled");
-            // $("#Quarter1_End option[value='"+month+"']").prop('removed',true);
-            // $("#Quarter1_End option[value='"+month+"']").attr("disabled","disabled");
+        //     // var list  =  [
+        //     //    "January",
+        //     //    "February",
+        //     //    "March",
+        //     //    "April",
+        //     //    "May",
+        //     //    "June",
+        //     //    "July",
+        //     //    "August",
+        //     //    "Septmber",
+        //     //    "October",
+        //     //    "November",
+        //     //    "December",
+        //     // ];
+
+        //     // console.log(list); return false;
+
+        //     // $("#Quarter2_Start option[value='"+month+"']").attr("disabled","disabled");
+        //     $(list).addClass('disabled').children('a').attr('href', '#').attr('tabindex', -1);
+        //     // $("#Quarter1_End option[value='"+month+"']").prop('removed',true);
+        //     // $("#Quarter1_End option[value='"+month+"']").attr("disabled","disabled");
 
             
-        }
-
-        // $("#Quarter1_Start").change(function() {
-        // if ($(this).data('options') === undefined) {
-        //     /*Taking an array of all options-2 and kind of embedding it on the select1*/
-        //     $(this).data('options', $('#Quarter1_End option').clone());
         // }
-        // var id = $(this).val();
-        // // alert (id);
-        // var options = $(this).data('options').filter('[value=' + id + ']');
-        // $('#Quarter1_End').html(options);
+
+        
+        $('#Quarter1_Start').on('change', function() {
+          // alert( this.value );
+          var month = this.value;
+          var Quarter1_End = $("#Quarter1_End").val();
+          var Quarter2_Start = $("#Quarter2_Start").val();
+          var Quarter2_End = $("#Quarter2_End").val();
+          var Quarter3_Start = $("#Quarter3_Start").val();
+          var Quarter3_End = $("#Quarter3_End").val();
+          var Quarter4_Start = $("#Quarter4_Start").val();
+          var Quarter4_End = $("#Quarter4_End").val();
+          
+          if(month == Quarter1_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_End){
+                alert("This month already selected"); return false;
+            }
+
+        });
+
+        
+        $('#Quarter1_End').on('change', function() {
+          // alert( this.value );
+          var month = this.value;
+          var Quarter1_Start = $("#Quarter1_Start").val();
+          var Quarter2_Start = $("#Quarter2_Start").val();
+          var Quarter2_End = $("#Quarter2_End").val();
+          var Quarter3_Start = $("#Quarter3_Start").val();
+          var Quarter3_End = $("#Quarter3_End").val();
+          var Quarter4_Start = $("#Quarter4_Start").val();
+          var Quarter4_End = $("#Quarter4_End").val();
+          
+          if(month == Quarter1_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_End){
+                alert("This month already selected"); return false;
+            }
+
+        });
+
+        $('#Quarter2_Start').on('change', function() {
+          // alert( this.value );
+          var month = this.value;
+          var Quarter1_Start = $("#Quarter1_Start").val();
+          var Quarter1_End = $("#Quarter1_End").val();
+          var Quarter2_End = $("#Quarter2_End").val();
+          var Quarter3_Start = $("#Quarter3_Start").val();
+          var Quarter3_End = $("#Quarter3_End").val();
+          var Quarter4_Start = $("#Quarter4_Start").val();
+          var Quarter4_End = $("#Quarter4_End").val();
+          
+          if(month == Quarter1_Start){
+                alert("This month already selected"); 
+               // alert($('#Quarter2_Start :selected').text()) ; return false;
+            }
+
+            if(month == Quarter1_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_End){
+                alert("This month already selected"); return false;
+            }
+            
+        });
+
+        $('#Quarter2_End').on('change', function() {
+          // alert( this.value );
+          var month = this.value;
+          var Quarter1_Start = $("#Quarter1_Start").val();
+          var Quarter1_End = $("#Quarter1_End").val();
+          var Quarter2_Start = $("#Quarter2_Start").val();
+          var Quarter3_Start = $("#Quarter3_Start").val();
+          var Quarter3_End = $("#Quarter3_End").val();
+          var Quarter4_Start = $("#Quarter4_Start").val();
+          var Quarter4_End = $("#Quarter4_End").val();
+          
+          if(month == Quarter1_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter1_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_End){
+                alert("This month already selected"); return false;
+            }
+        });
+
+        $('#Quarter3_Start').on('change', function() {
+          // alert( this.value );
+          var month = this.value;
+          var Quarter1_Start = $("#Quarter1_Start").val();
+          var Quarter1_End = $("#Quarter1_End").val();
+          var Quarter2_Start = $("#Quarter2_Start").val();
+          var Quarter2_End = $("#Quarter2_End").val();
+          var Quarter3_End = $("#Quarter3_End").val();
+          var Quarter4_Start = $("#Quarter4_Start").val();
+          var Quarter4_End = $("#Quarter4_End").val();
+          
+          if(month == Quarter1_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter1_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_End){
+                alert("This month already selected"); return false;
+            }
+        });
+
+        $('#Quarter3_End').on('change', function() {
+          // alert( this.value );
+          var month = this.value;
+          var Quarter1_Start = $("#Quarter1_Start").val();
+          var Quarter1_End = $("#Quarter1_End").val();
+          var Quarter2_Start = $("#Quarter2_Start").val();
+          var Quarter2_End = $("#Quarter2_End").val();
+          var Quarter3_start = $("#Quarter3_start").val();
+          var Quarter4_Start = $("#Quarter4_Start").val();
+          var Quarter4_End = $("#Quarter4_End").val();
+          
+          if(month == Quarter1_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter1_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_End){
+                alert("This month already selected"); return false;
+            }
+        });
+
+        $('#Quarter4_Start').on('change', function() {
+          // alert( this.value );
+          var month = this.value;
+          var Quarter1_Start = $("#Quarter1_Start").val();
+          var Quarter1_End = $("#Quarter1_End").val();
+          var Quarter2_Start = $("#Quarter2_Start").val();
+          var Quarter2_End = $("#Quarter2_End").val();
+          var Quarter3_start = $("#Quarter3_start").val();
+          var Quarter3_End = $("#Quarter3_End").val();
+          var Quarter4_End = $("#Quarter4_End").val();
+          
+          if(month == Quarter1_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter1_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_End){
+                alert("This month already selected"); return false;
+            }
+        });
+
+        $('#Quarter4_End').on('change', function() {
+          // alert( this.value );
+          var month = this.value;
+          var Quarter1_Start = $("#Quarter1_Start").val();
+          var Quarter1_End = $("#Quarter1_End").val();
+          var Quarter2_Start = $("#Quarter2_Start").val();
+          var Quarter2_End = $("#Quarter2_End").val();
+          var Quarter3_start = $("#Quarter3_start").val();
+          var Quarter3_End = $("#Quarter3_End").val();
+          var Quarter4_start = $("#Quarter4_start").val();
+          
+          if(month == Quarter1_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter1_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_Start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter2_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_start){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter3_End){
+                alert("This month already selected"); return false;
+            }
+
+            if(month == Quarter4_start){
+                alert("This month already selected"); return false;
+            }
+        });
+
+        // $('#Quarter1_End').on('change', function() {
+        //   // alert( this.value );
+        //   var month = this.value;
+        //   var Quarter1_Start = $("#Quarter1_Start").val();
+        //   if(month == Quarter1_Start){
+        //         alert("This month already selected"); return false;
+        //     }
         // });
+
+        // $('#Quarter1_End').on('change', function() {
+        //   // alert( this.value );
+        //   var month = this.value;
+        //   var Quarter1_Start = $("#Quarter1_Start").val();
+        //   if(month == Quarter1_Start){
+        //         alert("This month already selected"); return false;
+        //     }
+        // });
+
+
+
+        // $("#Quarter1_end").change(function(){
+        //     alert("dsd"); return false;
+        // });
+
 
         // $("#Quarter1_Start").change(function(){
         //     var id = $(this).val();
-
+        //     // alert(id); return false;
             
 
         //     // alert (id); return false;
@@ -1742,5 +2197,13 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        // alert(location.hash); return false;
+        if (location.hash) {
+            $("a[href='" + location.hash + "']").tab("show");
+        }
+    });
+</script>
 
 @endpush

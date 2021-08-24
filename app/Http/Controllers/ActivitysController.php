@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Activity;
 use App\Profile;
+use App\Activitytoquarter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -31,7 +32,7 @@ class ActivitysController extends Controller
         $Activity = $this->parentModel::orderBy('created_at')->paginate(60);
         $activitys = $this->parentModel::orderBy('created_at')->paginate(60);
         // echo "<pre>"; print_r($Activity); die;
-        return view($this->parentView . '.index')->with('items', $Activity)->with('activitys', $activitys);;
+        return view($this->parentView . '.index')->with('items', $Activity)->with('activitys', $activitys);
         // return view($this->parentView . '.index');
     }
 
@@ -68,16 +69,63 @@ class ActivitysController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'parent_id' => $request->parent_id,
-            'status' => $request->status,
-            
+            // 'status' => $request->status,
+            'project_id' => $request->project_id,
+            'department_id' => $request->department_id,
+            'status' => 1,
         ]);
+
+        if((isset($request->quarter)) && (count($request->quarter)>0)){
+            foreach($request->quarter as $key => $quarterone){
+                //echo "<pre>"; print_r($quarterone); die;
+                $quarter = new Activitytoquarter;
+                $quarter->activity_id = $user->id;
+                $quarter->quarter_id = $quarterone;
+                $quarter->save();
+            }
+        }
 
         // echo "<pre>"; print_r ($user); exit;
 
         Session::flash('success', "Successfully  Create");
         // return redirect()->back();
-        return redirect()->route($this->parentRoute);
+        $redirect = $this->redirectButton($request,$user);
+        return $redirect;
+        // return redirect()->route($this->parentRoute);
 
+    }
+
+    public function redirectButton($request,$object) {
+        if($request->submitType == "saveAndClose"){
+            return redirect()->route($this->parentRoute);
+        }
+        elseif($request->submitType == "saveAndNew"){
+            return redirect()->route($this->parentRoute.'.create');
+        }
+        elseif($request->submitType == "saveAndCopy"){
+            $user = Activity::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'parent_id' => $request->parent_id,
+                'project_id' => $request->project_id,
+                'department_id' => $request->department_id,
+                'status' => 1,
+            ]);
+    
+            if((isset($request->quarter)) && (count($request->quarter)>0)){
+                foreach($request->quarter as $key => $quarterone){
+                    //echo "<pre>"; print_r($quarterone); die;
+                    $quarter = new Activitytoquarter;
+                    $quarter->activity_id = $user->id;
+                    $quarter->quarter_id = $quarterone;
+                    $quarter->save();
+                }
+            }
+            return redirect()->route($this->parentRoute);
+        }
+        elseif($request->submitType == "save"){
+            return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id]);
+        }
     }
 
     /**
@@ -126,7 +174,7 @@ class ActivitysController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // echo "<pre>"; print_r($request->all()); die;
+        
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',
@@ -137,38 +185,38 @@ class ActivitysController extends Controller
         $user->title = $request->title;
         $user->description = $request->description;
         $user->parent_id = $request->parent_id;
-        $user->status = $request->status;
+        $user->project_id = $request->project_id;
+        $user->department_id = $request->department_id;
+
+        if((isset($request->quarter)) && (count($request->quarter)>0)){
+            $del = Activitytoquarter::where('activity_id',$id)->delete();
+            foreach($request->quarter as $key => $quarterone){
+                //echo "<pre>"; print_r($quarterone); die;
+                $quarter = new Activitytoquarter;
+                $quarter->activity_id = $id;
+                $quarter->quarter_id = $quarterone;
+                $quarter->save();
+            }
+        }
+     
+        //$user->status = $request->status;
 
         
 
         $user->save();
         Session::flash('success', "Update Successfully");
-        return redirect()->route($this->parentRoute);
+
+        $redirect = $this->redirectButton($request,$user);
+        return $redirect;
+        // return redirect()->route($this->parentRoute);
 
     }
 
-    public function update_status($id)
+    public function update_status($id, $status)
     {
-
-        $link = $_SERVER['REQUEST_URI'];
-        $link_array = explode('/',$link);
-        $statusId = end($link_array);
-        // echo "<pre>"; print_r($page); die;
-        // $items = $this->parentModel::find($id);
-
         $items = Activity::find($id);
-        $items->status = $statusId;
+        $items->status = $status;
         $items->save();
-        // echo "<pre>"; print_r($items); exit;
-
-        // echo "aa"; exit;
-        
-        // $user = Activity::find($id);
-        // $user->status = $request->status;
-
-        
-
-        // $user->save();
         Session::flash('success', "Update Successfully");
         return redirect()->route($this->parentRoute);
 

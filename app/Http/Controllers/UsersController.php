@@ -54,14 +54,13 @@ class UsersController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:1|confirmed',
-            'role_manage_id' => 'required|min:1',
-            'department_id' => 'required'
+            'role_manage_id' => 'required|min:1'
         ]);
 
         $department_head = isset($request->department_head) ? 1 : 0;
         $position_id = isset($request->position_id) ? $request->position_id : 0;
 
-        //echo '<pre>'; print_r($request->all()); die;
+        // echo '<pre>'; print_r($request->all()); die;
 
         $user = new User;
         $user->name = $request->name;
@@ -167,8 +166,7 @@ class UsersController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'role_manage_id' => 'numeric|min:1',
-            'department_id' => 'required'
+            'role_manage_id' => 'numeric|min:1'
         ]);
         
 

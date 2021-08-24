@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 
 use App\Http\Controllers\RoleManageController;
 
-class Cost_itemsController extends Controller
+class CostItemsController extends Controller
 {
 
 //    Important properties
@@ -31,8 +31,8 @@ class Cost_itemsController extends Controller
         
         $Activity = $this->parentModel::orderBy('created_at')->paginate(60);
         $activitys = Activity::all();
-        echo "<pre>"; print_r($activitys); die;
-        return view($this->parentView . '.index')->with('items', $Activity);
+        // echo "<pre>"; print_r($activitys); die;
+        return view($this->parentView . '.index')->with('items', $Activity)->with('activitys', $activitys);
         // return view($this->parentView . '.index');
     }
 
@@ -44,7 +44,8 @@ class Cost_itemsController extends Controller
     public function create()
     {  
         $Activity = $this->parentModel::orderBy('created_at')->paginate(60);
-        return view($this->parentView . '.create')->with('items', $Activity);
+        $activitys = Activity::all();
+        return view($this->parentView . '.create')->with('items', $Activity)->with('activitys', $activitys);
         // return view($this->parentView . '.create');
     }
 
@@ -56,38 +57,59 @@ class Cost_itemsController extends Controller
      */
     public function store(Request $request)
     {
-        // echo "<pre>"; print_r($request->all()); die;
-
-        
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:255',           
             
         ]);
-
-        $user = Cost_item::create([
-            'main_activity_id' => $request->main_activity_id,
-            'sub_activity_id'=> $request->sub_activity_id,
-            'title' => $request->title,
-            'description' => $request->description,
-            'single_unit' => 1,
-            'single_cost' => $request->cost / $request->unit,
-            'unit' => $request->unit,
-            'cost' => $request->cost,
-            'frequency' => $request->frequency,
-            'quater' => $request->quater,
-            'status' => $request->status,
-            
-        ]);
-
-        // echo "<pre>"; print_r ($user); exit;
-
+        
+        $costItem = new Cost_item;
+        $costItem->main_activity_id = $request->main_activity_id;
+        $costItem->sub_activity_id= $request->sub_activity_id;
+        $costItem->title = $request->title;
+        $costItem->description = $request->description;
+        $costItem->single_unit = 1;
+        if(($request->cost != "" || $request->cost != 0) && ($request->unit != "" || $request->unit != 0)){
+            $costItem->single_cost = $request->cost / $request->unit;
+        }
+        $costItem->unit = $request->unit;
+        $costItem->cost = $request->cost;
+        $costItem->frequency = $request->frequency;
+        $costItem->status = $request->status;
+        $costItem->save();
         Session::flash('success', "Successfully  Create");
-        // return redirect()->back();
-        return redirect()->route($this->parentRoute);
+        $redirect = $this->redirectButton($request,$costItem);
+        return $redirect;
 
     }
-
+    public function redirectButton($request,$object) {
+        if($request->submitType == "saveAndClose"){
+            return redirect()->route($this->parentRoute);
+        }
+        elseif($request->submitType == "saveAndNew"){
+            return redirect()->route($this->parentRoute.'.create');
+        }
+        elseif($request->submitType == "saveAndCopy"){
+            $costItemNew = new Cost_item;
+            $costItemNew->main_activity_id = $request->main_activity_id;
+            $costItemNew->sub_activity_id= $request->sub_activity_id;
+            $costItemNew->title = $request->title;
+            $costItemNew->description = $request->description;
+            $costItemNew->single_unit = 1;
+            if(($request->cost != "" || $request->cost != 0) && ($request->unit != "" || $request->unit != 0)){
+                $costItemNew->single_cost = $request->cost / $request->unit;
+            }
+            $costItemNew->unit = $request->unit;
+            $costItemNew->cost = $request->cost;
+            $costItemNew->frequency = $request->frequency;
+            $costItemNew->status = $request->status;
+            $costItemNew->save();
+            return redirect()->route($this->parentRoute);
+        }
+        elseif($request->submitType == "save"){
+            return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id]);
+        }
+    }
     /**
      * Display the specified resource.
      *
@@ -118,10 +140,23 @@ class Cost_itemsController extends Controller
     {
         $items = $this->parentModel::find($id);        
         
-        $activitys = $this->parentModel::orderBy('created_at')->paginate(60);
+        $activitys = Activity::all();
         // echo "<pre>"; print_r ($Activity); exit;
 
         return view($this->parentView . '.edit')->with('item', $items)->with('activitys', $activitys);
+    }
+
+    public function get_sub_activity(Request $request)
+    {
+        $main_act_id = $request->main_act_id;
+        $activitys = Activity::where('parent_id', $main_act_id)->get();
+        $html = "";
+        if($main_act_id != "0" || $main_act_id != 0){
+            foreach($activitys as $activity){
+                $html .= "<option value='".$activity->id."' >".$activity->title."</option>";
+            } 
+        }
+        return response()->json(['success'=>'Got Simple Ajax Request.', 'result'=> $html]);
     }
 
     
@@ -140,46 +175,34 @@ class Cost_itemsController extends Controller
             'description' => 'required|string|max:255',
             
         ]);
-
-        $user = Cost_item::find($id);
-        $user->title = $request->title;
-        $user->description = $request->description;
-        $user->parent_id = $request->parent_id;
-        $user->status = $request->status;
-
-        
-
-        $user->save();
+        $costItem = Cost_item::find($id);
+        $costItem->main_activity_id = $request->main_activity_id;
+        $costItem->sub_activity_id= $request->sub_activity_id;
+        $costItem->title = $request->title;
+        $costItem->description = $request->description;
+        $costItem->single_unit = 1;
+        if(($request->cost != "" || $request->cost != 0) && ($request->unit != "" || $request->unit != 0)){
+            $costItem->single_cost = $request->cost / $request->unit;
+        }
+        $costItem->unit = $request->unit;
+        $costItem->cost = $request->cost;
+        $costItem->frequency = $request->frequency;
+        $costItem->status = $request->status;
+        $costItem->save();
         Session::flash('success', "Update Successfully");
-        return redirect()->route($this->parentRoute);
+        // return redirect()->route($this->parentRoute);
+        $redirect = $this->redirectButton($request,$costItem);
+        return $redirect;
 
     }
 
-    public function update_status($id)
+    public function update_status($id,$status)
     {
-
-        $link = $_SERVER['REQUEST_URI'];
-        $link_array = explode('/',$link);
-        $statusId = end($link_array);
-        // echo "<pre>"; print_r($page); die;
-        // $items = $this->parentModel::find($id);
-
-        $items = Activity::find($id);
-        $items->status = $statusId;
-        $items->save();
-        // echo "<pre>"; print_r($items); exit;
-
-        // echo "aa"; exit;
-        
-        // $user = Activity::find($id);
-        // $user->status = $request->status;
-
-        
-
-        // $user->save();
+        $costItem = Cost_item::find($id);
+        $costItem->status = $status;
+        $costItem->save();
         Session::flash('success', "Update Successfully");
         return redirect()->route($this->parentRoute);
-
     }
 
     /**
