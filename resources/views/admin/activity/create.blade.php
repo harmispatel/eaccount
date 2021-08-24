@@ -102,7 +102,6 @@ $ParentRouteName = 'activity';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    {{-- <label for="cars">Choose a car:</label> --}}
                                                     <input autofocus value="{{ old('title')  }}" name="title" type="text"
                                                            class="form-control" required aria-required="true">
                                                     <label class="form-label">Name</label> 

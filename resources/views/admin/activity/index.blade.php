@@ -152,9 +152,9 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                     <label for="md_checkbox_{{ $i }}"></label>
                                                 </th>
                                                 <td>{{ $item->title }}</td>
-                                                <td> 
+                                                <td>
                                                     @foreach($activitys as $activity)
-                                                        @if($item->parent_id == $activity->id) {{ $activity->title }} @else - @endif
+                                                        @if($item->parent_id == $activity->id) {{ $activity->title }}  @endif
                                                     @endforeach
                                                 </td>
                                                 <td>
