@@ -27,7 +27,18 @@ class Projects extends Model
         'updated_by',
         'deleted_by'
     ];
-
+    public function hasManyActivity()
+    {
+        return $this->hasMany('App\Activity','project_id','id');
+    }
+    public function hasOneSupportDonor()
+    {
+       return $this->hasOne('App\SupportDonor','id','donor');
+    }
+    public function hasOneUser()
+    {
+       return $this->hasOne('App\User','id','coordinator');
+    }
  
 
 

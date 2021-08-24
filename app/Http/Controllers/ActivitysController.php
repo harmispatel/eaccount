@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Activity;
 use App\Profile;
+use App\Projects;
 use App\Activitytoquarter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,14 +29,15 @@ class ActivitysController extends Controller
      */
     public function index()
     {
-        
-        $Activity = $this->parentModel::orderBy('created_at')->paginate(60);
-        $activitys = $this->parentModel::orderBy('created_at')->paginate(60);
-        // echo "<pre>"; print_r($Activity); die;
-        return view($this->parentView . '.index')->with('items', $Activity)->with('activitys', $activitys);
-        // return view($this->parentView . '.index');
+        $activity = $this->parentModel::with('hasOneParentActivity')->orderBy('created_at')->paginate(60);
+        return view($this->parentView . '.index',['items'=>$activity]);
     }
-
+    public function projectActivity($projectId)
+    {
+        $project = Projects::find($projectId);
+        $activity = $this->parentModel::with('hasOneParentActivity')->where('project_id',$projectId)->orderBy('created_at')->paginate(60);
+        return view($this->parentView . '.index',['items'=>$activity,'project'=>$project]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -230,11 +232,15 @@ class ActivitysController extends Controller
      */
     public function destroy($id)
     {
-
-        $user = Activity::find($id);
+        
+        $user = Activity::with('hasManyCost_item')->find($id);
+        $costItems = $user->hasManyCost_item ? $user->hasManyCost_item : [];
+        if(count($costItems)){
+            Session::flash('error', "This activity used in Cost Items");
+            return redirect()->route($this->parentRoute);    
+        }
         $user->delete();
         Session::flash('success', "Successfully Trashed");
-        // return redirect()->back();
         return redirect()->route($this->parentRoute);
     }
 

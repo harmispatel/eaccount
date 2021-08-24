@@ -144,6 +144,10 @@ $trash_show = config('role_manage.Project.TrashShow');
 
                                         <?php $i = 1; ?>
                                         @foreach($projects as $project)
+                                            @php
+                                                $supportDonor = $project->hasOneSupportDonor ? $project->hasOneSupportDonor : [];
+                                                $user = $project->hasOneUser ? $project->hasOneUser : [];
+                                            @endphp
                                             <tr @if (Auth::id()==$project->id)
 
                                                     class="bg-tr"
@@ -155,10 +159,10 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                            class="chk-col-cyan selects "/>
                                                     <label for="md_checkbox_{{ $i }}"></label>
                                                 </th>
-                                                <td>{{ $project->projectName }}</td>
-                                                <td>{{ $project->region }}</td>
-                                                <td>{{ $project->donor }}</td>
-                                                <td>{{ $project->coordinator }}</td>
+                                                <td><a href="{{ url('project/project_activity/'.$project->id) }}"> {{$project->projectName ? $project->projectName : '' }}</a></td>
+                                                <td>{{ $project->region ? $project->region : '' }}</td>
+                                                <td>{{ !empty($supportDonor) ? $supportDonor->supportDonor : '-' }}</td>
+                                                <td>{{ !empty($user) ? $user->name : '-' }}</td>
                                                 <td>
                                                     @if($project->status == "1")
                                                         <span class="label label-warning">Started</span>
@@ -167,19 +171,19 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="">Started</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Started</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="">In Progress</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/2') }}">In Progress</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="">Cancel</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/3') }}">Cancel</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="">On Hold</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/4') }}">On Hold</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="">Completed</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/5') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -190,19 +194,19 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="#">Started</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Started</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">In Progress</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/2') }}">In Progress</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">Cancel</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/3') }}">Cancel</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">On Hold</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/4') }}">On Hold</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">Completed</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/5') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -213,19 +217,19 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="#">Started</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Started</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">In Progress</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/2') }}">In Progress</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">Cancel</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/3') }}">Cancel</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">On Hold</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/4') }}">On Hold</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">Completed</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/5') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -236,19 +240,19 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="#">Started</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Started</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">In Progress</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/2') }}">In Progress</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">Cancel</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/3') }}">Cancel</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">On Hold</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/4') }}">On Hold</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">Completed</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/5') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -259,19 +263,19 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="#">Started</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Started</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">In Progress</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/2') }}">In Progress</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">Cancel</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/3') }}">Cancel</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">On Hold</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/4') }}">On Hold</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">Completed</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/5') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -281,19 +285,19 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="#">Started</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Started</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">In Progress</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/1') }}">In Progress</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">Cancel</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Cancel</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">On Hold</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/1') }}">On Hold</a>
                                                                     </li>
                                                                 <li>
-                                                                    <a href="#">Completed</a>
+                                                                    <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>

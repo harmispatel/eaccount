@@ -58,6 +58,9 @@ $trash_show = config('role_manage.Activity.TrashShow');
 
             <ol class="breadcrumb breadcrumb-col-cyan pull-right">
                 <li><a href="{{ route('dashboard') }}"><i class="material-icons">home</i> Home</a></li>
+                @if(!empty($project))
+                    <li><a href="{{ url('project/project_activity/'.$project->id) }}"><i class="fas fa-project-diagram"></i>{{ $project->projectName ? $project->projectName : ''  }}</a></li>
+                    @endif
                 <li><a href="{{ route($ParentRouteName) }}"><i
                                 class="{{ $breadcrumbMainIcon  }}"></i>{{ $breadcrumbMainName  }}</a></li>
                 <li class="active"><i
@@ -140,6 +143,9 @@ $trash_show = config('role_manage.Activity.TrashShow');
 
                                         <?php $i = 1; ?>
                                         @foreach($items as $item)
+                                            @php
+                                                $parentActivity = $item->hasOneParentActivity ? $item->hasOneParentActivity : [];   
+                                            @endphp
                                             <tr @if (Auth::id()==$item->id)
 
                                                     class="bg-tr"
@@ -151,11 +157,9 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                            class="chk-col-cyan selects "/>
                                                     <label for="md_checkbox_{{ $i }}"></label>
                                                 </th>
-                                                <td>{{ $item->title }}</td>
+                                                <td><a href="{{ url('cost_item/activity_cost_item/'.$item->id) }}"> {{$item->title }}</a></td>
                                                 <td>
-                                                    @foreach($activitys as $activity)
-                                                        @if($item->parent_id == $activity->id) {{ $activity->title }}  @endif
-                                                    @endforeach
+                                                    {{ !empty($parentActivity) ? $parentActivity->title : '-' }}
                                                 </td>
                                                 <td>
                                                     {{ isset($item->hasOneProject->projectName) ? $item->hasOneProject->projectName : "-" }}

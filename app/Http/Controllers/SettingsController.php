@@ -520,15 +520,23 @@ class SettingsController extends Controller
     public function supportDonor_destroy($id)
     { 
 
-        // echo "<pre>"; print_r($request->all()); die;
+        $getDonor = DB::table('bankaccount')->where('donors',$id)->first();
         
+        if(isset($getDonor->id)){
+            Session::flash('error', 'This Donor also used in Bank Account ');
+        }
+        else{
+            // echo "null";
+            DB::table('supportdonor')->where('id',$id)->delete();
+            Session::flash('success', 'Successfully Delete');
+        }
+        
+        // echo "<pre>"; print_r($getDonor); die;
+        return redirect('settings/general#supportDonorsetting');
 
-       DB::table('supportdonor')->where('id',$id)->delete();
 
-        Session::flash('success', 'Successfully Delete');
 
         // return redirect()->back();
-        return redirect('settings/general#supportDonorsetting');
 
     }
 
@@ -601,7 +609,4 @@ class SettingsController extends Controller
         return redirect('settings/general#bankaccountsetting');
 
     }
-
-
-
 }

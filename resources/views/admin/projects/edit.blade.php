@@ -86,9 +86,14 @@ $ParentRouteName = 'project';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input name="donor" type="text" value="{{ $item->donor }}" class="form-control "
-                                                    >
-                                                    <label class="form-label">Donor</label>
+                                                    <select data-live-search="true" class="form-control show-tick" name="donor">
+                                                        <option value="0">Select Donor</option>
+                                                        @if(count($supportDonors))
+                                                            @foreach ($supportDonors as $supportDonor)
+                                                            <option value="{{$supportDonor->id}}" @if($item->donor == $supportDonor->id) selected @endif>{{$supportDonor->supportDonor ? $supportDonor->supportDonor : ''}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -96,9 +101,14 @@ $ParentRouteName = 'project';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input name="coordinator" type="text" value="{{ $item->coordinator }}" class="form-control"
-                                                    >
-                                                    <label class="form-label">coordinator</label>
+                                                    <select data-live-search="true" class="form-control show-tick" name="coordinator">
+                                                        <option value="0">Coordinator</option>
+                                                        @if(count($users))
+                                                            @foreach ($users as $user)
+                                                            <option value="{{$user->id}}" @if($item->coordinator == $user->id) selected @endif>{{$user->name ? $user->name : ''}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -116,12 +126,29 @@ $ParentRouteName = 'project';
                                                 </select>
                                             </div>
                                         </div>
+                                        <input value="" name="submitType" id="submitType" type="hidden" value="">
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                {{-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">
                                                     Update
-                                                </button>
+                                                </button> --}}
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-line">
+                                                        <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
+                                                            Update
+                                                        </button>
+                                                        <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
+                                                            Update & New
+                                                        </button>
+                                                        <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn btn-primary m-t-15 waves-effect">
+                                                            Update & Copy
+                                                        </button>
+                                                        <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
+                                                            Update & Close
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -216,7 +243,10 @@ $ParentRouteName = 'project';
         @endforeach
         @endif
 
-
+        function changeSubmitType(submitType){
+            jQuery("#submitType").val(submitType);
+            $("#form_validation").submit();
+        }
 
 
         // Validation and calculation

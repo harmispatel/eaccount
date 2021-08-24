@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Projects;
 use App\Profile;
+use App\SupportDonor;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -27,8 +29,7 @@ class ProjectsController extends Controller
     public function index()
     {
 
-        $projects = $this->parentModel::orderBy('created_at', 'desc')->paginate(60);
-        // echo "<pre>"; print_r($projects); die;
+        $projects = $this->parentModel::with('hasOneSupportDonor','hasOneUser')->orderBy('created_at', 'desc')->paginate(60);
         return view($this->parentView . '.index')->with('projects', $projects);
         // return view($this->parentView . '.index');
     }
@@ -40,7 +41,9 @@ class ProjectsController extends Controller
      */
     public function create()
     {  
-        return view($this->parentView . '.create');
+        $supportDonors = SupportDonor::get();
+        $users = User::get();
+        return view($this->parentView . '.create',['supportDonors'=>$supportDonors,'users'=>$users]);
     }
 
     /**
@@ -70,8 +73,10 @@ class ProjectsController extends Controller
         ]);
 
         Session::flash('success', "Successfully  Create");
+        $redirect = $this->redirectButton($request,$user);
+        return $redirect;
         // return redirect()->back();
-        return redirect()->route($this->parentRoute);
+        // return redirect()->route($this->parentRoute);
 
     }
 
@@ -104,8 +109,9 @@ class ProjectsController extends Controller
     public function edit($id)
     {
         $items = $this->parentModel::find($id);
-
-        return view($this->parentView . '.edit')->with('item', $items);
+        $supportDonors = SupportDonor::get();
+        $users = User::get();
+        return view($this->parentView . '.edit',['item'=> $items,'supportDonors'=>$supportDonors,'users' =>$users]);
     }
 
     /**
@@ -135,10 +141,38 @@ class ProjectsController extends Controller
 
         $user->save();
         Session::flash('success', "Update Successfully");
-        return redirect()->route($this->parentRoute);
-
+        $redirect = $this->redirectButton($request,$user);
+        return $redirect;
     }
-
+    public function redirectButton($request,$object) {
+        if($request->submitType == "saveAndClose"){
+            return redirect()->route($this->parentRoute);
+        }
+        elseif($request->submitType == "saveAndNew"){
+            return redirect()->route($this->parentRoute.'.create');
+        }
+        elseif($request->submitType == "saveAndCopy"){
+            $projects = new Projects;
+            $projects->projectName  = $request->projectName;
+            $projects->region  = $request->region;
+            $projects->donor  =$request->donor;
+            $projects->coordinator  = $request->coordinator;
+            $projects->status  = $request->status;
+            $projects->save();
+            return redirect()->route($this->parentRoute);
+        }
+        elseif($request->submitType == "save"){
+            return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id]);
+        }
+    }
+    public function update_status($id,$status)
+    {
+        $projects = Projects::find($id);
+        $projects->status = $status;
+        $projects->save();
+        Session::flash('success', "Update Successfully");
+        return redirect()->route($this->parentRoute);
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -147,9 +181,13 @@ class ProjectsController extends Controller
      */
     public function destroy($id)
     {
-
-        $user = Projects::find($id);
-        $user->delete();
+        $projects = Projects::with('hasManyActivity')->find($id);
+        $activity = $projects->hasManyActivity ? $projects->hasManyActivity : [];
+        if(count($activity)){
+            Session::flash('error', "This project used in Activities");
+            return redirect()->route($this->parentRoute);    
+        }
+        $projects->delete();
         Session::flash('success', "Successfully Trashed");
         return redirect()->back();
     }

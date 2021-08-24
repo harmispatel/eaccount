@@ -33,10 +33,18 @@ class Activity extends Model
     {
         return $this->hasMany('App\Activitytoquarter','activity_id','id');
     }
+    public function hasManyCost_item()
+    {
+        return $this->hasMany('App\Cost_item','activity_id','id');
+    }
     public function hasOneProject()
     {
         return $this->hasOne('App\Projects','id','project_id');
     }
-
+    public function hasOneParentActivity()
+    {
+        return $this->hasOne('App\Activity','id','parent_id')->where('parent_id', '!=' ,0);
+    }
+    
     
 }

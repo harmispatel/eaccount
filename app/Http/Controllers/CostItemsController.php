@@ -29,13 +29,15 @@ class CostItemsController extends Controller
     public function index()
     {
         
-        $Activity = $this->parentModel::orderBy('created_at')->paginate(60);
-        $activitys = Activity::all();
-        // echo "<pre>"; print_r($activitys); die;
-        return view($this->parentView . '.index')->with('items', $Activity)->with('activitys', $activitys);
-        // return view($this->parentView . '.index');
+        $activity = $this->parentModel::orderBy('created_at')->paginate(60);
+        return view($this->parentView . '.index',['items'=>$activity]);
     }
-
+    public function activityCostItems($activityId)
+    {
+        $activity = $this->parentModel::where('main_activity_id',$activityId)->orderBy('created_at')->paginate(60);
+        return view($this->parentView . '.index',['items'=> $activity]);
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
