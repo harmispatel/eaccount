@@ -117,22 +117,22 @@ $ParentRouteName = 'user';
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
-                                                            id="department_id">
-                                                        <option value="0" >Select User Department</option>
-                                                        @foreach(App\Department::all() as $department)
-                                                            <option value="{{$department->id}}"> {{ $department->departmentName }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                        <div id="sikika_field">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
+                                                                id="department_id">
+                                                            <option value="0" >Select User Department</option>
+                                                            @foreach(App\Department::all() as $department)
+                                                                <option value="{{$department->id}}"> {{ $department->departmentName }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div id="sikika_field">
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
@@ -147,6 +147,14 @@ $ParentRouteName = 'user';
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                <div class="form-group form-float" style="margin-top:10px">
+                                                    <input type="checkbox" id="department_head" name="department_head" class="filled-in" >
+                                                    <label for="department_head">Is Head of Department</label>
+                                                </div>
+                                            </div>
+
                                         </div>
 
                                         <div id="vendor_field">
@@ -241,17 +249,17 @@ $ParentRouteName = 'user';
 
                                         </div>
 
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float" style="margin-top:10px">
-                                                <input type="checkbox" id="department_head" name="department_head" class="filled-in" >
-                                                <label for="department_head">Is Head of Department</label>
-                                            </div>
-                                        </div>
-
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                    Create
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save & New
+                                                </button>
+                                                
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save & Close
                                                 </button>
                                             </div>
                                         </div>
@@ -334,6 +342,11 @@ $ParentRouteName = 'user';
 
 
     <script> 
+        function changeSubmitType(submitType){
+            jQuery("#submitType").val(submitType);
+            $("#form_validation").submit();
+        }
+
         $(function() {
             $('#vendor_field').hide();
             $('#sikika_field').hide();

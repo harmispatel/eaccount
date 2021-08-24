@@ -174,6 +174,13 @@ $trash_show = config('role_manage.User.TrashShow');
                                             </td>
 
                                             <td class="tdTrashAction">
+                                                <a class="btn btn-xs btn-warning waves-effect"
+                                                    href="{{ route($ParentRouteName.'.userdetails',['id'=>$item->id]) }}"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top" title="Detail"> <i
+                                                            class="material-icons">visibility</i>
+                                                </a>
+
                                                 <a @if ($edit==0)
 
                                                         class="dis-none"
