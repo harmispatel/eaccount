@@ -421,7 +421,7 @@
                     class="dis-none"
                     @endif
 
-                    @if( Request::segment('1') == 'project' || Request::segment('1') == 'activity' || Request::segment('1') == 'activity')class="active " @endif>
+                    @if( Request::segment('1') == 'project' || Request::segment('1') == 'activity' || Request::segment('1') == 'cost_item')class="active " @endif>
                     <a class="menu-toggle" href="javascript:void(0);">
                         <i class="fas fa-receipt"></i>
                         <span>Project</span>

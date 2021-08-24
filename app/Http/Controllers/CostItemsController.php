@@ -78,16 +78,16 @@ class CostItemsController extends Controller
         $costItem->status = $request->status;
         $costItem->save();
         Session::flash('success', "Successfully  Create");
-        $redirect = $this->redirectButton($request);
+        $redirect = $this->redirectButton($request,$costItem);
         return $redirect;
 
     }
-    public function redirectButton($request) {
+    public function redirectButton($request,$object) {
         if($request->submitType == "saveAndClose"){
             return redirect()->route($this->parentRoute);
         }
         elseif($request->submitType == "saveAndNew"){
-            return redirect()->back();
+            return redirect()->route($this->parentRoute.'.create');
         }
         elseif($request->submitType == "saveAndCopy"){
             $costItemNew = new Cost_item;
@@ -107,7 +107,7 @@ class CostItemsController extends Controller
             return redirect()->route($this->parentRoute);
         }
         elseif($request->submitType == "save"){
-            return redirect()->back()->withInput();
+            return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id]);
         }
     }
     /**
@@ -191,7 +191,7 @@ class CostItemsController extends Controller
         $costItem->save();
         Session::flash('success', "Update Successfully");
         // return redirect()->route($this->parentRoute);
-        $redirect = $this->redirectButton($request);
+        $redirect = $this->redirectButton($request,$costItem);
         return $redirect;
 
     }

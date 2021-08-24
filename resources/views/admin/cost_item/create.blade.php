@@ -72,7 +72,7 @@ $ParentRouteName = 'cost_item';
                                                         <?php
                                                             if ($activity->parent_id == 0) { 
                                                         ?>
-                                                            <option value="{{ $activity->id }}">{{ $activity->title }}</option>
+                                                            <option value="{{ $activity->id }}" @if(old('frequency') == $activity->id) selected @endif>{{ $activity->title }}</option>
                                                         <?php
                                                             } 
                                                         ?>
