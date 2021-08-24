@@ -158,7 +158,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    {{ $item->hasOneProject->projectName }}
+                                                    {{ isset($item->hasOneProject->projectName) ? $item->hasOneProject->projectName : "-" }}
                                                 </td>
                                                 
                                                 <td class="tdTrashAction">
