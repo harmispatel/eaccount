@@ -11127,3 +11127,51 @@ body.modal-open {
     -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(1 135 56);
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(1 135 56);
 }
+
+.card .body form {
+    margin-top: 30px;
+}
+.user_main{
+    margin-top: 50px;
+    padding: 20px 0px;
+    background-color: #fff;
+    
+}
+.project_detail{
+    margin: 20px 0px;
+}
+.user_img{
+    text-align: center;
+}
+.user_img img{
+    width: 150px;
+}
+.user_text, .user_last_text{
+    text-align: center;
+}
+.user_head{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #FF0000;
+    align-items:  center;
+    padding: 0 20px;
+}
+.user_info{
+    padding: 20px 60px;
+}
+.user_info p span{
+    margin-left: 30px;
+}
+.user_filed{
+    display: flex;
+}
+.table-responsive {
+    overflow-x: inherit;
+}
+.table.table-style1 td {
+    padding: 4px 10px;
+    border: none;
+}
+.table.table-style1 td:first-child {
+    width: 170px;
+}

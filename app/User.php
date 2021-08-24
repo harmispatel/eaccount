@@ -45,6 +45,10 @@ class User extends Authenticatable
     }
     public function role()
     {
-        return $this->hasOne('App\RoleManage','id');
+        return $this->hasOne('App\RoleManage','id','role_manage_id');
+    }
+    public function hasOneDepartment()
+    {
+        return $this->hasOne('App\Department','id','department_id');
     }
 }

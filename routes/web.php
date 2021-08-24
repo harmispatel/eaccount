@@ -139,7 +139,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/user/userdetails/{id}', [
         'uses' => 'UsersController@userdetails',
-        'as' => 'user.active.userdetails'
+        'as' => 'user.userdetails'
     ]);
 
     //    User End

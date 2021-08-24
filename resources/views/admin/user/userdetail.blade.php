@@ -30,7 +30,7 @@ $ParentRouteName = 'user';
 @stop
 @section('content')
 
-    <section class="content">
+<section class="content">
         <div class="container-fluid">
             <div class="block-header pull-left">
                 <a class="btn btn-sm btn-info waves-effect" href="{{ url()->previous() }}">Back</a>
@@ -44,236 +44,138 @@ $ParentRouteName = 'user';
                 <li class="active"><i
                             class="material-icons">{{ $breadcrumbCurrentIcon  }}</i> {{ $breadcrumbCurrentName  }}</li>
             </ol>
-
-            <!-- Inline Layout | With Floating Label -->
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
-                        <div class="header">
-                            <h2>
-                                {{ $createItemName  }}
-                                <small>Edit {{ $moduleName  }} Information</small>
-                            </h2>
-
-                            <div class="body">
-                                <form class="form" id="form_validation" method="post"
-                                      action="{{ route($ParentRouteName.'.update',['id'=>$item->id]) }}"  enctype="multipart/form-data">
-
-                                    {{ csrf_field() }}
-                                    <div class="row clearfix">
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <input value="{{ $item->name  }}" name="name" type="text"
-                                                           class="form-control" >
-                                                    <label class="form-label">Name</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <input readonly value="{{ $item->email }}" name="email" type="email"
-                                                           class="form-control" required>
-                                                    <label class="form-label">Email Address</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <input name="password" type="password" class="form-control ">
-                                                    <label class="form-label">Password</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <input name="confirm_password" type="password" class="form-control">
-                                                    <label class="form-label">Confirm Password</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="role_manage_id"
-                                                            id="role_manage_id">
-                                                        <option value="0" >Select User Role</option>
-                                                        @foreach(App\RoleManage::all() as $role)
-                                                            <option @if ($item->role_manage_id==$role->id)
-                                                                    selected
-                                                                    @endif value="{{$role->id}}"> {{ $role->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
-                                                            id="department_id">
-                                                        <option value="0" >Select User Department</option>
-                                                        @foreach(App\Department::all() as $department)
-                                                            <option @if ($item->department_id ==$department->id)
-                                                                    selected
-                                                                    @endif value="{{$department->id}}"> {{ $department->departmentName }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div id="sikika_field">
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <select data-live-search="true" class="form-control show-tick search-choice" name="position_id"
-                                                                id="department_id">
-                                                            <option value="0" >Select User Position</option>
-                                                            @foreach(App\Orgenizationleader::all() as $Orgenizationleaderone)
-                                                                <option @if ($item->position_id ==$Orgenizationleaderone->id)
-                                                                        selected
-                                                                        @endif value="{{$Orgenizationleaderone->id}}"> {{ $Orgenizationleaderone->name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <?php //echo '<pre>'; print_r($item->profile); die; ?>
-
-                                        <div id="vendor_field">
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input name="company_name" type="text" value="{{ $item->profile->company_name }}" class="form-control">
-                                                        <label class="form-label">Company Name</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input name="business_registration_no" type="text" class="form-control" value="{{ $item->profile->business_registration_no }}">
-                                                        <label class="form-label">Business registration no</label>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input name="business_license" type="text" class="form-control" value="{{ $item->profile->business_license }}">
-                                                        <label class="form-label">Business License</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input name="bank_details" type="text" class="form-control" value="{{ $item->profile->bank_details }}">
-                                                        <label class="form-label">Bank details</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input name="tra_certification" type="text" class="form-control" value="{{ $item->profile->tra_certification }}">
-                                                        <label class="form-label">TRA Certification</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input name="tin_number" type="text" class="form-control" value="{{ $item->profile->tin_number }}">
-                                                        <label class="form-label">TIN Number</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line focused" style="display:flex;">
-                                                        <input name="legal_documents" type="file" class="form-control">
-                                                        <label class="form-label">Legal documents</label>
-                                                        @if($item->profile->legal_documents != "")<img height="50px" src="{{ url('/').'/'.$item->profile->legal_documents }}" />@endif
-                                                    </div>
-                                                </div>
-                                            </div>
+            <!-- <----------------Start-------------->
+            <div class="card">
+                <div class="user_main" style="margin-top: 50px;padding: 20px 0px;">
+                    <div class="container-fluid">
+                
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="user_left_detail">
+                                    <div class="row">
+                                        <div class="col-md-6">
                                             
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="project_detail">
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
+                                                <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
                                             
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line focused" style="display:flex;">
-                                                        <input name="company_logo" type="file" class="form-control">
-                                                        <label class="form-label">Company Logo</label>
-                                                        @if($item->profile->company_logo != "")<img height="50px" src="{{ url('/').'/'.$item->profile->company_logo }}" />@endif
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input name="vat_number" type="text" class="form-control" value="{{ $item->profile->vat_number }}">
-                                                        <label class="form-label">VAT Number</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float" style="margin-top:10px">
-                                                    <input type="checkbox" id="physical_verified" name="physical_verified" class="filled-in" @if($item->profile->physical_verified == "1") checked="checked" @endif>
-                                                    <label for="physical_verified">Physical verification</label>
-                                                </div>
-                                            </div>
-
                                         </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float" style="margin-top:10px">
-                                                <input type="checkbox" id="department_head" name="department_head" class="filled-in" @if($item->profile->department_head == "1") checked="checked" @endif>
-                                                <label for="department_head">Is Head of Department</label>
+                                        <div class="col-md-6">
+                                            <div class="project_detail">
+                                                <p>6</p>
+                                                <p>Completed Tasks</p>
+                                                <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
-                                        
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="form-line">
-                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                    Update
-                                                </button>
-                                            </div>
-                                        </div>
-
                                     </div>
-
-                                </form>
-
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="user_img">
+                                @if($item->profile->avatar != "")
+                                    <img src="{{ url('/').'/'.$item->profile->avatar }}">
+                                @else
+                                    <img src="https://www.pngkey.com/png/detail/157-1579943_no-profile-picture-round.png">
+                                @endif
+                                </div>
+                                <div class="user_text">
+                                    <h2> {{ $item->name ? $item->name : ""  }} </h2>
+                                    <p>EMP ID:{{ $item->id ? $item->id : ""  }}</p>
+                                </div>
+                                <div class="user_last_text">
+                                    <h3>{{ isset($item->hasOneDepartment->departmentName) ? $item->hasOneDepartment->departmentName : "" }}</h3>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="card">
+                <div class="user_info_main">
+                    <div class="user_head">
+                        <h2>{{ $item->name ? $item->name : ""  }}</h2>
+                        <a href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}">Update</a>
+                    </div>
+                    <div class="user_info">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">   
+                                    <div class="user_filed">
+                                        <table class="table table-style1">
+                                            <tbody>
+                                                <tr>
+                                                    <td align="right">EMP ID:</td>
+                                                    <td> 4154435</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">Name:</td>
+                                                    <td> {{ $item->name ? $item->name : "" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">Joining Date:</td>
+                                                    <td> {{ $item->created_at ? $item->created_at : "" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">Email:</td>
+                                                    <td> {{ $item->email ? $item->email : "" }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">Parent Address:</td>
+                                                    <td> {{ $item->profile->present_address ? $item->profile->present_address : "" }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>  
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="user_filed">
+                                        <table class="table table-style1">
+                                            <tbody>
+                                                <tr>
+                                                    <td align="right">Full Name:</td>
+                                                    <td> {{ $item->profile->first_name ? $item->profile->first_name : ""  }} {{ $item->profile->last_name ? $item->profile->last_name : ""  }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">Password:</td>
+                                                    <td><a href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}">Change Password</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">Gender:</td>
+                                                    <td>
+                                                        @if($item->profile->gender == 1)
+                                                            Male
+                                                        @elseif($item->profile->gender == 2)
+                                                            Female
+                                                        @elseif($item->profile->gender == 3)
+                                                            Common
+                                                        @elseif($item->profile->gender == 4)
+                                                            Not Willing To Say
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">Mothers Name:</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">Phone:</td>
+                                                    <td> {{ $item->profile->phone_number ? $item->profile->phone_number : "" }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- #END# Inline Layout | With Floating Label -->
             </div>
         </div>
     </section>

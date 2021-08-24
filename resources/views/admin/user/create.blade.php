@@ -117,8 +117,6 @@ $ParentRouteName = 'user';
                                             </div>
                                         </div>
 
-                                        
-
                                         <div id="sikika_field">
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
@@ -252,8 +250,15 @@ $ParentRouteName = 'user';
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                    Create
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save & New
+                                                </button>
+                                                
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save & Close
                                                 </button>
                                             </div>
                                         </div>
@@ -336,6 +341,11 @@ $ParentRouteName = 'user';
 
 
     <script> 
+        function changeSubmitType(submitType){
+            jQuery("#submitType").val(submitType);
+            $("#form_validation").submit();
+        }
+
         $(function() {
             $('#vendor_field').hide();
             $('#sikika_field').hide();

@@ -99,8 +99,26 @@ class UsersController extends Controller
         $profile->save();
 
         Session::flash('success', "Successfully  Create");
-        return redirect()->back();
+        // return redirect()->back();
 
+        $redirect = $this->redirectButton($request,$user);
+        return $redirect;
+
+    }
+
+    public function redirectButton($request,$object) {
+        if($request->submitType == "saveAndClose"){
+            return redirect()->route($this->parentRoute);
+        }
+        elseif($request->submitType == "saveAndNew"){
+            return redirect()->route($this->parentRoute.'.create');
+        }
+        elseif($request->submitType == "saveAndCopy"){
+            return redirect()->route($this->parentRoute);
+        }
+        elseif($request->submitType == "save"){
+            return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id]);
+        }
     }
 
     /**
@@ -198,7 +216,10 @@ class UsersController extends Controller
         
         $user->save();
         Session::flash('success', "Update Successfully");
-        return redirect()->route($this->parentRoute);
+        // return redirect()->route($this->parentRoute);
+
+        $redirect = $this->redirectButton($request,$user);
+        return $redirect;
 
     }
 
@@ -360,6 +381,14 @@ class UsersController extends Controller
         return view($this->parentView . '.index')
             ->with('items', $items);
 
+    }
+
+    public function userdetails(Request $request)
+    {
+        //echo '<pre>'; print_r($request->all()); die;
+        $item = User::where('id',$request->id)->first();
+        //echo '<pre>'; print_r($item->hasOneDepartment); die;
+        return view($this->parentView . '.userdetail')->with('item', $item);
     }
 
 

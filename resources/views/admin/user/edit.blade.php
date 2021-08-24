@@ -151,7 +151,7 @@ $ParentRouteName = 'user';
                                                     </div>
                                                 </div>
                                             </div>
-
+                                            
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float" style="margin-top:10px">
                                                     <input type="checkbox" id="department_head" name="department_head" class="filled-in" @if($item->profile->department_head == "1") checked="checked" @endif>
@@ -255,11 +255,19 @@ $ParentRouteName = 'user';
                                             </div>
 
                                         </div>
-
+                                        
+                                        <input value="" name="submitType" id="submitType" type="hidden" value="">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
                                                     Update
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Update & New
+                                                </button>
+                                                
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Update & Close
                                                 </button>
                                             </div>
                                         </div>
@@ -339,6 +347,11 @@ $ParentRouteName = 'user';
     <script src="{{ asset('asset/js/pages/forms/basic-form-elements.js') }}"></script>
 
     <script>
+
+        function changeSubmitType(submitType){
+            jQuery("#submitType").val(submitType);
+            $("#form_validation").submit();
+        }
 
         $(window).on('load', function() {
             $('#vendor_field').hide();
