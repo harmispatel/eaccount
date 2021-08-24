@@ -422,13 +422,15 @@
                     @endif
 
                     @if( Request::segment('1') == 'project' || Request::segment('1') == 'activity' || Request::segment('1') == 'cost_item')class="active " @endif>
-                    <a class="menu-toggle" href="javascript:void(0);">
+                    <a class="" @if (config('role_manage.Project.All')==0)
+                                class="dis-none"
+                                @endif href="{{ route('project') }}">
                         <i class="fas fa-project-diagram"></i>
                         <span>Project</span>
                     </a>
-                    <ul class="ml-menu">
+                    {{-- <ul class="ml-menu"> --}}
                          {{--Project start--}}
-                        <li @if ( config('role_manage.Project.All')==0 and  config('role_manage.Project.TrashShow')==0 and config('role_manage.Project.Create')==0  )
+                        {{-- <li @if ( config('role_manage.Project.All')==0 and  config('role_manage.Project.TrashShow')==0 and config('role_manage.Project.Create')==0  )
                         class="dis-none"
                         @endif  @if(Request::url() === route('project') or Request::url() === route('project.create') or Request::url() === route('project.trashed') or Request::url() === route('project.active.search') or Request::url() === route('project.trashed.search') )
                         class="active "
@@ -439,7 +441,7 @@
                                     <i class="fas fa-project-diagram"></i>
                                     <span>Project</span>
                                 </a>
-                        </li>
+                        </li> --}}
                          {{--Project End--}}
                          {{--Activity activity Start--}}
                         {{-- <li @if ( config('role_manage.Activity.All')==0 and  config('role_manage.Activity.TrashShow')==0 and config('role_manage.Activity.Create')==0  )
@@ -469,7 +471,7 @@
                             </a>
                         </li> --}}
                         {{--Cost Item End--}}
-                    </ul>
+                    {{-- </ul> --}}
                 </li>
                 {{--Project End--}}
                 

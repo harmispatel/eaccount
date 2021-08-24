@@ -1313,12 +1313,13 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <label class="form-label">supporting donors</label>
+                                                        <label class="form-label">Supporting donors</label>
                                                         <select name="donors" data-live-search="true"
                                                                 class="form-control show-tick"
                                                         >
                                                         <option value="0">Select Donor</option>
                                                         @if($supportdonor) 
+                                                        
                                                             @foreach($supportdonor as $donor)
                                                                 <option value="{{ $donor->id }}" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->donors == $donor->id)) {{ "Selected" }} @endif @endif>{{ $donor->supportDonor }}</option>
                                                             @endforeach
@@ -1333,7 +1334,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             </div>
 
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
-                                                <div class="form-group form-float">
+                                                <div class="form-group form-float"></div>
                                                     <div class="form-line">
                                                         <input value="@if(!empty($Bankaccountsedit) && $Bankaccountsedit->bankCode) {{ $Bankaccountsedit->bankCode }} @endif" name="bankCode" type="text" class="form-control" maxlength="5">
                                                         <label class="form-label">Bank code</label>
@@ -1429,7 +1430,13 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <tr>
                                                 <td> {{ $Bankaccount->id }}</td>
                                                 <td><!-- <input name="supportDonor" type="text" class="form-control" value="{{ $donor->supportDonor }}"> -->{{ $Bankaccount->bankName }} </td>
-                                                <td> {{ $Bankaccount->donors }}</td>
+                                                <td> 
+                                                    @foreach($supportdonor as $donor)
+                                                    @if($Bankaccount->donors == $donor->id)
+                                                        {{ $donor->supportDonor }}
+                                                    @endif
+                                                    @endforeach
+                                                </td>
                                                 <td> {{ $Bankaccount->bankCode }}</td>
                                                 <td> {{ $Bankaccount->bankcurrency_code }}</td>
                                                 <td> 
@@ -1443,12 +1450,12 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 <td class="tdTrashAction">
                                                     <a class="btn btn-xs btn-info waves-effect"
                                                        href="{{ route($ParentRouteNamebankaccount.'.edit',['id'=>$Bankaccount->id]) }}/#bankaccountsetting" data-toggle="tooltip" data-placement="top" title="Edit"><i
-                                                                class="material-icons">mode_edit</i></a>
+                                                                class="material-icons">mode_edit</i></a>                                    
 
-                                                    <a class="btn btn-xs btn-danger waves-effect"
+                                                    <a class="btn btn-xs btn-danger waves-effect" onclick="return confirm('Do you want to Delete?');"
                                                        href="{{ route($ParentRouteNamebankaccount.'.destroy',['id'=>$Bankaccount->id]) }}"
                                                        data-toggle="tooltip"
-                                                       data-placement="top" title="Trash"> <i
+                                                       data-placement="top" title="Delete"> <i
                                                                 class="material-icons">delete</i></a>
 
 
@@ -1550,10 +1557,10 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 <td><!-- <input name="supportDonor" type="text" class="form-control" value="{{ $donor->supportDonor }}"> -->{{ $donor->supportDonor }} </td>
                                                 <td class="tdTrashAction">
                                                     <a 
-                                                        class="btn btn-xs btn-danger waves-effect"
+                                                        class="btn btn-xs btn-danger waves-effect" onclick="return confirm('Do you want to Delete?');"
                                                        href="{{ route($ParentRouteNamesupportDonor.'.destroy',['id'=>$donor->id]) }}"
                                                        data-toggle="tooltip"
-                                                       data-placement="top" title="Trash"> <i
+                                                       data-placement="top" title="Delete"> <i
                                                                 class="material-icons">delete</i></a>
 
 
@@ -1662,10 +1669,10 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 <td>{{ $orgenization->order }}</td>
                                                 <td class="tdTrashAction">
                                                     <a 
-                                                        class="btn btn-xs btn-danger waves-effect"
+                                                        class="btn btn-xs btn-danger waves-effect" onclick="return confirm('Do you want to Delete?');"
                                                        href="{{ route($ParentRouteNameorgenozationLeader.'.destroy',['id'=>$orgenization->id]) }}"
                                                        data-toggle="tooltip"
-                                                       data-placement="top" title="Trash"> <i
+                                                       data-placement="top" title="Delete"> <i
                                                                 class="material-icons">delete</i></a>
 
 
@@ -1813,10 +1820,10 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
             
         // }
 
-        
+        var lastmonth1_Start = $("#Quarter1_Start").val();
         $('#Quarter1_Start').on('change', function() {
           // alert( this.value );
-          var month = this.value;
+          var month = this.value;          
           var Quarter1_End = $("#Quarter1_End").val();
           var Quarter2_Start = $("#Quarter2_Start").val();
           var Quarter2_End = $("#Quarter2_End").val();
@@ -1826,36 +1833,50 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
           var Quarter4_End = $("#Quarter4_End").val();
           
           if(month == Quarter1_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected"); 
+                $("#Quarter1_Start").val(lastmonth1_Start); 
+                return false;
             }
 
             if(month == Quarter2_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_Start").val(lastmonth1_Start);
+                return false;
             }
 
             if(month == Quarter2_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_Start").val(lastmonth1_Start);
+                return false;
             }
 
             if(month == Quarter3_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_Start").val(lastmonth1_Start);
+                return false;
             }
 
             if(month == Quarter3_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_Start").val(lastmonth1_Start);
+                return false;
             }
 
             if(month == Quarter4_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_Start").val(lastmonth1_Start);
+                return false;
             }
 
             if(month == Quarter4_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_Start").val(lastmonth1_Start);
+                return false;
             }
 
         });
 
-        
+        var lastmonth1_End = $("#Quarter1_End").val();
         $('#Quarter1_End').on('change', function() {
           // alert( this.value );
           var month = this.value;
@@ -1868,35 +1889,50 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
           var Quarter4_End = $("#Quarter4_End").val();
           
           if(month == Quarter1_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_End").val(lastmonth1_End);
+                return false;
             }
 
             if(month == Quarter2_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_End").val(lastmonth1_End);
+                return false;
             }
 
             if(month == Quarter2_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_End").val(lastmonth1_End);
+                return false;
             }
 
             if(month == Quarter3_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_End").val(lastmonth1_End);
+                return false;
             }
 
             if(month == Quarter3_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_End").val(lastmonth1_End);
+                return false;
             }
 
             if(month == Quarter4_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_End").val(lastmonth1_End);
+                return false;
             }
 
             if(month == Quarter4_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_End").val(lastmonth1_End);
+                return false;
             }
 
         });
 
+        var lastmonth2_Start = $("#Quarter2_Start").val();
         $('#Quarter2_Start').on('change', function() {
           // alert( this.value );
           var month = this.value;
@@ -1908,37 +1944,51 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
           var Quarter4_Start = $("#Quarter4_Start").val();
           var Quarter4_End = $("#Quarter4_End").val();
           
-          if(month == Quarter1_Start){
-                alert("This month already selected"); 
-               // alert($('#Quarter2_Start :selected').text()) ; return false;
+            if(month == Quarter1_Start){
+                alert("This month already selected");
+                $("#Quarter2_Start").val(lastmonth2_Start);
+                return false;
             }
 
             if(month == Quarter1_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_Start").val(lastmonth2_Start);
+                return false;
             }
 
             if(month == Quarter2_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_Start").val(lastmonth2_Start);
+                return false;
             }
 
             if(month == Quarter3_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_Start").val(lastmonth2_Start);
+                return false;
             }
 
             if(month == Quarter3_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_Start").val(lastmonth2_Start);
+                return false;
             }
 
             if(month == Quarter4_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_Start").val(lastmonth2_Start);
+                return false;
             }
 
             if(month == Quarter4_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_Start").val(lastmonth2_Start);
+                return false;
             }
             
         });
 
+        var lastmonth2_End = $("#Quarter2_End").val();
         $('#Quarter2_End').on('change', function() {
           // alert( this.value );
           var month = this.value;
@@ -1951,34 +2001,49 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
           var Quarter4_End = $("#Quarter4_End").val();
           
           if(month == Quarter1_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_End").val(lastmonth2_End);
+                return false;
             }
 
             if(month == Quarter1_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_End").val(lastmonth2_End);
+                return false;
             }
 
             if(month == Quarter2_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_End").val(lastmonth2_End);
+                return false;
             }
 
             if(month == Quarter3_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_End").val(lastmonth2_End);
+                return false;
             }
 
             if(month == Quarter3_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_End").val(lastmonth2_End);
+                return false;
             }
 
             if(month == Quarter4_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_End").val(lastmonth2_End);
+                return false;
             }
 
             if(month == Quarter4_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter2_End").val(lastmonth2_End);
+                return false;
             }
         });
 
+        var lastmonth3_Start = $("#Quarter3_Start").val();
         $('#Quarter3_Start').on('change', function() {
           // alert( this.value );
           var month = this.value;
@@ -1991,34 +2056,49 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
           var Quarter4_End = $("#Quarter4_End").val();
           
           if(month == Quarter1_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_Start").val(lastmonth3_Start);
+                return false;
             }
 
             if(month == Quarter1_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_Start").val(lastmonth3_Start);
+                return false;
             }
 
             if(month == Quarter2_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_Start").val(lastmonth3_Start);
+                return false;
             }
 
             if(month == Quarter2_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_Start").val(lastmonth3_Start);
+                return false;
             }
 
             if(month == Quarter3_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_Start").val(lastmonth3_Start);
+                return false;
             }
 
             if(month == Quarter4_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_Start").val(lastmonth3_Start);
+                return false;
             }
 
             if(month == Quarter4_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_Start").val(lastmonth3_Start);
+                return false;
             }
         });
 
+        var lastmonth3_End = $("#Quarter3_End").val();
         $('#Quarter3_End').on('change', function() {
           // alert( this.value );
           var month = this.value;
@@ -2031,34 +2111,49 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
           var Quarter4_End = $("#Quarter4_End").val();
           
           if(month == Quarter1_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_End").val(lastmonth3_End);
+                return false;
             }
 
             if(month == Quarter1_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_End").val(lastmonth3_End);
+                return false;
             }
 
             if(month == Quarter2_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_End").val(lastmonth3_End);
+                return false;
             }
 
             if(month == Quarter2_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_End").val(lastmonth3_End);
+                return false;
             }
 
             if(month == Quarter3_start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_End").val(lastmonth3_End);
+                return false;
             }
 
             if(month == Quarter4_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_End").val(lastmonth3_End);
+                return false;
             }
 
             if(month == Quarter4_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter3_End").val(lastmonth3_End);
+                return false;
             }
         });
 
+        var lastmonth4_Start = $("#Quarter4_Start").val();
         $('#Quarter4_Start').on('change', function() {
           // alert( this.value );
           var month = this.value;
@@ -2071,34 +2166,49 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
           var Quarter4_End = $("#Quarter4_End").val();
           
           if(month == Quarter1_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_Start").val(lastmonth4_Start);
+                return false;
             }
 
             if(month == Quarter1_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_Start").val(lastmonth4_Start);
+                return false;
             }
 
             if(month == Quarter2_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_Start").val(lastmonth4_Start);
+                return false;
             }
 
             if(month == Quarter2_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_Start").val(lastmonth4_Start);
+                return false;
             }
 
             if(month == Quarter3_start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_Start").val(lastmonth4_Start);
+                return false;
             }
 
             if(month == Quarter3_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_Start").val(lastmonth4_Start);
+                return false;
             }
 
             if(month == Quarter4_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_Start").val(lastmonth4_Start);
+                return false;
             }
         });
 
+        var lastmonth4_End = $("#Quarter4_End").val();
         $('#Quarter4_End').on('change', function() {
           // alert( this.value );
           var month = this.value;
@@ -2111,31 +2221,45 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
           var Quarter4_start = $("#Quarter4_start").val();
           
           if(month == Quarter1_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_End").val(lastmonth4_End);
+                return false;
             }
 
             if(month == Quarter1_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_End").val(lastmonth4_End);
+                return false;
             }
 
             if(month == Quarter2_Start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_End").val(lastmonth4_End);
+                return false;
             }
 
             if(month == Quarter2_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_End").val(lastmonth4_End);
+                return false;
             }
 
             if(month == Quarter3_start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter4_End").val(lastmonth4_End);
+                return false;
             }
 
             if(month == Quarter3_End){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_End").val(lastmonth4_End);
+                return false;
             }
 
             if(month == Quarter4_start){
-                alert("This month already selected"); return false;
+                alert("This month already selected");
+                $("#Quarter1_End").val(lastmonth4_End);
+                return false;
             }
         });
 
