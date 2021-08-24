@@ -89,18 +89,18 @@ class ActivitysController extends Controller
 
         Session::flash('success', "Successfully  Create");
         // return redirect()->back();
-        $redirect = $this->redirectButton($request);
-        echo $redirect; exit;
+        $redirect = $this->redirectButton($request,$user);
+        return $redirect;
         // return redirect()->route($this->parentRoute);
 
     }
 
-    public function redirectButton($request) {
+    public function redirectButton($request,$object) {
         if($request->submitType == "saveAndClose"){
             return redirect()->route($this->parentRoute);
         }
         elseif($request->submitType == "saveAndNew"){
-            return redirect()->back();
+            return redirect()->route($this->parentRoute.'.create');
         }
         elseif($request->submitType == "saveAndCopy"){
             $user = Activity::create([
@@ -124,7 +124,7 @@ class ActivitysController extends Controller
             return redirect()->route($this->parentRoute);
         }
         elseif($request->submitType == "save"){
-            return redirect()->back()->withInput();
+            return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id]);
         }
     }
 
@@ -206,7 +206,7 @@ class ActivitysController extends Controller
         $user->save();
         Session::flash('success', "Update Successfully");
 
-        $redirect = $this->redirectButton($request);
+        $redirect = $this->redirectButton($request,$user);
         return $redirect;
         // return redirect()->route($this->parentRoute);
 

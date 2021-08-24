@@ -137,6 +137,11 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'user.active.usertype'
     ]);
 
+    Route::get('/user/userdetails/{id}', [
+        'uses' => 'UsersController@userdetails',
+        'as' => 'user.active.userdetails'
+    ]);
+
     //    User End
 
 
