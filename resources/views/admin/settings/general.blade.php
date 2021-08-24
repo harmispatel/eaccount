@@ -1489,13 +1489,8 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                 </div>
 
                             </div>
-                        </div>
-
-                        <!-- bank account setting end -->
-
-
-
-                        <!-- Donor setting start -->
+                             <!-- bank account setting end -->
+                             <!-- Donor setting start -->
 
                         <div id="supportDonorsetting" class="tab-pane fade ">
                             <div class="header">
@@ -1591,11 +1586,6 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                             </div>
                         </div>
-
-                        <!-- Donor setting end -->
-
-
-
                         <!-- Orgenization leadership setting start -->
 
                         <div id="orgenizationLeader" class="tab-pane fade ">
@@ -1606,7 +1596,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                 <br>
                                 <div class="body">
                                     <form enctype="multipart/form-data" class="form" id="form_validation" method="post"
-                                          action="{{ route($ParentRouteNameorgenozationLeader.'.update') }}">
+                                        action="{{ route($ParentRouteNameorgenozationLeader.'.update') }}">
 
                                         {{ csrf_field() }}
                                         <div class="row clearfix">
@@ -1615,7 +1605,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
                                                         <input value="" name="orgenizationLeader" type="text"
-                                                               class="form-control">
+                                                            class="form-control">
                                                         <label class="form-label">Organization Leadership</label>
                                                     </div>
                                                 </div>
@@ -1625,7 +1615,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
                                                         <input value="" name="order" type="text"
-                                                               class="form-control">
+                                                            class="form-control">
                                                         <label class="form-label">Order</label>
                                                     </div>
                                                 </div>
@@ -1670,9 +1660,9 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 <td class="tdTrashAction">
                                                     <a 
                                                         class="btn btn-xs btn-danger waves-effect" onclick="return confirm('Do you want to Delete?');"
-                                                       href="{{ route($ParentRouteNameorgenozationLeader.'.destroy',['id'=>$orgenization->id]) }}"
-                                                       data-toggle="tooltip"
-                                                       data-placement="top" title="Delete"> <i
+                                                    href="{{ route($ParentRouteNameorgenozationLeader.'.destroy',['id'=>$orgenization->id]) }}"
+                                                    data-toggle="tooltip"
+                                                    data-placement="top" title="Delete"> <i
                                                                 class="material-icons">delete</i></a>
 
 
@@ -1700,6 +1690,11 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                         <!-- Orgenization leadership setting end -->
 
+                        <!-- Donor setting end -->
+                    </div>
+
+
+                       
 
 
 
