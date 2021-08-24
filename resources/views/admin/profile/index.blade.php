@@ -57,7 +57,7 @@
 
 @section('content')
 
-<?php //echo '<pre>'; print_r($profile->profile['signature']); die; ?>
+<?php //echo '<pre>'; print_r($profile->profile); die; ?>
     <section class="content">
         <div class="container-fluid">
             <div class="row clearfix">
@@ -78,7 +78,7 @@
                             <div class="content-area">
                                 <h3>{{ $profile->profile["last_name"] }} {{ $profile->profile["first_name"] }}</h3>
                                 <p>{{ $profile->profile["designation"] }}</p>
-                                <p>{{ App\User::find($profile->profile['user_id'])->role['name'] }}</p>
+                                <p>{{ App\RoleManage::find($profile->role_manage_id)->name }}</p>
                             </div>
                         </div>
 
@@ -215,6 +215,7 @@
 
                                                 </div>
                                             </div>
+                                            
                                             <div class="form-group">
                                                 <label for="NID" class="col-sm-2 control-label">Work ID</label>
                                                 <div class="col-sm-10">
@@ -283,12 +284,13 @@
                                             <div class="form-group">
                                                 <label for="description"
                                                        class="col-sm-2 control-label">Signature</label>
-                                                <div class="col-sm-10">
+                                                <div class="col-sm-10" style="display:flex;">
                                                     <input name="signature" type="file" class="form-control">
+                                                    @if($profile->profile['signature'] != "")<img height="50px" src="{{ url('/').'/'.$profile->profile['signature'] }}" />@endif
                                                 </div>
                                             </div>
 
-                                                
+                                            
                                             @endif
                                          
                                             <div class="form-group">

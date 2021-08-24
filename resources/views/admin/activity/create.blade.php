@@ -57,6 +57,7 @@ $ParentRouteName = 'activity';
                             <div class="body">
                                 <form class="form" id="form_validation" method="post"
                                       action="{{ route($ParentRouteName.'.store') }}">
+                                    
 
                                     {{ csrf_field() }}
                                     <div class="row clearfix">
@@ -64,10 +65,25 @@ $ParentRouteName = 'activity';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
+                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="project_id"
+                                                            id="project_id">
+                                                        <option value="0" >Select Project</option>
+                                                        @foreach(App\Projects::all() as $project)
+                                                            <option value="{{$project->id}}"> {{ $project->projectName }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick"
                                                             name="parent_id"
                                                             id="parent_id">
-                                                        <option value="0">Select Activity</option>
+                                                        <option value="0">Main Activity</option>
                                                         @foreach($items as $item)
                                                         <?php
                                                             if ($item->parent_id == 0) { 
@@ -89,7 +105,7 @@ $ParentRouteName = 'activity';
                                                     {{-- <label for="cars">Choose a car:</label> --}}
                                                     <input autofocus value="{{ old('title')  }}" name="title" type="text"
                                                            class="form-control" required aria-required="true">
-                                                    <label class="form-label">Activity</label> 
+                                                    <label class="form-label">Name</label> 
                                                 </div>
                                             </div>
                                         </div>
@@ -105,6 +121,34 @@ $ParentRouteName = 'activity';
                                         </div>
 
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <select data-live-search="true" multiple class="form-control show-tick search-choice" name="quarter[]"
+                                                            id="quarter">
+                                                            <option value="1">Quarter 1</option>
+                                                            <option value="2">Quarter 2</option>
+                                                            <option value="3">Quarter 3</option>
+                                                            <option value="4">Quarter 4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
+                                                            id="department_id">
+                                                        <option value="0" >Responsible Department</option>
+                                                        @foreach(App\Department::all() as $department)
+                                                            <option value="{{$department->id}}"> {{ $department->departmentName }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
                                                     <option value="0">Select Status</option>
@@ -117,26 +161,23 @@ $ParentRouteName = 'activity';
                                                 
                                                 </select>
                                             </div>
-                                        </div>                                       
-
-                                        {{-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-line">
-                                                <select data-live-search="true" class="form-control show-tick" name="status" id="status">
-                                                    <option value="0">Select Status</option>
-                                                    <option value="1">Started</option>
-                                                    <option value="2">In Progress</option>
-                                                    <option value="3">Cancel</option>
-                                                    <option value="4">On Hold</option>
-                                                    <option value="5">Completed</option>
-                                                
-                                                </select>
-                                            </div>
-                                        </div> --}}
+                                        </div>                                        -->
+                                        
+                                        <input value="" name="submitType" id="submitType" type="hidden" value="">
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                    Create
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save & New
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save & Copy
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Save & Close
                                                 </button>
                                             </div>
                                         </div>
@@ -219,6 +260,11 @@ $ParentRouteName = 'activity';
 
 
     <script>
+        function changeSubmitType(submitType){
+            jQuery("#submitType").val(submitType);
+            $("#form_validation").submit();
+        }
+
         @if(Session::has('success'))
             toastr["success"]('{{ Session::get('success') }}');
         @endif
@@ -245,7 +291,9 @@ $ParentRouteName = 'activity';
                 password: 'input[name=password]',
                 confirm_password: 'input[name=password_confirmation]',
                 role_manage_id: 'role_manage_id',
-
+                project_id: 'project_id',
+                department_id: 'department_id',
+                quarter: 'quarter',
 
             };
 
@@ -261,6 +309,9 @@ $ParentRouteName = 'activity';
                         get_confirm_password: document.querySelector(DOMString.confirm_password),
                         get_email: document.querySelector(DOMString.email),
                         get_role_manage_id: document.getElementById(DOMString.role_manage_id),
+                        getProject_id: document.getElementById(DOMString.project_id),
+                        getDepartment_id: document.getElementById(DOMString.department_id),
+                        getQuarter: document.getElementById(DOMString.quarter),
 
 
                     }
@@ -274,7 +325,9 @@ $ParentRouteName = 'activity';
                         password: Fields.get_password.value,
                         confirm_password: Fields.get_confirm_password.value,
                         role_manage_id: Fields.get_role_manage_id.value == "" ? 0 : Fields.get_role_manage_id.value,
-
+                        project_id: Fields.getProject_id.value == "" ? 0 : Fields.getProject_id.value,
+                        department_id: Fields.getDepartment_id.value == "" ? 0 : Fields.getDepartment_id.value,
+                        quarter: Fields.getQuarter.value == "" ? 0 : Fields.getQuarter.value,
 
                     }
                 },

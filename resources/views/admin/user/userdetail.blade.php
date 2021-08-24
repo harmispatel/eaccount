@@ -4,10 +4,10 @@
 
 <?php
 $moduleName = " User";
-$createItemName = "Create" . $moduleName;
+$createItemName = "Edit" . $moduleName;
 
 $breadcrumbMainName = $moduleName;
-$breadcrumbCurrentName = " Create";
+$breadcrumbCurrentName = " All";
 
 $breadcrumbMainIcon = "fas fa-user";
 $breadcrumbCurrentIcon = "archive";
@@ -16,6 +16,7 @@ $ModelName = 'App\User';
 $ParentRouteName = 'user';
 
 ?>
+
 
 @section('title')
     {{ $moduleName }}->{{ $createItemName }}
@@ -32,11 +33,11 @@ $ParentRouteName = 'user';
     <section class="content">
         <div class="container-fluid">
             <div class="block-header pull-left">
-                <a class="btn btn-sm btn-info  waves-effect" href="{{ url()->previous() }}">Back</a>
+                <a class="btn btn-sm btn-info waves-effect" href="{{ url()->previous() }}">Back</a>
             </div>
 
             <ol class="breadcrumb breadcrumb-col-cyan pull-right">
-                <li><a href="{{ route('dashboard') }}"><i class="material-icons">home</i> Home</a></li>
+                <li><a href="{{ route($ParentRouteName) }}"><i class="material-icons">home</i> Home</a></li>
                 <li><a href="{{ route($ParentRouteName) }}"><i
                                 class="{{ $breadcrumbMainIcon  }} "></i>{{  $breadcrumbMainName }}</a>
                 </li>
@@ -51,12 +52,12 @@ $ParentRouteName = 'user';
                         <div class="header">
                             <h2>
                                 {{ $createItemName  }}
-                                <small>Put {{ $moduleName  }} Information</small>
+                                <small>Edit {{ $moduleName  }} Information</small>
                             </h2>
 
                             <div class="body">
                                 <form class="form" id="form_validation" method="post"
-                                      action="{{ route($ParentRouteName.'.store') }}" enctype="multipart/form-data">
+                                      action="{{ route($ParentRouteName.'.update',['id'=>$item->id]) }}"  enctype="multipart/form-data">
 
                                     {{ csrf_field() }}
                                     <div class="row clearfix">
@@ -64,8 +65,8 @@ $ParentRouteName = 'user';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ old('name')  }}" name="name" type="text"
-                                                           class="form-control">
+                                                    <input value="{{ $item->name  }}" name="name" type="text"
+                                                           class="form-control" >
                                                     <label class="form-label">Name</label>
                                                 </div>
                                             </div>
@@ -74,19 +75,17 @@ $ParentRouteName = 'user';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input value="{{ old('email')  }}" name="email" type="email"
-                                                           class="form-control">
+                                                    <input readonly value="{{ $item->email }}" name="email" type="email"
+                                                           class="form-control" required>
                                                     <label class="form-label">Email Address</label>
                                                 </div>
                                             </div>
                                         </div>
 
-
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input name="password" type="password" class="form-control "
-                                                    >
+                                                    <input name="password" type="password" class="form-control ">
                                                     <label class="form-label">Password</label>
                                                 </div>
                                             </div>
@@ -95,8 +94,7 @@ $ParentRouteName = 'user';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input name="password_confirmation" type="password" class="form-control"
-                                                    >
+                                                    <input name="confirm_password" type="password" class="form-control">
                                                     <label class="form-label">Confirm Password</label>
                                                 </div>
                                             </div>
@@ -105,36 +103,38 @@ $ParentRouteName = 'user';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick"
-                                                            name="role_manage_id"
+                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="role_manage_id"
                                                             id="role_manage_id">
-                                                        <option value="0">Select User Role</option>
-                                                        @foreach(App\RoleManage::orderBy('created_at','desc')->get() as $role)
-                                                            <option value="{{ $role->id  }}">{{ $role->name  }}</option>
+                                                        <option value="0" >Select User Role</option>
+                                                        @foreach(App\RoleManage::all() as $role)
+                                                            <option @if ($item->role_manage_id==$role->id)
+                                                                    selected
+                                                                    @endif value="{{$role->id}}"> {{ $role->name }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        
-
-                                        <div id="sikika_field">
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
-                                                                id="department_id">
-                                                            <option value="0" >Select User Department</option>
-                                                            @foreach(App\Department::all() as $department)
-                                                                <option value="{{$department->id}}"> {{ $department->departmentName }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
+                                                            id="department_id">
+                                                        <option value="0" >Select User Department</option>
+                                                        @foreach(App\Department::all() as $department)
+                                                            <option @if ($item->department_id ==$department->id)
+                                                                    selected
+                                                                    @endif value="{{$department->id}}"> {{ $department->departmentName }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
+                                        </div>
 
+                                        <div id="sikika_field">
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
@@ -142,27 +142,24 @@ $ParentRouteName = 'user';
                                                                 id="department_id">
                                                             <option value="0" >Select User Position</option>
                                                             @foreach(App\Orgenizationleader::all() as $Orgenizationleaderone)
-                                                                <option value="{{$Orgenizationleaderone->id}}"> {{ $Orgenizationleaderone->name }}
+                                                                <option @if ($item->position_id ==$Orgenizationleaderone->id)
+                                                                        selected
+                                                                        @endif value="{{$Orgenizationleaderone->id}}"> {{ $Orgenizationleaderone->name }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                                <div class="form-group form-float" style="margin-top:10px">
-                                                    <input type="checkbox" id="department_head" name="department_head" class="filled-in" >
-                                                    <label for="department_head">Is Head of Department</label>
-                                                </div>
-                                            </div>
                                         </div>
+
+                                        <?php //echo '<pre>'; print_r($item->profile); die; ?>
 
                                         <div id="vendor_field">
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="company_name" type="text" value="" class="form-control">
+                                                        <input name="company_name" type="text" value="{{ $item->profile->company_name }}" class="form-control">
                                                         <label class="form-label">Company Name</label>
                                                     </div>
                                                 </div>
@@ -171,7 +168,7 @@ $ParentRouteName = 'user';
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="business_registration_no" type="text" class="form-control" value="">
+                                                        <input name="business_registration_no" type="text" class="form-control" value="{{ $item->profile->business_registration_no }}">
                                                         <label class="form-label">Business registration no</label>
                                                         
                                                     </div>
@@ -181,7 +178,7 @@ $ParentRouteName = 'user';
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="business_license" type="text" class="form-control" value="">
+                                                        <input name="business_license" type="text" class="form-control" value="{{ $item->profile->business_license }}">
                                                         <label class="form-label">Business License</label>
                                                     </div>
                                                 </div>
@@ -190,7 +187,7 @@ $ParentRouteName = 'user';
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="bank_details" type="text" class="form-control" value="">
+                                                        <input name="bank_details" type="text" class="form-control" value="{{ $item->profile->bank_details }}">
                                                         <label class="form-label">Bank details</label>
                                                     </div>
                                                 </div>
@@ -199,7 +196,7 @@ $ParentRouteName = 'user';
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="tra_certification" type="text" class="form-control" value="">
+                                                        <input name="tra_certification" type="text" class="form-control" value="{{ $item->profile->tra_certification }}">
                                                         <label class="form-label">TRA Certification</label>
                                                     </div>
                                                 </div>
@@ -208,8 +205,29 @@ $ParentRouteName = 'user';
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="tin_number" type="text" class="form-control" value="">
+                                                        <input name="tin_number" type="text" class="form-control" value="{{ $item->profile->tin_number }}">
                                                         <label class="form-label">TIN Number</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line focused" style="display:flex;">
+                                                        <input name="legal_documents" type="file" class="form-control">
+                                                        <label class="form-label">Legal documents</label>
+                                                        @if($item->profile->legal_documents != "")<img height="50px" src="{{ url('/').'/'.$item->profile->legal_documents }}" />@endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line focused" style="display:flex;">
+                                                        <input name="company_logo" type="file" class="form-control">
+                                                        <label class="form-label">Company Logo</label>
+                                                        @if($item->profile->company_logo != "")<img height="50px" src="{{ url('/').'/'.$item->profile->company_logo }}" />@endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -217,47 +235,35 @@ $ParentRouteName = 'user';
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="vat_number" type="text" class="form-control" value="">
+                                                        <input name="vat_number" type="text" class="form-control" value="{{ $item->profile->vat_number }}">
                                                         <label class="form-label">VAT Number</label>
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                <div class="form-group form-float">
-                                                    <div class="form-line focused" style="display:fled;">
-                                                        <input name="company_logo" type="file" class="form-control">
-                                                        <label class="form-label">Company Logo</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                <div class="form-group form-float" style="display:fled;">
-                                                    <div class="form-line focused">
-                                                        <input name="legal_documents" type="file" class="form-control">
-                                                        <label class="form-label">Legal documents</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                            
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float" style="margin-top:10px">
-                                                    <input type="checkbox" id="physical_verified" name="physical_verified" class="filled-in">
+                                                    <input type="checkbox" id="physical_verified" name="physical_verified" class="filled-in" @if($item->profile->physical_verified == "1") checked="checked" @endif>
                                                     <label for="physical_verified">Physical verification</label>
                                                 </div>
                                             </div>
 
                                         </div>
 
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float" style="margin-top:10px">
+                                                <input type="checkbox" id="department_head" name="department_head" class="filled-in" @if($item->profile->department_head == "1") checked="checked" @endif>
+                                                <label for="department_head">Is Head of Department</label>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
                                                 <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                    Create
+                                                    Update
                                                 </button>
                                             </div>
                                         </div>
-
 
                                     </div>
 
@@ -269,6 +275,7 @@ $ParentRouteName = 'user';
                 </div>
                 <!-- #END# Inline Layout | With Floating Label -->
             </div>
+        </div>
     </section>
 
 @stop
@@ -309,11 +316,9 @@ $ParentRouteName = 'user';
     <!-- Sweet Alert Css -->
     <link href="{{ asset('asset/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet"/>
 
-
 @endpush
 
 @push('include-js')
-
 
     <!-- Moment Plugin Js -->
     <script src="{{ asset('asset/plugins/momentjs/moment.js') }}"></script>
@@ -334,18 +339,31 @@ $ParentRouteName = 'user';
 
     <script src="{{ asset('asset/js/pages/forms/basic-form-elements.js') }}"></script>
 
+    <script>
 
-    <script> 
-        $(function() {
+        $(window).on('load', function() {
             $('#vendor_field').hide();
             $('#sikika_field').hide();
+            
+            if($('#role_manage_id').val() == '2') {
+                $('#vendor_field').show();
+                $('#sikika_field').hide(); 
+            } else if($('#role_manage_id').val() == '3') {
+                $('#sikika_field').show(); 
+                $('#vendor_field').hide(); 
+            }else{
+                $('#sikika_field').hide();
+                $('#vendor_field').hide();
+            } 
+        });
+        $(function() {
             $('#role_manage_id').change(function(){
                 if($('#role_manage_id').val() == '2') {
                     $('#vendor_field').show(); 
-                    $('#sikika_field').hide(); 
+                    $('#sikika_field').hide();
                 } else if($('#role_manage_id').val() == '3') {
                     $('#sikika_field').show();  
-                    $('#vendor_field').hide();  
+                    $('#vendor_field').hide(); 
                 } else{
                     $('#sikika_field').hide(); 
                     $('#vendor_field').hide(); 
@@ -361,11 +379,13 @@ $ParentRouteName = 'user';
             toastr["error"]('{{ Session::get('error') }}');
         @endif
 
+
                 @if ($errors->any())
                 @foreach ($errors->all() as $error)
             toastr["error"]('{{ $error }}');
         @endforeach
         @endif
+
 
 
 
@@ -375,9 +395,8 @@ $ParentRouteName = 'user';
             var DOMString = {
                 submit_form: 'form.form',
                 name: 'input[name=name]',
-                email: 'input[name=email]',
                 password: 'input[name=password]',
-                confirm_password: 'input[name=password_confirmation]',
+                confirm_password: 'input[name=confirm_password]',
                 role_manage_id: 'role_manage_id',
                 department_id: 'department_id',
                 position_id: 'position_id',
@@ -393,8 +412,7 @@ $ParentRouteName = 'user';
                         get_name: document.querySelector(DOMString.name),
                         get_password: document.querySelector(DOMString.password),
                         get_confirm_password: document.querySelector(DOMString.confirm_password),
-                        get_email: document.querySelector(DOMString.email),
-                        get_role_manage_id: document.getElementById(DOMString.role_manage_id),
+                        getRole_manage_id: document.getElementById(DOMString.role_manage_id),
                         getDepartment_id: document.getElementById(DOMString.department_id),
                         getPosition_id: document.getElementById(DOMString.position_id),
                     }
@@ -403,10 +421,9 @@ $ParentRouteName = 'user';
                     var Fields = this.getFields();
                     return {
                         name: Fields.get_name.value == "" ? 0 : Fields.get_name.value,
-                        email: Fields.get_email.value == "" ? 0 : Fields.get_email.value,
                         password: Fields.get_password.value,
                         confirm_password: Fields.get_confirm_password.value,
-                        role_manage_id: Fields.get_role_manage_id.value == "" ? 0 : Fields.get_role_manage_id.value,
+                        role_manage_id: Fields.getRole_manage_id.value == "" ? 0 : Fields.getRole_manage_id.value,
                         department_id: Fields.getDepartment_id.value == "" ? 0 : Fields.getDepartment_id.value,
                         position_id: Fields.getPosition_id.value == "" ? 0 : Fields.getPosition_id.value,
                     }
@@ -434,33 +451,25 @@ $ParentRouteName = 'user';
                 var FieldName1 = " Name";
 
 
-                if (input_values.role_manage_id == 0) {
-                    toastr["error"]('Select Any Role');
+                if (input_values.name == 0) {
+                    toastr["error"]('Set Any' + FieldName1);
                     e.preventDefault();
                 }
-
 
                 if (input_values.password != input_values.confirm_password) {
                     toastr["error"]('Password Does Not Match');
                     e.preventDefault();
                 }
 
-                if (input_values.email == 0) {
-                    toastr["error"]('Email Is Required');
+
+                if (input_values.role_manage_id == 0) {
+                    toastr["error"]('Select Any Role');
                     e.preventDefault();
                 }
-
-                if (input_values.name == 0) {
-                    toastr["error"]('Name is Required');
-                    e.preventDefault();
-                }
-
 
             };
-
             return {
                 init: function () {
-                    console.log("App Is running");
                     setUpEventListner();
 
                 }
@@ -469,7 +478,6 @@ $ParentRouteName = 'user';
         })(UiController);
 
         MainController.init();
-
 
     </script>
 
