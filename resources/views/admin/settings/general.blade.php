@@ -1334,7 +1334,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             </div>
 
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
-                                                <div class="form-group form-float"></div>
+                                                <div class="form-group form-float">
                                                     <div class="form-line">
                                                         <input value="@if(!empty($Bankaccountsedit) && $Bankaccountsedit->bankCode) {{ $Bankaccountsedit->bankCode }} @endif" name="bankCode" type="text" class="form-control" maxlength="5">
                                                         <label class="form-label">Bank code</label>
