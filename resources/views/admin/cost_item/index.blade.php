@@ -134,7 +134,6 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                         <th>unit</th>
                                         <th>cost</th>
                                         <th>frequency</th>
-                                        <th>quater</th>
                                         <th>status</th>                               
                                         <th>Action</th>
 
@@ -161,7 +160,6 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                 <td>{{ $item->unit }}</td>
                                                 <td>{{ $item->cost }}</td>
                                                 <td>{{ $item->frequency }}</td>
-                                                <td>{{ $item->quater }}</td>
                                                 
                                                 
                                                 <td>
@@ -172,42 +170,23 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/1') }}">Pending</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/2') }}">Approval Stage</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/3') }}">On Progress</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/5') }}">Half Cleared</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/6') }}">Completed</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
                                                                 </li>
-                                                                
-                                                                {{-- <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/started">Pending</a>
-                                                                </li> --}}
-                                                                {{-- <li>                                                                
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/in_progress">Approval Stage</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/cancel">On Progress</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/on_hold">Wait Clearance</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/completed">Half Cleared</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/completed">Completed</a>
-                                                                </li> --}}
                                                             </ul>
                                                         </div>
                                                     @elseif($item->status == "2")
@@ -217,22 +196,22 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/1') }}">Pending</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/2') }}">Approval Stage</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/3') }}">On Progress</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/5') }}">Half Cleared</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/6') }}">Completed</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -243,22 +222,22 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/1') }}">Pending</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/2') }}">Approval Stage</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/3') }}">On Progress</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/5') }}">Half Cleared</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/6') }}">Completed</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -269,22 +248,22 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/1') }}">Pending</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/2') }}">Approval Stage</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/3') }}">On Progress</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/5') }}">Half Cleared</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/6') }}">Completed</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -295,22 +274,22 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/1') }}">Pending</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/2') }}">Approval Stage</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/3') }}">On Progress</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/5') }}">Half Cleared</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/6') }}">Completed</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -321,22 +300,22 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/1') }}">Pending</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/2') }}">Approval Stage</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/3') }}">On Progress</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/5') }}">Half Cleared</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/6') }}">Completed</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -346,22 +325,22 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                                 <span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/1') }}">Pending</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/2') }}">Approval Stage</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/3') }}">On Progress</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/5') }}">Half Cleared</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="{{ url('activity/update_status/'.$item->id.'/6') }}">Completed</a>
+                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -414,7 +393,6 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                         <th>unit</th>
                                         <th>cost</th>
                                         <th>frequency</th>
-                                        <th>quater</th>
                                         <th>status</th>                               
                                         <th>Action</th>
                                     </tr>

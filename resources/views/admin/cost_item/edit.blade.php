@@ -66,8 +66,52 @@ $ParentRouteName = 'cost_item';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
+                                                    <select data-live-search="true" class="form-control show-tick"
+                                                            name="main_activity_id"
+                                                            id="main_activity_id" onchange="getSubActivity()">
+                                                        <option value="0">Select Activity</option>
+                                                        @foreach($activitys as $activity)
+                                                        <?php
+                                                            if ($activity->parent_id == 0) { 
+                                                        ?>
+                                                            <option @if($item->main_activity_id == $activity->id) {{ "selected" }} @endif value="{{ $activity->id }}">{{ $activity->title }}</option>
+                                                        <?php
+                                                            } 
+                                                        ?>
+                                                        
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <select data-live-search="true" class="form-control show-tick"
+                                                            name="sub_activity_id"
+                                                            id="sub_activity_id">
+                                                        <option value="0">Select Sub Activity</option>
+                                                        @foreach($activitys as $activity)
+                                                        <?php
+                                                            if ($activity->parent_id != 0) { 
+                                                        ?>
+                                                            <option @if($item->sub_activity_id == $activity->id) {{ "selected" }} @endif value="{{ $activity->id }}">{{ $activity->title }}</option>
+                                                        <?php
+                                                            } 
+                                                        ?>
+                                                        
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
                                                     {{-- <label for="cars">Choose a car:</label> --}}
-                                                    <input autofocus value="{{ old('title')  }}" name="title" type="text"
+                                                    <input autofocus value="{{ $item->title  }}" name="title" type="text"
                                                            class="form-control" required aria-required="true">
                                                     <label class="form-label">Title</label> 
                                                 </div>
@@ -77,7 +121,7 @@ $ParentRouteName = 'cost_item';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ old('description')  }}" name="description" type="text"
+                                                    <input autofocus value="{{ $item->description  }}" name="description" type="text"
                                                            class="form-control">
                                                     <label class="form-label">Description</label>
                                                 </div>
@@ -87,7 +131,7 @@ $ParentRouteName = 'cost_item';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ old('unit')  }}" name="unit" type="text"
+                                                    <input autofocus value="{{ $item->unit  }}" name="unit" type="text"
                                                            class="form-control">
                                                     <label class="form-label">Unit</label>
                                                 </div>
@@ -97,7 +141,7 @@ $ParentRouteName = 'cost_item';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ old('cost')  }}" name="cost" type="text"
+                                                    <input autofocus value="{{ $item->cost  }}" name="cost" type="text"
                                                            class="form-control">
                                                     <label class="form-label">Cost</label>
                                                 </div>
@@ -107,39 +151,29 @@ $ParentRouteName = 'cost_item';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ old('frequency')  }}" name="frequency" type="text"
+                                                    <input autofocus value="{{ $item->frequency  }}" name="frequency" type="number"
                                                            class="form-control">
                                                     <label class="form-label">Frequency</label>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <input autofocus value="{{ old('quater')  }}" name="quater" type="text"
-                                                           class="form-control">
-                                                    <label class="form-label">Quater</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
-                                                    <option value="0">Select Status</option>
-                                                    <option value="1">Pending</option>
-                                                    <option value="2">Approval Stage</option>
-                                                    <option value="3">On Progress</option>
-                                                    <option value="4">Wait Clearance</option>
-                                                    <option value="5">Half Cleared</option>
-                                                    <option value="6">Completed</option>
+                                                    <option @if($item->status == "0") {{ "selected" }} @endif value="0">Select Status</option>
+                                                    <option @if($item->status == "1") {{ "selected" }} @endif value="1">Pending</option>
+                                                    <option @if($item->status == "2") {{ "selected" }} @endif value="2">Approval Stage</option>
+                                                    <option @if($item->status == "3") {{ "selected" }} @endif value="3">On Progress</option>
+                                                    <option @if($item->status == "4") {{ "selected" }} @endif value="4">Wait Clearance</option>
+                                                    <option @if($item->status == "5") {{ "selected" }} @endif value="5">Half Cleared</option>
+                                                    <option @if($item->status == "6") {{ "selected" }} @endif value="6">Completed</option>
                                                 
                                                 </select>
                                             </div>
                                         </div>
 
-                                        
+                                        <input value="" name="submitType" id="submitType" type="hidden" value="">
+                                         
 
                                         {{-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
@@ -155,7 +189,7 @@ $ParentRouteName = 'cost_item';
                                             </div>
                                         </div> --}}
 
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                        {{-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
                                                     <option value="0">Select Status</option>
@@ -168,13 +202,29 @@ $ParentRouteName = 'cost_item';
                                                 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                {{-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">
                                                     Update
-                                                </button>
+                                                </button> --}}
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-line">
+                                                        <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
+                                                            Update
+                                                        </button>
+                                                        <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
+                                                            Update & New
+                                                        </button>
+                                                        <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn btn-primary m-t-15 waves-effect">
+                                                            Update & Copy
+                                                        </button>
+                                                        <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
+                                                            Update & Close
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -269,7 +319,30 @@ $ParentRouteName = 'cost_item';
         @endforeach
         @endif
 
-
+        function changeSubmitType(submitType){
+            jQuery("#submitType").val(submitType);
+            $("#form_validation").submit();
+        }
+        function getSubActivity(){
+            var main_act_id = $('#main_activity_id').val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "{{ route('cost_item.get_sub_activity') }}",
+                data: {'main_act_id':main_act_id},     
+                success: function (data) {
+                    $('#sub_activity_id').html(data.result);
+                    $('#sub_activity_id').selectpicker('refresh');           
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
 
 
         // Validation and calculation

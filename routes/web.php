@@ -250,32 +250,11 @@ Route::group(['middleware' => 'auth'], function () {
     ])->middleware('activity.edit');
 
   
-    Route::get('/activity/update_status/{id}/1', [
+    Route::get('/activity/update_status/{id}/{status}', [
         'uses' => 'ActivitysController@update_status',
         'as' => 'activity.update_status'
     ]);
     
-
-    Route::get('/activity/update_status/{id}/2', [
-        'uses' => 'ActivitysController@update_status',
-        'as' => 'activity.update_status'
-    ]);
-    Route::get('/activity/update_status/{id}/3', [
-        'uses' => 'ActivitysController@update_status',
-        'as' => 'activity.update_status'
-    ]);
-    Route::get('/activity/update_status/{id}/4', [
-        'uses' => 'ActivitysController@update_status',
-        'as' => 'activity.update_status'
-    ]);
-    Route::get('/activity/update_status/{id}/5', [
-        'uses' => 'ActivitysController@update_status',
-        'as' => 'activity.update_status'
-    ]);
-    Route::get('/activity/update_status/{id}/6', [
-        'uses' => 'ActivitysController@update_status',
-        'as' => 'activity.update_status'
-    ]);
 
     Route::get('/activity/show/{id}', [
         'uses' => 'ActivitysController@show',
@@ -332,85 +311,89 @@ Route::group(['middleware' => 'auth'], function () {
 
         //    Cost_item
         Route::get('/cost_item', [
-            'uses' => 'Cost_itemsController@index',
+            'uses' => 'CostItemsController@index',
             'as' => 'cost_item'
         ])->middleware('cost_item.module_show');
     
         Route::get('/cost_item/create', [
-            'uses' => 'Cost_itemsController@create',
+            'uses' => 'CostItemsController@create',
             'as' => 'cost_item.create'
         ])->middleware('cost_item.create');
     
         Route::post('/cost_item/store', [
-            'uses' => 'Cost_itemsController@store',
+            'uses' => 'CostItemsController@store',
             'as' => 'cost_item.store'
         ])->middleware('cost_item.create');
     
     
         Route::get('/cost_item/edit/{id}', [
-            'uses' => 'Cost_itemsController@edit',
+            'uses' => 'CostItemsController@edit',
             'as' => 'cost_item.edit'
         ])->middleware('cost_item.edit');
     
         Route::post('/cost_item/update/{id}', [
-            'uses' => 'Cost_itemsController@update',
+            'uses' => 'CostItemsController@update',
             'as' => 'cost_item.update'
         ])->middleware('cost_item.edit');
     
         Route::get('/cost_item/show/{id}', [
-            'uses' => 'Cost_itemsController@show',
+            'uses' => 'CostItemsController@show',
             'as' => 'cost_item.show'
         ]);
     
         Route::get('/cost_item/destroy/{id}', [
-            'uses' => 'Cost_itemsController@destroy',
+            'uses' => 'CostItemsController@destroy',
             'as' => 'cost_item.destroy'
         ])->middleware('cost_item.delete');
     
         Route::get('/cost_item/trashed', [
-            'uses' => 'Cost_itemsController@trashed',
+            'uses' => 'CostItemsController@trashed',
             'as' => 'cost_item.trashed'
         ])->middleware('cost_item.trash_show');
     
         Route::post('/cost_item/trashed/show', [
-            'uses' => 'Cost_itemsController@trashedShow',
+            'uses' => 'CostItemsController@trashedShow',
             'as' => 'cost_item.trashed.show'
         ]);
     
     
         Route::get('/cost_item/restore/{id}', [
-            'uses' => 'Cost_itemsController@restore',
+            'uses' => 'CostItemsController@restore',
             'as' => 'cost_item.restore'
         ])->middleware('cost_item.restore');
     
         Route::get('/cost_item/kill/{id}', [
-            'uses' => 'Cost_itemsController@kill',
+            'uses' => 'CostItemsController@kill',
             'as' => 'cost_item.kill'
         ])->middleware('cost_item.permanently_delete');
     
         Route::get('/cost_item/active/search', [
-            'uses' => 'Cost_itemsController@activeSearch',
+            'uses' => 'CostItemsController@activeSearch',
             'as' => 'cost_item.active.search'
         ]);
     
         Route::get('/cost_item/trashed/search', [
-            'uses' => 'Cost_itemsController@trashedSearch',
+            'uses' => 'CostItemsController@trashedSearch',
             'as' => 'cost_item.trashed.search'
         ]);
     
         Route::get('/cost_item/active/action', [
-            'uses' => 'Cost_itemsController@activeAction',
+            'uses' => 'CostItemsController@activeAction',
             'as' => 'cost_item.active.action'
         ]);
     
         Route::get('/cost_item/trashed/action', [
-            'uses' => 'Cost_itemsController@trashedAction',
+            'uses' => 'CostItemsController@trashedAction',
             'as' => 'cost_item.trashed.action'
         ]);
 
         Route::post('/cost_item/get_sub_activity', [
-            'uses' => 'Cost_itemsController@get_sub_activity',
+            'uses' => 'CostItemsController@get_sub_activity',
             'as' => 'cost_item.get_sub_activity'            
+        ]);
+        Route::get('/cost_item/update_status/{id}/{status}', [
+            'uses' => 'CostItemsController@update_status',
+            'as' => 'cost_item.update_status'
         ]);
 
         //end Cost_item

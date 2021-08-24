@@ -147,28 +147,11 @@ class ActivitysController extends Controller
 
     }
 
-    public function update_status($id)
+    public function update_status($id, $status)
     {
-
-        $link = $_SERVER['REQUEST_URI'];
-        $link_array = explode('/',$link);
-        $statusId = end($link_array);
-        // echo "<pre>"; print_r($page); die;
-        // $items = $this->parentModel::find($id);
-
         $items = Activity::find($id);
-        $items->status = $statusId;
+        $items->status = $status;
         $items->save();
-        // echo "<pre>"; print_r($items); exit;
-
-        // echo "aa"; exit;
-        
-        // $user = Activity::find($id);
-        // $user->status = $request->status;
-
-        
-
-        // $user->save();
         Session::flash('success', "Update Successfully");
         return redirect()->route($this->parentRoute);
 

@@ -413,55 +413,66 @@
 
                 {{--Project Start--}}
 
-                <li @if ( config('role_manage.Project.All')==0 and  config('role_manage.Project.TrashShow')==0 and config('role_manage.Project.Create')==0  )
+                <?php
+
+                $AccountsShow = (config('role_manage.Project.All') or config('role_manage.Cost_item.All') or config('role_manage.Activity.All'));
+                ?>
+                <li @if( $AccountsShow ==false)
                     class="dis-none"
-                    @endif  @if(Request::url() === route('project') or Request::url() === route('project.create') or Request::url() === route('project.trashed') or Request::url() === route('project.active.search') or Request::url() === route('project.trashed.search') )
-                    class="active "
-                        @endif >
-                    <a class="" @if (config('role_manage.Project.All')==0)
-                               class="dis-none"
-                               @endif href="{{ route('project') }}">
-                        <i class="fas fa-project-diagram"></i>
+                    @endif
+
+                    @if( Request::segment('1') == 'project' || Request::segment('1') == 'activity' || Request::segment('1') == 'activity')class="active " @endif>
+                    <a class="menu-toggle" href="javascript:void(0);">
+                        <i class="fas fa-receipt"></i>
                         <span>Project</span>
                     </a>
-
+                    <ul class="ml-menu">
+                         {{--Project start--}}
+                        <li @if ( config('role_manage.Project.All')==0 and  config('role_manage.Project.TrashShow')==0 and config('role_manage.Project.Create')==0  )
+                        class="dis-none"
+                        @endif  @if(Request::url() === route('project') or Request::url() === route('project.create') or Request::url() === route('project.trashed') or Request::url() === route('project.active.search') or Request::url() === route('project.trashed.search') )
+                        class="active "
+                            @endif >
+                                <a class="" @if (config('role_manage.Project.All')==0)
+                                            class="dis-none"
+                                            @endif href="{{ route('project') }}">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>Project</span>
+                                </a>
+                        </li>
+                         {{--Project End--}}
+                         {{--Activity activity Start--}}
+                        <li @if ( config('role_manage.Activity.All')==0 and  config('role_manage.Activity.TrashShow')==0 and config('role_manage.Activity.Create')==0  )
+                        class="dis-none"
+                        @endif  @if(Request::url() === route('activity') or Request::url() === route('activity.create') or Request::url() === route('activity.trashed') or Request::url() === route('activity.active.search') or Request::url() === route('activity.trashed.search') )
+                        class="active "
+                            @endif >
+                            <a class="" @if (config('role_manage.Activity.All')==0)
+                                    class="dis-none"
+                                    @endif href="{{ route('activity') }}">
+                                    <i class="fas fa-chart-line"></i>
+                                <span>Activity</span>
+                            </a>
+                        </li>
+                        {{--Activity End--}}
+                        {{--Cost_item cost_item Start--}}
+                        <li @if ( config('role_manage.Cost_item.All')==0 and  config('role_manage.Cost_item.TrashShow')==0 and config('role_manage.Cost_item.Create')==0  )
+                        class="dis-none"
+                        @endif  @if(Request::url() === route('cost_item') or Request::url() === route('cost_item.create') or Request::url() === route('cost_item.trashed') or Request::url() === route('cost_item.active.search') or Request::url() === route('cost_item.trashed.search') )
+                        class="active "
+                            @endif >
+                            <a class="" @if (config('role_manage.Cost_item.All')==0)
+                                class="dis-none"
+                                        @endif href="{{ route('cost_item') }}">
+                                    <i class="fas fa-money-bill"></i>
+                                <span>Cost Item</span>
+                            </a>
+                        </li>
+                        {{--Cost Item End--}}
+                    </ul>
                 </li>
                 {{--Project End--}}
-
-                {{--Activity activity Start--}}
-
-                <li @if ( config('role_manage.Activity.All')==0 and  config('role_manage.Activity.TrashShow')==0 and config('role_manage.Activity.Create')==0  )
-                    class="dis-none"
-                    @endif  @if(Request::url() === route('activity') or Request::url() === route('activity.create') or Request::url() === route('activity.trashed') or Request::url() === route('activity.active.search') or Request::url() === route('activity.trashed.search') )
-                    class="active "
-                        @endif >
-                    <a class="" @if (config('role_manage.Activity.All')==0)
-                               class="dis-none"
-                               @endif href="{{ route('activity') }}">
-                            <i class="fas fa-chart-line"></i>
-                        <span>Activity</span>
-                    </a>
-
-                </li>
-                {{--Activity End--}}
-
-                {{--Cost_item cost_item Start--}}
-
-                <!-- <li @if ( config('role_manage.Cost_item.All')==0 and  config('role_manage.Cost_item.TrashShow')==0 and config('role_manage.Cost_item.Create')==0  )
-                    class="dis-none"
-                    @endif  @if(Request::url() === route('cost_item') or Request::url() === route('cost_item.create') or Request::url() === route('cost_item.trashed') or Request::url() === route('cost_item.active.search') or Request::url() === route('cost_item.trashed.search') )
-                    class="active "
-                        @endif >
-                    <a class="" @if (config('role_manage.Cost_item.All')==0)
-                               class="dis-none"
-                               @endif href="{{ route('cost_item') }}">
-                            <i class="fas fa-money-bill"></i>
-                        <span>Cost Item</span>
-                    </a>
-
-                </li> -->
-                {{--Activity End--}}
-
+                
                 {{--Report Start--}}
 
                 <?php
