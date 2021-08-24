@@ -185,7 +185,6 @@ class SettingsController extends Controller
     public function quarter_update(Request $request)
     { 
 
-        // echo "<pre>"; print_r($request->all()); die;
         // $request->validate([
         //     'company_name' => 'required',
         //     'company_logo' => 'image'
@@ -208,91 +207,91 @@ class SettingsController extends Controller
         //             return back()->withInput()->withErrors($validator->errors());
         //   }
 
-        if($request->Quarter1_Start == $request->Quarter1_End){
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if($request->Quarter1_Start == $request->Quarter2_Start){
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if($request->Quarter1_Start == $request->Quarter2_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter1_Start == $request->Quarter3_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter1_Start == $request->Quarter3_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter1_Start == $request->Quarter4_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter1_Start == $request->Quarter4_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        }
+        // if($request->Quarter1_Start == $request->Quarter1_End){
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if($request->Quarter1_Start == $request->Quarter2_Start){
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if($request->Quarter1_Start == $request->Quarter2_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter1_Start == $request->Quarter3_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter1_Start == $request->Quarter3_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter1_Start == $request->Quarter4_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter1_Start == $request->Quarter4_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // }
 
-         else if ($request->Quarter1_End == $request->Quarter1_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter1_End == $request->Quarter2_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter1_End == $request->Quarter2_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter1_End == $request->Quarter3_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter1_End == $request->Quarter3_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter1_End == $request->Quarter4_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter1_End == $request->Quarter4_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        }
+        //  else if ($request->Quarter1_End == $request->Quarter1_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter1_End == $request->Quarter2_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter1_End == $request->Quarter2_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter1_End == $request->Quarter3_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter1_End == $request->Quarter3_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter1_End == $request->Quarter4_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter1_End == $request->Quarter4_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // }
 
-        else if ($request->Quarter2_Start == $request->Quarter1_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_Start == $request->Quarter1_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_Start == $request->Quarter2_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_Start == $request->Quarter2_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_Start == $request->Quarter3_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_Start == $request->Quarter3_end) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_Start == $request->Quarter4_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_Start == $request->Quarter4_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } 
+        // else if ($request->Quarter2_Start == $request->Quarter1_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_Start == $request->Quarter1_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_Start == $request->Quarter2_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_Start == $request->Quarter2_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_Start == $request->Quarter3_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_Start == $request->Quarter3_end) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_Start == $request->Quarter4_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_Start == $request->Quarter4_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } 
 
-        else if ($request->Quarter2_End == $request->Quarter1_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter1_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter2_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter3_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter3_end) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter4_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter4_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter2_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } 
+        // else if ($request->Quarter2_End == $request->Quarter1_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter1_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter2_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter3_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter3_end) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter4_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter4_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter2_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } 
 
-        else if ($request->Quarter2_End == $request->Quarter1_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter1_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter2_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter3_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter3_end) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter4_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter4_End) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } else if ($request->Quarter2_End == $request->Quarter2_Start) {
-            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
-        } 
+        // else if ($request->Quarter2_End == $request->Quarter1_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter1_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter2_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter3_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter3_end) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter4_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter4_End) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } else if ($request->Quarter2_End == $request->Quarter2_Start) {
+        //     return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        // } 
 
 
 
