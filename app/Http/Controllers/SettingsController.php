@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Setting;
 use App\Orgenizationleader;
+use App\Bankaccount;
 use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -14,9 +15,9 @@ use DB;
 class SettingsController extends Controller
 {
 
-    public function general_show($donorId="")
+    public function general_show($allId="")
     {
-        // echo "dsdsg".$donorId; 
+        // echo "dsdsg".$allId; 
         $general_settings_info = Setting::where('settings_name', 'General Settings')->get()->first();
 
         $generaldata = json_decode($general_settings_info->content, true);
@@ -38,13 +39,22 @@ class SettingsController extends Controller
         // $orgenizationleader = DB::table('orgenizationleader')->get();    
 
         $orgenizationleader = Orgenizationleader::get();
+
+        $Bankaccounts = Bankaccount::get();
+        if($allId != ""){
+            $Bankaccountsedit = Bankaccount::where('id',$allId)->first();    
+        } else {
+            $Bankaccounts = Bankaccount::get();
+            $Bankaccountsedit = array();
+        }
+        
         // $orgenizationleader = DB::table('orgenizationleader')->get();    
         
 
-        // echo"<pre>"; print_r($supportdonor); exit;
+        // echo"<pre>"; print_r($Bankaccounts); exit;
         
         // return view('admin.settings.general')->with('settings', $data);
-        return view('admin.settings.general')->with(array('generalsettings'=>$generaldata, 'systemdata'=>$systemdata, 'quarterdata'=>$quarterdata, 'bankAccountdata'=>$bankAccountdata, 'supportdonor'=>$supportdonor, 'orgenizationleader'=>$orgenizationleader ));
+        return view('admin.settings.general')->with(array('generalsettings'=>$generaldata, 'systemdata'=>$systemdata, 'quarterdata'=>$quarterdata, 'bankAccountdata'=>$bankAccountdata, 'supportdonor'=>$supportdonor, 'orgenizationleader'=>$orgenizationleader, 'Bankaccounts'=>$Bankaccounts, 'Bankaccountsedit'=>$Bankaccountsedit ));
 
     }
 
@@ -181,6 +191,112 @@ class SettingsController extends Controller
         //     'company_logo' => 'image'
         // ]);
 
+
+        // $validator = \Validator::make($request->all(), [
+        //         'Quarter1_Start.*' => 'yourRules',
+        //         'Quarter1_End.*' => 'yourRules',
+        //         'Quarter2_Start.*' => 'yourRules',
+        //         'Quarter2_End.*' => 'yourRules',
+        //         'Quarter3_Start.*' => 'yourRules'
+        //         'Quarter3_End.*' => 'yourRules'
+        //         'Quarter4_Start.*' => 'yourRules'
+        //         'Quarter4_End.*' => 'yourRules'
+        //         'Quarter3_Start.*' => 'yourRules'
+        //     ]);
+
+        //   if($validator->fails()) {
+        //             return back()->withInput()->withErrors($validator->errors());
+        //   }
+
+        if($request->Quarter1_Start == $request->Quarter1_End){
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if($request->Quarter1_Start == $request->Quarter2_Start){
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if($request->Quarter1_Start == $request->Quarter2_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter1_Start == $request->Quarter3_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter1_Start == $request->Quarter3_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter1_Start == $request->Quarter4_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter1_Start == $request->Quarter4_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        }
+
+         else if ($request->Quarter1_End == $request->Quarter1_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter1_End == $request->Quarter2_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter1_End == $request->Quarter2_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter1_End == $request->Quarter3_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter1_End == $request->Quarter3_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter1_End == $request->Quarter4_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter1_End == $request->Quarter4_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        }
+
+        else if ($request->Quarter2_Start == $request->Quarter1_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_Start == $request->Quarter1_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_Start == $request->Quarter2_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_Start == $request->Quarter2_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_Start == $request->Quarter3_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_Start == $request->Quarter3_end) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_Start == $request->Quarter4_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_Start == $request->Quarter4_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } 
+
+        else if ($request->Quarter2_End == $request->Quarter1_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter1_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter2_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter3_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter3_end) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter4_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter4_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter2_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } 
+
+        else if ($request->Quarter2_End == $request->Quarter1_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter1_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter2_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter3_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter3_end) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter4_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter4_End) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } else if ($request->Quarter2_End == $request->Quarter2_Start) {
+            return back()->withInput()->withErrors("Quartert 1 End month is same, please don't select same month");
+        } 
+
+
+
+
         $setting_general = Setting::where('settings_name', 'Quarter Settings')->get()->first();
 
         $setting_general_data = json_decode($setting_general->content, true);
@@ -299,24 +415,38 @@ class SettingsController extends Controller
         //     'company_logo' => 'image'
         // ]);
 
-        $setting_general = Setting::where('settings_name', 'Bank Account')->get()->first();
+        // $setting_general = Setting::where('settings_name', 'Bank Account')->get()->first();
 
-        $setting_general_data = json_decode($setting_general->content, true);
+        // $setting_general_data = json_decode($setting_general->content, true);
 
+        // $setting_general = Bankaccount::where('settings_name', 'Bank Account')->get()->first();
+
+        if ($request->bankid != "") {
+            $Bankaccount = Bankaccount::find($request->bankid);
+        } else {
+            $Bankaccount = new Bankaccount;
+        }
+        
+        $Bankaccount->bankName = $request->bankName;
+        $Bankaccount->donors = $request->donors;
+        $Bankaccount->bankCode = $request->bankCode;
+        $Bankaccount->bankcurrency_code = $request->bankcurrency_code;
+        $Bankaccount->bankStatus = $request->bankStatus;
+        $Bankaccount->save();
+        
     
-        $data = array(
-            'bankName' => $request->bankName,
-            'donors' => $request->donors,
-            'bankCode' => $request->bankCode,
-            'bankcurrency_code' => $request->bankcurrency_code,
-            'bankStatus' => $request->bankStatus,
-        );
+        // $data = array(
+        //     'bankName' => $request->bankName,
+        //     'donors' => $request->donors,
+        //     'bankCode' => $request->bankCode,
+        //     'bankcurrency_code' => $request->bankcurrency_code,
+        //     'bankStatus' => $request->bankStatus,
+        // );
 
-        // echo"<pre>"; print_r($data); exit;
 
-        $json_data = json_encode($data);
-        $setting_general->content = $json_data;
-        $setting_general->save();
+        // $json_data = json_encode($data);
+        // $setting_general->content = $json_data;
+        // $setting_general->save();
 
         Session::flash('success', 'Successfully Update');
 
@@ -453,6 +583,22 @@ class SettingsController extends Controller
 
         // return redirect()->back();
         return redirect('settings/general#orgenizationLeader');
+
+    }
+
+
+    public function bankaccount_destroy($id)
+    { 
+
+        // echo "<pre>"; print_r($id); die;
+        
+
+        Bankaccount::where('id',$id)->delete();
+
+        Session::flash('success', 'Successfully Delete');
+
+        // return redirect()->back();
+        return redirect('settings/general#bankaccountsetting');
 
     }
 

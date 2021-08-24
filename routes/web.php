@@ -620,6 +620,16 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'settings.bankaccount.update'
     ]);
 
+    Route::get('/settings/bankaccount/destroy/{id}', [
+        'uses' => 'SettingsController@bankaccount_destroy',
+        'as' => 'settings.bankaccount.destroy'
+    ]);
+
+    Route::get('/settings/bankaccount/edit/{id}', [
+        'uses' => 'SettingsController@general_show',
+        'as' => 'settings.bankaccount.edit'
+    ]);
+
 
     Route::get('/settings/supportDonor', [
         'uses' => 'SettingsController@supportDonor_show',

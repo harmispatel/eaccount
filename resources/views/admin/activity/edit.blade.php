@@ -66,8 +66,8 @@ $ParentRouteName = 'activity';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="role_manage_id"
-                                                            id="role_manage_id">
+                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="project_id"
+                                                            id="project_id">
                                                         <option value="0" >Select Project</option>
                                                         @foreach(App\Projects::all() as $project)
                                                             <option @if ($item->project_id==$project->id)
@@ -79,7 +79,6 @@ $ParentRouteName = 'activity';
                                                 </div>
                                             </div>
                                         </div>
-                                        
 
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
@@ -87,10 +86,10 @@ $ParentRouteName = 'activity';
                                                     <select data-live-search="true" class="form-control show-tick"
                                                             name="parent_id"
                                                             id="parent_id">
-                                                        <option value="0">Select Activity</option>
+                                                        <option value="0">Main Activity</option>
                                                         @foreach($activitys as $activity)
                                                         <?php
-                                                            if ($activity->parent_id == 0) { 
+                                                            if ($activity->parent_id == 0 && $item->id != $activity->id) { 
                                                         ?>
                                                             <option value="{{ $activity->id }}" @if($item->parent_id == "$activity->id") {{ "selected" }} @endif >{{ $activity->title }}</option>
                                                         <?php
@@ -108,7 +107,7 @@ $ParentRouteName = 'activity';
 
                                                     <input autofocus value="{{ $item->title  }}" name="title" type="text"
                                                            class="form-control">
-                                                    <label class="form-label">Activity</label>
+                                                    <label class="form-label">Name</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,23 +122,49 @@ $ParentRouteName = 'activity';
                                             </div>
                                         </div>
 
+                                        <?php 
+                                            $people = [];
+                                            if(count($item->hasManyActivitytoquarter)>0){
+                                                foreach($item->hasManyActivitytoquarter as $key => $one){
+                                                    array_push($people,$one->quarter_id);
+                                                }
+                                            }
+                                        //echo '<pre>'; print_r($item->hasManyActivitytoquarter[0]->quarter_id); die; 
+                                        
+                                        ?>
                                         
 
-                                        {{-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-line">
-                                                <select data-live-search="true" class="form-control show-tick" name="status" id="status">
-                                                    <option value="0">Select Status</option>
-                                                    <option @if($item->status == "1") {{ "selected" }} @endif value="1">Started</option>
-                                                    <option @if($item->status == "2") {{ "selected" }} @endif value="2">In Progress</option>
-                                                    <option @if($item->status == "3") {{ "selected" }} @endif value="3">Cancel</option>
-                                                    <option @if($item->status == "4") {{ "selected" }} @endif value="4">On Hold</option>
-                                                    <option @if($item->status == "5") {{ "selected" }} @endif value="5">Completed</option>
-                                                
-                                                </select>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <select data-live-search="true" multiple class="form-control show-tick search-choice" name="quarter[]"
+                                                            id="quarter">
+                                                            <option @if (in_array("1",$people )) selected @endif value="1">Quarter 1</option>
+                                                            <option @if (in_array("2",$people )) selected @endif value="2">Quarter 2</option>
+                                                            <option @if (in_array("3",$people )) selected @endif value="3">Quarter 3</option>
+                                                            <option @if (in_array("4",$people )) selected @endif value="4">Quarter 4</option>
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div> --}}
+                                        </div>
 
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
+                                                            id="department_id">
+                                                        <option value="0" >Responsible Department</option>
+                                                        @foreach(App\Department::all() as $department)
+                                                            <option @if ($item->department_id==$department->id)
+                                                                    selected
+                                                                    @endif value="{{$department->id}}"> {{ $department->departmentName }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
                                                     <option value="0">Select Status</option>
@@ -152,12 +177,23 @@ $ParentRouteName = 'activity';
                                                 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
+
+                                        <input value="" name="submitType" id="submitType" type="hidden" value="">
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
                                                     Update
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Update & New
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Update & Copy
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
+                                                    Update & Close
                                                 </button>
                                             </div>
                                         </div>
@@ -237,6 +273,10 @@ $ParentRouteName = 'activity';
     <script src="{{ asset('asset/js/pages/forms/basic-form-elements.js') }}"></script>
 
     <script>
+        function changeSubmitType(submitType){
+            jQuery("#submitType").val(submitType);
+            $("#form_validation").submit();
+        }
 
         @if(Session::has('success'))
             toastr["success"]('{{ Session::get('success') }}');
@@ -265,6 +305,9 @@ $ParentRouteName = 'activity';
                 password: 'input[name=password]',
                 confirm_password: 'input[name=confirm_password]',
                 role_manage_id: 'role_manage_id',
+                project_id: 'project_id',
+                department_id: 'department_id',
+                quarter: 'quarter',
             };
 
             return {
@@ -278,6 +321,9 @@ $ParentRouteName = 'activity';
                         get_password: document.querySelector(DOMString.password),
                         get_confirm_password: document.querySelector(DOMString.confirm_password),
                         getRole_manage_id: document.getElementById(DOMString.role_manage_id),
+                        getProject_id: document.getElementById(DOMString.project_id),
+                        getDepartment_id: document.getElementById(DOMString.department_id),
+                        getQuarter: document.getElementById(DOMString.quarter),
 
 
                     }
@@ -289,6 +335,9 @@ $ParentRouteName = 'activity';
                         password: Fields.get_password.value,
                         confirm_password: Fields.get_confirm_password.value,
                         role_manage_id: Fields.getRole_manage_id.value == "" ? 0 : Fields.getRole_manage_id.value,
+                        project_id: Fields.getProject_id.value == "" ? 0 : Fields.getProject_id.value,
+                        department_id: Fields.getDepartment_id.value == "" ? 0 : Fields.getDepartment_id.value,
+                        quarter: Fields.getQuarter.value == "" ? 0 : Fields.getQuarter.value,
 
                     }
                 },

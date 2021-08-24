@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class Activity extends Model
-{
+{ 
     use Notifiable;
     use SoftDeletes;
     protected $table = 'projects_activity';
@@ -22,9 +22,21 @@ class Activity extends Model
         'description',
         'parent_id',
         'status',
-        
+        'project_id',
+        'department_id',
         'created_by',
         'updated_by',
         'deleted_at'
     ];
+
+    public function hasManyActivitytoquarter()
+    {
+        return $this->hasMany('App\Activitytoquarter','activity_id','id');
+    }
+    public function hasOneProject()
+    {
+        return $this->hasOne('App\Projects','id','project_id');
+    }
+
+    
 }

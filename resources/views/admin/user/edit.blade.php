@@ -117,24 +117,24 @@ $ParentRouteName = 'user';
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
-                                                            id="department_id">
-                                                        <option value="0" >Select User Department</option>
-                                                        @foreach(App\Department::all() as $department)
-                                                            <option @if ($item->department_id ==$department->id)
-                                                                    selected
-                                                                    @endif value="{{$department->id}}"> {{ $department->departmentName }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                        <div id="sikika_field">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
+                                                                id="department_id">
+                                                            <option value="0" >Select User Department</option>
+                                                            @foreach(App\Department::all() as $department)
+                                                                <option @if ($item->department_id ==$department->id)
+                                                                        selected
+                                                                        @endif value="{{$department->id}}"> {{ $department->departmentName }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div id="sikika_field">
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
@@ -149,6 +149,13 @@ $ParentRouteName = 'user';
                                                             @endforeach
                                                         </select>
                                                     </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                <div class="form-group form-float" style="margin-top:10px">
+                                                    <input type="checkbox" id="department_head" name="department_head" class="filled-in" @if($item->profile->department_head == "1") checked="checked" @endif>
+                                                    <label for="department_head">Is Head of Department</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -211,17 +218,15 @@ $ParentRouteName = 'user';
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
-                                                    <div class="form-line focused" style="display:flex;">
-                                                        <input name="legal_documents" type="file" class="form-control">
-                                                        <label class="form-label">Legal documents</label>
-                                                        @if($item->profile->legal_documents != "")<img height="50px" src="{{ url('/').'/'.$item->profile->legal_documents }}" />@endif
+                                                    <div class="form-line">
+                                                        <input name="vat_number" type="text" class="form-control" value="{{ $item->profile->vat_number }}">
+                                                        <label class="form-label">VAT Number</label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            
-                                            
+
                                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line focused" style="display:flex;">
@@ -232,11 +237,12 @@ $ParentRouteName = 'user';
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                 <div class="form-group form-float">
-                                                    <div class="form-line">
-                                                        <input name="vat_number" type="text" class="form-control" value="{{ $item->profile->vat_number }}">
-                                                        <label class="form-label">VAT Number</label>
+                                                    <div class="form-line focused" style="display:flex;">
+                                                        <input name="legal_documents" type="file" class="form-control">
+                                                        <label class="form-label">Legal documents</label>
+                                                        @if($item->profile->legal_documents != "")<img height="50px" src="{{ url('/').'/'.$item->profile->legal_documents }}" />@endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -250,13 +256,6 @@ $ParentRouteName = 'user';
 
                                         </div>
 
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float" style="margin-top:10px">
-                                                <input type="checkbox" id="department_head" name="department_head" class="filled-in" @if($item->profile->department_head == "1") checked="checked" @endif>
-                                                <label for="department_head">Is Head of Department</label>
-                                            </div>
-                                        </div>
-                                        
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
                                                 <button type="submit" class="btn btn-primary m-t-15 waves-effect">
