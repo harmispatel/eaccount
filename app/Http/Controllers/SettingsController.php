@@ -355,7 +355,7 @@ class SettingsController extends Controller
         //     'supportDonor' => $request->supportDonor,
         // );
 
-        DB::table(' supportdonor')->insert([
+        DB::table('supportdonor')->insert([
             'supportDonor' => $request->supportDonor,
         ]);
 

@@ -121,7 +121,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                             <!-- <li><a data-toggle="tab" href="#smtpsetting">SMTP</a></li> -->
                             <li><a data-toggle="tab" href="#bankaccountsetting">Bank account</a></li>
                             <li><a data-toggle="tab" href="#supportDonorsetting">Support Donors</a></li>
-                            <li><a data-toggle="tab" href="#orgenizationLeader">Orgenization Leader</a></li>
+                            <li><a data-toggle="tab" href="#orgenizationLeader">Organization Leader</a></li>
                         </ul>
                     <div class="tab-content">
                          <!-- general setting start -->
@@ -1532,7 +1532,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                     <div class="form-line">
                                                         <input value="" name="orgenizationLeader" type="text"
                                                                class="form-control">
-                                                        <label class="form-label">Orgenization Leadership</label>
+                                                        <label class="form-label">Organization Leadership</label>
                                                     </div>
                                                 </div>
                                             </div>

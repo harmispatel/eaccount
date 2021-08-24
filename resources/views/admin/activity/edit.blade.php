@@ -66,6 +66,24 @@ $ParentRouteName = 'activity';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
+                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="role_manage_id"
+                                                            id="role_manage_id">
+                                                        <option value="0" >Select Project</option>
+                                                        @foreach(App\Projects::all() as $project)
+                                                            <option @if ($item->project_id==$project->id)
+                                                                    selected
+                                                                    @endif value="{{$project->id}}"> {{ $project->projectName }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick"
                                                             name="parent_id"
                                                             id="parent_id">
@@ -83,7 +101,7 @@ $ParentRouteName = 'activity';
                                                 </div>
                                             </div>
                                         </div>
-                                        
+                          
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
