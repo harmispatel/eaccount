@@ -15,6 +15,7 @@ $breadcrumbCurrentIcon = "archive";
 
 $ModelName = 'App\Activity';
 $ParentRouteName = 'activity';
+$projectId = Request::get('projectId');
 
 ?>
 
@@ -111,7 +112,15 @@ $ParentRouteName = 'activity';
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input autofocus value="{{ $item->activity_code  }}" name="activity_code" type="text"
+                                                           class="form-control" required aria-required="true">
+                                                    <label class="form-label">Activity Code</label> 
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
@@ -164,22 +173,10 @@ $ParentRouteName = 'activity';
                                             </div>
                                         </div>
 
-                                        <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-line">
-                                                <select data-live-search="true" class="form-control show-tick" name="status" id="status">
-                                                    <option value="0">Select Status</option>
-                                                    <option @if($item->status == "1") {{ "selected" }} @endif value="1">Pending</option>
-                                                    <option @if($item->status == "2") {{ "selected" }} @endif value="2">Approval Stage</option>
-                                                    <option @if($item->status == "3") {{ "selected" }} @endif value="3">On Progress</option>
-                                                    <option @if($item->status == "4") {{ "selected" }} @endif value="4">Wait Clearance</option>
-                                                    <option @if($item->status == "5") {{ "selected" }} @endif value="5">Half Cleared</option>
-                                                    <option @if($item->status == "6") {{ "selected" }} @endif value="6">Completed</option>
-                                                
-                                                </select>
-                                            </div>
-                                        </div> -->
+                                        
 
                                         <input value="" name="submitType" id="submitType" type="hidden" value="">
+                                        <input name="selectedProjectId" id="selectedProjectId" type="hidden" value="{{$projectId}}">
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">

@@ -11178,3 +11178,19 @@ body.modal-open {
 .font-custom-bold span:first-child {
     font-weight: 800;
 }
+.block-header.pjct-ttl {
+    font-size: 20px;
+    font-weight: 900;
+    color: #ff0000;
+}
+.activity-main-btn {
+    margin-bottom: 30px;
+}
+.bck-to-prjct i{
+    font-size: 15px !important;
+    position: relative;
+    top: 1px !important;
+}
+.w-csm-40{
+    width: 40%;
+}

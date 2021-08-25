@@ -34,4 +34,14 @@ class Cost_item extends Model
         'updated_by',
         'deleted_at'
     ];
+    
+    public function hasOneParentActivity()
+    {
+        return $this->hasOne('App\Activity','id','main_activity_id');
+    }
+    public function hasOneSubActivity()
+    {
+        return $this->hasOne('App\Activity','id','sub_activity_id');
+    }
+    
 }

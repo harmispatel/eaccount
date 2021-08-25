@@ -3,7 +3,7 @@
 {{--Important Variables--}}
 
 <?php
-$moduleName = " Cost_item";
+$moduleName = " Budget_items";
 $createItemName = "Create" . $moduleName;
 
 $breadcrumbMainName = $moduleName;
@@ -15,6 +15,8 @@ $breadcrumbCurrentIcon = "archive";
 $ModelName = 'App\Cost_item';
 $ParentRouteName = 'cost_item';
 
+$projectId = Request::get('projectId');
+$activityId = Request::get('activityId');
 ?>
 
 @section('title')
@@ -67,7 +69,7 @@ $ParentRouteName = 'cost_item';
                                                     <select data-live-search="true" class="form-control show-tick"
                                                             name="main_activity_id"
                                                             id="main_activity_id" onchange="getSubActivity()">
-                                                        <option value="0">Select Activity</option>
+                                                        <option value="0" class="font-custom-bold">Select Activity</option>
                                                         @foreach($activitys as $activity)
                                                         <?php
                                                             if ($activity->parent_id == 0) { 
@@ -147,10 +149,12 @@ $ParentRouteName = 'cost_item';
                                         </div>
                                         <input value="" name="submitType" id="submitType" type="hidden" value="">
 
+                                        <input name="selectedProjectId" id="selectedProjectId" type="hidden" value="{{$projectId}}">
+                                        <input name="selectedActivityId" id="selectedActivityId" type="hidden" value="{{$activityId}}">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
-                                                    <option value="0">Select Status</option>
+                                                    <option value="0" class="font-custom-bold">Select Status</option>
                                                     <option value="1">Pending</option>
                                                     <option value="2">Approval Stage</option>
                                                     <option value="3">On Progress</option>
@@ -160,21 +164,7 @@ $ParentRouteName = 'cost_item';
                                                 
                                                 </select>
                                             </div>
-                                        </div>                                       
-
-                                        {{-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-line">
-                                                <select data-live-search="true" class="form-control show-tick" name="status" id="status">
-                                                    <option value="0">Select Status</option>
-                                                    <option value="1">Started</option>
-                                                    <option value="2">In Progress</option>
-                                                    <option value="3">Cancel</option>
-                                                    <option value="4">On Hold</option>
-                                                    <option value="5">Completed</option>
-                                                
-                                                </select>
-                                            </div>
-                                        </div> --}}
+                                        </div>  
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">

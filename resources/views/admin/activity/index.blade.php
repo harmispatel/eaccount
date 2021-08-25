@@ -46,20 +46,21 @@ $trash_show = config('role_manage.Activity.TrashShow');
 
     <section class="content">
         <div class="container-fluid">
+            <div class="block-header pjct-ttl">
+                @if(!empty($project))
+                {{ $project->projectName ? $project->projectName : ''  }}
+                @endif
+            </div>
             <div class="block-header pull-left">
 
-                <a @if ( $create==0 )
-                   class="dis-none"
-                   @endif class="btn btn-sm btn-info waves-effect"
-                   href="{{ route($ParentRouteName.'.create') }}">Add New </a>
-
-
+                <a @if ( $create==0 ) class="dis-none" @endif class="btn btn-sm btn-info waves-effect" href="@if(!empty($project)) {{ route($ParentRouteName.'.create',['projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.create') }}@endif">Add Activity </a> <a class="btn btn-sm btn-info waves-effect bck-to-prjct"
+                   href="{{ url('project') }}"><i class="fas fa-arrow-left"></i> Back to Projects </a>
             </div>
 
             <ol class="breadcrumb breadcrumb-col-cyan pull-right">
                 <li><a href="{{ route('dashboard') }}"><i class="material-icons">home</i> Home</a></li>
                 @if(!empty($project))
-                    <li><a href="{{ url('project/project_activity/'.$project->id) }}"><i class="fas fa-project-diagram"></i>{{ $project->projectName ? $project->projectName : ''  }}</a></li>
+                    <li><a href="{{ url('/project') }}"><i class="fas fa-project-diagram"></i>{{ $project->projectName ? $project->projectName : ''  }}</a></li>
                     @endif
                 <li><a href="{{ route($ParentRouteName) }}"><i
                                 class="{{ $breadcrumbMainIcon  }}"></i>{{ $breadcrumbMainName  }}</a></li>
@@ -71,18 +72,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header">
-
-                            <a class="btn btn-xs btn-info waves-effect"
-                               href="{{ route($ParentRouteName)  }}">All({{ $ModelName::all()->count() }})</a>
-                            
-                            <a @if ( $trash_show==0)
-                               class="dis-none"
-                               @endif
-                                class="btn btn-xs btn-danger"
-                               href="{{ route($ParentRouteName.'.trashed') }}">Trash({{ $ModelName::onlyTrashed()->count()  }}
-                                )</a>
-
+                        <div class="header" style="padding: 30px;">
                             <ul class="header-dropdown m-r--5">
                                 <form class="search" action="{{ route($ParentRouteName.'.active.search') }}"
                                       method="get">
@@ -94,33 +84,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                         </div>
                         <form class="actionForm" action="{{ route($ParentRouteName.'.active.action') }}"
                               method="get">
-                            <div class="row body">
-                                <div class="margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <select class="form-control" name="apply_comand_top" id="">
-                                                <option value="0">Select Action</option>
-
-                                                @if ($delete)
-                                                    <option value="3">Move To trash</option>
-                                                @endif
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class=" margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
-                                    <div class="form-group">
-                                        <input class="btn btn-sm btn-info" type="submit" value="Apply"
-                                               name="ApplyTop">
-                                    </div>
-                                </div>
-                                <div class=" margin-bottom-0 col-md-8 col-sm-8 col-xs-8">
-                                    <div class="custom-paginate pull-right">
-                                        {{ $items->links() }}
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="body table-responsive">
                                 {{ csrf_field() }}
                                 <table class="table table-hover table-bordered table-sm">
@@ -133,7 +97,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                         </th>
 
                                         <th>Activity</th>
-                                        <th>Parent Activity</th>
+                                        <th>Activity code</th>
                                         <th>Project</th>                                        
                                         <th>Action</th>
 
@@ -142,60 +106,99 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                     <tbody>
 
                                         <?php $i = 1; ?>
-                                        @foreach($items as $item)
-                                            @php
-                                                $parentActivity = $item->hasOneParentActivity ? $item->hasOneParentActivity : [];   
-                                            @endphp
-                                            <tr @if (Auth::id()==$item->id)
+                                        @if(count($items))
+                                            @foreach($items as $item)
+                                                @php
+                                                    $parentActivity = $item->hasOneParentActivity ? $item->hasOneParentActivity : [];   
+                                                    $subActivities = $item->hasManySubActivity ? $item->hasManySubActivity : [];   
+                                                @endphp
+                                                <tr @if (Auth::id()==$item->id) class="bg-tr" @endif >
+                                                    <th class="text-center">
+                                                        <input name="items[id][]" value="{{ $item->id }}"
+                                                            type="checkbox" id="md_checkbox_{{ $i }}"
+                                                            class="chk-col-cyan selects "/>
+                                                        <label for="md_checkbox_{{ $i }}"></label>
+                                                    </th>
+                                                    <td>
+                                                    
+                                                            @if (!empty($project))
+                                                                    <a href="{{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id]) }}"> {{$item->title }}</a>
+                                                            @endif
+                                                        
+                                                    </td>
+                                                    <td>     
+                                                        {{$item->activity_code ? $item->activity_code : ''}}
+                                                    </td>
+                                                    <td>
+                                                        {{ isset($item->hasOneProject->projectName) ? $item->hasOneProject->projectName : "-" }}
+                                                    </td>
+                                                    
+                                                    <td class="tdTrashAction">
+                                                        
+                                                            <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs btn-info waves-effect" href="@if (!empty($project)){{ route($ParentRouteName.'.edit',['id'=>$item->id,'projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
+                                                        <a data-target="#largeModal"
+                                                        class="btn btn-xs btn-success waves-effect ajaxCall hidden"
+                                                        href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top" title="Preview"><i
+                                                                    class="material-icons">pageview</i></a>
 
-                                                    class="bg-tr"
+                                                        <a @if ($delete==0)
 
-                                                    @endif >
-                                                <th class="text-center">
-                                                    <input name="items[id][]" value="{{ $item->id }}"
-                                                           type="checkbox" id="md_checkbox_{{ $i }}"
-                                                           class="chk-col-cyan selects "/>
-                                                    <label for="md_checkbox_{{ $i }}"></label>
-                                                </th>
-                                                <td><a href="{{ url('cost_item/activity_cost_item/'.$item->id) }}"> {{$item->title }}</a></td>
-                                                <td>
-                                                    {{ !empty($parentActivity) ? $parentActivity->title : '-' }}
-                                                </td>
-                                                <td>
-                                                    {{ isset($item->hasOneProject->projectName) ? $item->hasOneProject->projectName : "-" }}
-                                                </td>
+                                                        class="dis-none"
+
+                                                        @endif class="btn btn-xs btn-danger waves-effect"
+                                                        href="@if (!empty($project)){{ route($ParentRouteName.'.destroy',['id'=>$item->id,'projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}@endif"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top" title="Trash"> <i
+                                                                    class="material-icons">delete</i></a>
+
+                                                    </td>
+                                                </tr>
+                                                <?php $i++; ?>
+                                                @if(count($subActivities))
+                                                    @foreach ($subActivities as $item)
+                                                        <tr @if (Auth::id()==$item->id) class="bg-tr" @endif >
+                                                            <th class="text-center">
+                                                                <input name="items[id][]" value="{{ $item->id }}"
+                                                                    type="checkbox" id="md_checkbox_{{ $i }}"
+                                                                    class="chk-col-cyan selects "/>
+                                                                <label for="md_checkbox_{{ $i }}"></label>
+                                                            </th>
+                                                            <td>
+                                                                    - <a href="@if(!empty($project)){{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id])}}@else{{ route('cost_item')}}@endif"> {{$item->title }}</a>
+                                                            </td>
+                                                            <td>     
+                                                                {{$item->activity_code ? $item->activity_code : ''}}
+                                                            </td>
+                                                            <td>
+                                                                {{ isset($item->hasOneProject->projectName) ? $item->hasOneProject->projectName : "-" }}
+                                                            </td>
+                                                            
+                                                            <td class="tdTrashAction">
+                                                                <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs btn-info waves-effect" href="@if (!empty($project)){{ route($ParentRouteName.'.edit',['id'=>$item->id,'projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
+
+                                                                <a data-target="#largeModal"
+                                                                class="btn btn-xs btn-success waves-effect ajaxCall hidden"
+                                                                href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}"
+                                                                data-toggle="tooltip"
+                                                                data-placement="top" title="Preview"><i
+                                                                            class="material-icons">pageview</i></a>
+        
+                                                                <a @if ($delete==0) class="dis-none"@endif class="btn btn-xs btn-danger waves-effect" href="@if (!empty($project)){{ route($ParentRouteName.'.destroy',['id'=>$item->id,'projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}@endif"
+                                                                data-toggle="tooltip"
+                                                                data-placement="top" title="Trash"> <i
+                                                                            class="material-icons">delete</i></a>
+        
+                                                            </td>
+                                                            <?php $i++; ?>
+
+                                                        </tr>        
+                                                    @endforeach
+                                                @endif
                                                 
-                                                <td class="tdTrashAction">
-                                                    <a @if ($edit==0)
-
-                                                            class="dis-none"
-
-                                                       @endif class="btn btn-xs btn-info waves-effect"
-                                                       href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}"
-                                                       data-toggle="tooltip"
-                                                       data-placement="top" title="Edit"><i
-                                                                class="material-icons">mode_edit</i></a>
-                                                    <a data-target="#largeModal"
-                                                       class="btn btn-xs btn-success waves-effect ajaxCall hidden"
-                                                       href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}"
-                                                       data-toggle="tooltip"
-                                                       data-placement="top" title="Preview"><i
-                                                                class="material-icons">pageview</i></a>
-
-                                                    <a @if ($delete==0)
-
-                                                       class="dis-none"
-
-                                                       @endif class="btn btn-xs btn-danger waves-effect"
-                                                       href="{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}"
-                                                       data-toggle="tooltip"
-                                                       data-placement="top" title="Trash"> <i
-                                                                class="material-icons">delete</i></a>
-
-                                                </td>
-                                            </tr>
-                                        <?php $i++; ?>
-                                        @endforeach
+                                            @endforeach
+                                        @endif
 
                                     
                                     <thead>
@@ -207,8 +210,8 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                         </th>
 
                                         <th>Activity</th>
-                                        <th>Parent Activity</th>
-                                        <th>Status</th>                                        
+                                        <th>Activity code</th>
+                                        <th>Project</th>                                        
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -218,6 +221,20 @@ $trash_show = config('role_manage.Activity.TrashShow');
                             </div>
 
                             <div class="row body">
+                                <div class="container">
+                                    <div class="activity-main-btn">
+                                        <a class="btn btn-xs btn-info waves-effect"
+                                       href="{{ route($ParentRouteName)  }}">All({{ $ModelName::all()->count() }})</a>
+                                    
+                                    <a @if ( $trash_show==0)
+                                       class="dis-none"
+                                       @endif
+                                        class="btn btn-xs btn-danger"
+                                       href="{{ route($ParentRouteName.'.trashed') }}">Trash({{ $ModelName::onlyTrashed()->count()  }}
+                                        )</a>
+                                    </div>
+
+                                </div>
                                 <div class="m-0 col-md-2 col-lg-2 col-sm-2">
                                     <div class="form-group">
                                         <div class="form-line">

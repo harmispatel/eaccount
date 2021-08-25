@@ -132,6 +132,7 @@ $trash_show = config('role_manage.Department.TrashShow');
                                         </th>
 
                                         <th>Department Name</th>
+                                        <th>Department code</th>
                                         <!-- <th>parent</th> -->
                                         <th>Head of Department</th>
                                         <th>Action</th>
@@ -154,6 +155,7 @@ $trash_show = config('role_manage.Department.TrashShow');
                                                     <label for="md_checkbox_{{ $i }}"></label>
                                                 </th>
                                                 <td>{{ $item->departmentName }}</td>
+                                                <td>{{ $item->department_code ? $item->department_code : '' }}</td>
                                                 <!-- <td>{{ $item->parent_id }}</td> -->
                                                 <td>
                                                     {{ isset($item->hasOneHead->name) ? $item->hasOneHead->name : 'Not Assigned Yet' }}
@@ -201,6 +203,7 @@ $trash_show = config('role_manage.Department.TrashShow');
                                         </th>
 
                                         <th>Department Name</th>
+                                        <th>Department Code</th>
                                         <!-- <th>parent</th> -->
                                         <th>Head of Department</th>
                                         <th>Action</th>

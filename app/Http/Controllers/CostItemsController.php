@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Cost_item;
 use App\Activity;
+use App\Projects;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,16 +27,17 @@ class CostItemsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        
-        $activity = $this->parentModel::orderBy('created_at')->paginate(60);
-        return view($this->parentView . '.index',['items'=>$activity]);
-    }
-    public function activityCostItems($activityId)
-    {
+    public function index(Request $request)
+    {   
+        // echo "<pre>";
+        // print_r($request->all());
+        // exit;
+        $projectId = $request->projectId; 
+        $activityId = $request->activityId; 
+        $project = Projects::find($projectId);
+        $activitySelect = Activity::find($activityId);
         $activity = $this->parentModel::where('main_activity_id',$activityId)->orderBy('created_at')->paginate(60);
-        return view($this->parentView . '.index',['items'=> $activity]);
+        return view($this->parentView . '.index',['items'=> $activity,'activity'=>$activitySelect,'projectId'=>$projectId,'project'=>$project]);
     }
     
     /**
@@ -86,10 +88,10 @@ class CostItemsController extends Controller
     }
     public function redirectButton($request,$object) {
         if($request->submitType == "saveAndClose"){
-            return redirect()->route($this->parentRoute);
+            return redirect()->route($this->parentRoute,['activityId'=>$request->selectedActivityId,'projectId'=>$request->selectedProjectId]);
         }
         elseif($request->submitType == "saveAndNew"){
-            return redirect()->route($this->parentRoute.'.create');
+            return redirect()->route($this->parentRoute.'.create',['activityId'=>$request->selectedActivityId,'projectId'=>$request->selectedProjectId]);
         }
         elseif($request->submitType == "saveAndCopy"){
             $costItemNew = new Cost_item;
@@ -106,10 +108,11 @@ class CostItemsController extends Controller
             $costItemNew->frequency = $request->frequency;
             $costItemNew->status = $request->status;
             $costItemNew->save();
-            return redirect()->route($this->parentRoute);
+            // return redirect()->route($this->parentRoute);
+            return redirect()->route($this->parentRoute,['activityId'=>$request->selectedActivityId,'projectId'=>$request->selectedProjectId]);
         }
         elseif($request->submitType == "save"){
-            return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id]);
+            return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id,'activityId'=>$request->selectedActivityId,'projectId'=>$request->selectedProjectId]);
         }
     }
     /**
@@ -213,14 +216,13 @@ class CostItemsController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
 
         $user = Cost_item::find($id);
         $user->delete();
         Session::flash('success', "Successfully Trashed");
-        // return redirect()->back();
-        return redirect()->route($this->parentRoute);
+        return redirect()->route($this->parentRoute,['activityId'=>$request->activityId,'projectId'=>$request->projectId]);
     }
 
 

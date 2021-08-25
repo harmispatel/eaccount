@@ -45,6 +45,12 @@ class Activity extends Model
     {
         return $this->hasOne('App\Activity','id','parent_id')->where('parent_id', '!=' ,0);
     }
-        
-    
+    public function hasManySubActivity()
+    {
+        return $this->hasMany('App\Activity','parent_id','id')->where('parent_id', '!=' ,0);
+    }
+    public function hasOneDepartment()
+    {
+        return $this->hasOne('App\Department','id','department_id');
+    }
 }
