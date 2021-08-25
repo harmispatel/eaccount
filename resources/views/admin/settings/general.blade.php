@@ -60,10 +60,15 @@ $ParentRouteNamebankaccount = 'settings.bankaccount';
 $moduleNamesupportDonor = " Support Donor Settings Manage";
 $createItemNamesupportDonor = "Update" . $moduleNamesupportDonor;
 
+$moduleNameregion = " Region Settings Manage";
+$createItemNameregion = "Update" . $moduleNameregion;
+
 $breadcrumbMainName = $moduleNamesupportDonor;
 $breadcrumbCurrentName = " Update";
 
 $ParentRouteNamesupportDonor = 'settings.supportDonor';
+
+$ParentRouteNameregion = 'settings.region';
 
 
 $moduleNameorgenozationLeader = " Organization Leadership Settings Manage";
@@ -122,6 +127,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                             <li><a data-toggle="tab" href="#bankaccountsetting">Bank account</a></li>
                             <li><a data-toggle="tab" href="#supportDonorsetting">Support Donors</a></li>
                             <li><a data-toggle="tab" href="#orgenizationLeader">Organization Leader</a></li>
+                            <li><a data-toggle="tab" href="#region">Region</a></li>
                         </ul>
                     <div class="tab-content">
                          <!-- general setting start -->
@@ -251,7 +257,6 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                         </div>
 
                         <!-- general setting end -->
-
 
                         <!-- system setting start -->
 
@@ -1698,6 +1703,105 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                         </div>
 
                         <!-- Orgenization leadership setting end -->
+
+                        <!-- Region setting start -->
+
+                        <div id="region" class="tab-pane fade ">
+                            <div class="header">
+                                <h2>
+                                    {{ $createItemNameregion }}
+                                </h2>
+                                <br>
+                                <div class="body">
+                                    <form enctype="multipart/form-data" class="form" id="form_validation" method="post"
+                                          action="{{ route($ParentRouteNameregion.'.addnew') }}">
+
+                                        {{ csrf_field() }}
+                                        <div class="row clearfix">
+
+                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input name="region" type="text"
+                                                               class="form-control" value="">
+                                                        <label class="form-label">Region</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-line">
+                                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                        Add New
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+                                </div>
+
+
+                                <div>
+                                    <!-- <form enctype="multipart/form-data" class="form" id="form_validation" method="post" action="{{ route($ParentRouteNamesupportDonor.'.update') }}"> -->
+                                    <table class="table table-hover table-bordered table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Region</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+
+                                        <?php $i = 1; ?>
+                                        @if(count($region)>0)
+                                            @foreach($region as $regionone)
+                                                    
+                                            <tr>
+                                                <td> {{ $regionone->id }}</td>
+                                                <td><!-- <input name="supportDonor" type="text" class="form-control" value="{{ $donor->supportDonor }}"> -->{{ $regionone->name }} </td>
+                                                <td class="tdTrashAction">
+                                                    <a 
+                                                        class="btn btn-xs btn-danger waves-effect" onclick="return confirm('Do you want to Delete?');"
+                                                       href="{{ route($ParentRouteNameregion.'.destroy',['id'=>$regionone->id]) }}"
+                                                       data-toggle="tooltip"
+                                                       data-placement="top" title="Delete"> <i
+                                                                class="material-icons">delete</i></a>
+
+
+                                                </td>
+                                            </tr>
+                                        <?php $i++; ?>
+                                            @endforeach
+                                        @endif
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Region</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+
+                                        </tbody>
+                                    </table>
+                                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="form-line">
+                                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </div> -->
+                                        <!-- </form> -->
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Region setting end -->
 
 
 

@@ -19,7 +19,8 @@ class Projects extends Model
     protected $fillable = [
         'projectName',
         'region',
-        'donor',
+        'over_budget',
+        'total_budget',
         'coordinator',
         'status',
         
@@ -39,7 +40,15 @@ class Projects extends Model
     {
        return $this->hasOne('App\User','id','coordinator');
     }
- 
+    public function hasManyProjecttodonor()
+    {
+       return $this->hasMany('App\Projecttodonor','project_id','id');
+    }
+    public function hasOneRegion()
+    {
+       return $this->hasOne('App\Region','id','region');
+    }
+    
 
 
 
