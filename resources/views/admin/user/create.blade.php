@@ -137,10 +137,25 @@ $ParentRouteName = 'user';
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
                                                         <select data-live-search="true" class="form-control show-tick search-choice" name="position_id"
-                                                                id="department_id">
+                                                                id="position_id">
                                                             <option value="0" class="font-custom-bold">Select User Position</option>
                                                             @foreach(App\Orgenizationleader::all() as $Orgenizationleaderone)
                                                                 <option value="{{$Orgenizationleaderone->id}}"> {{ $Orgenizationleaderone->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <select data-live-search="true" multiple class="form-control show-tick search-choice" name="suppoprt_department[]"
+                                                                id="suppoprt_department">
+                                                            <option value="0" class="font-custom-bold">Select Support Department</option>
+                                                            @foreach(App\Department::all() as $department)
+                                                                <option value="{{$department->id}}"> {{ $department->departmentName }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -247,6 +262,8 @@ $ParentRouteName = 'user';
                                             </div>
 
                                         </div>
+
+                                        <input value="" name="submitType" id="submitType" type="hidden" value="">
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
@@ -391,6 +408,7 @@ $ParentRouteName = 'user';
                 role_manage_id: 'role_manage_id',
                 department_id: 'department_id',
                 position_id: 'position_id',
+                suppoprt_department: 'suppoprt_department',
             };
 
             return {
@@ -407,6 +425,7 @@ $ParentRouteName = 'user';
                         get_role_manage_id: document.getElementById(DOMString.role_manage_id),
                         getDepartment_id: document.getElementById(DOMString.department_id),
                         getPosition_id: document.getElementById(DOMString.position_id),
+                        getSuppoprt_department: document.getElementById(DOMString.suppoprt_department),
                     }
                 },
                 getInputsValue: function () {
@@ -419,6 +438,7 @@ $ParentRouteName = 'user';
                         role_manage_id: Fields.get_role_manage_id.value == "" ? 0 : Fields.get_role_manage_id.value,
                         department_id: Fields.getDepartment_id.value == "" ? 0 : Fields.getDepartment_id.value,
                         position_id: Fields.getPosition_id.value == "" ? 0 : Fields.getPosition_id.value,
+                        suppoprt_department: Fields.getSuppoprt_department.value == "" ? 0 : Fields.getSuppoprt_department.value,
                     }
                 },
 

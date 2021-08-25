@@ -154,22 +154,19 @@ $ParentRouteName = 'project';
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                {{-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                    Update
-                                                </button> --}}
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <div class="form-line">
                                                         <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update
+                                                            Save
                                                         </button>
                                                         <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update & New
+                                                            Save & New
                                                         </button>
                                                         <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update & Copy
+                                                            Save & Copy
                                                         </button>
                                                         <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update & Close
+                                                            Save & Close
                                                         </button>
                                                     </div>
                                                 </div>

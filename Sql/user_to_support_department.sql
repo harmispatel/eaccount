@@ -1,0 +1,1 @@
+CREATE TABLE `eaccount`.`user_to_support_department` ( `id` INT NOT NULL AUTO_INCREMENT , `user_id` INT NOT NULL , `department_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

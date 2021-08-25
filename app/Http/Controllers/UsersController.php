@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Profile;
+use App\Usertodepartment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -94,6 +95,16 @@ class UsersController extends Controller
                 $temporaryName = time() . $legal_documents->getClientOriginalName();
                 $legal_documents->move("public/upload/legal_documents/", $temporaryName);
                 $profile->legal_documents = 'upload/legal_documents/' . $temporaryName;
+            }
+        }else if($user->role_manage_id == "3"){
+            if(((isset($request->suppoprt_department)) && (count($request->suppoprt_department)>0))){
+                $del = Usertodepartment::where('user_id',$user->id)->delete();
+                foreach($request->suppoprt_department as $key => $suppoprt_departmentone){
+                    $donr = new Usertodepartment;
+                    $donr->user_id = $user->id;
+                    $donr->department_id = $suppoprt_departmentone;
+                    $donr->save();
+                }
             }
         }
         $profile->save();
@@ -212,8 +223,18 @@ class UsersController extends Controller
                 $profile->legal_documents = 'upload/legal_documents/' . $temporaryName;
             }
             $profile->save();
+        }else if($user->role_manage_id == "3"){
+            if(((isset($request->suppoprt_department)) && (count($request->suppoprt_department)>0))){
+                $del = Usertodepartment::where('user_id',$id)->delete();
+                foreach($request->suppoprt_department as $key => $suppoprt_departmentone){
+                    $donr = new Usertodepartment;
+                    $donr->user_id = $id;
+                    $donr->department_id = $suppoprt_departmentone;
+                    $donr->save();
+                }
+            }
         }
-        
+
         $user->save();
         Session::flash('success', "Update Successfully");
         // return redirect()->route($this->parentRoute);

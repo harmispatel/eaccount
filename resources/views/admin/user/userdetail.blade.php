@@ -54,7 +54,11 @@ $ParentRouteName = 'user';
                                 <div class="user_left_detail">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            
+                                            <div class="project_detail">
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
+                                                <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="project_detail">
@@ -64,7 +68,11 @@ $ParentRouteName = 'user';
                                             </div>
                                         </div>
                                         <div class="col-md-6">
-                                            
+                                            <div class="project_detail">
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
+                                                <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                            </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="project_detail">
@@ -81,7 +89,7 @@ $ParentRouteName = 'user';
                                 @if($item->profile->avatar != "")
                                     <img src="{{ url('/').'/'.$item->profile->avatar }}">
                                 @else
-                                    <img src="https://www.pngkey.com/png/detail/157-1579943_no-profile-picture-round.png">
+                                    <img class="width-140 height-140" src="{{ asset('upload/avatar/avatar.png') }}">
                                 @endif
                                 </div>
                                 <div class="user_text">
@@ -92,91 +100,174 @@ $ParentRouteName = 'user';
                                     <h3>{{ isset($item->hasOneDepartment->departmentName) ? $item->hasOneDepartment->departmentName : "" }}</h3>
                                 </div>
                             </div>
-                            
-                        </div>
-                    </div>
-                </div> 
-            </div>
-            <div class="card">
-                <div class="user_info_main">
-                    <div class="user_head">
-                        <h2>{{ $item->name ? $item->name : ""  }}</h2>
-                        <a href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}">Update</a>
-                    </div>
-                    <div class="user_info">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6">   
-                                    <div class="user_filed">
-                                        <table class="table table-style1">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="right">EMP ID:</td>
-                                                    <td> 4154435</td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right">Name:</td>
-                                                    <td> {{ $item->name ? $item->name : "" }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right">Joining Date:</td>
-                                                    <td> {{ $item->created_at ? $item->created_at : "" }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right">Email:</td>
-                                                    <td> {{ $item->email ? $item->email : "" }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right">Parent Address:</td>
-                                                    <td> {{ $item->profile->present_address ? $item->profile->present_address : "" }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>  
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="user_filed">
-                                        <table class="table table-style1">
-                                            <tbody>
-                                                <tr>
-                                                    <td align="right">Full Name:</td>
-                                                    <td> {{ $item->profile->first_name ? $item->profile->first_name : ""  }} {{ $item->profile->last_name ? $item->profile->last_name : ""  }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right">Password:</td>
-                                                    <td><a href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}">Change Password</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right">Gender:</td>
-                                                    <td>
-                                                        @if($item->profile->gender == 1)
-                                                            Male
-                                                        @elseif($item->profile->gender == 2)
-                                                            Female
-                                                        @elseif($item->profile->gender == 3)
-                                                            Common
-                                                        @elseif($item->profile->gender == 4)
-                                                            Not Willing To Say
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right">Mothers Name:</td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td align="right">Phone:</td>
-                                                    <td> {{ $item->profile->phone_number ? $item->profile->phone_number : "" }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                            <div class="col-md-5">
+                                <div class="user_left_detail">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="project_detail">
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
+                                                <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="project_detail">
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
+                                                <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="project_detail">
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
+                                                <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="project_detail">
+                                                <p>6</p>
+                                                <p>Completed Tasks</p>
+                                                <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div> 
+            </div>
+            
+            <div class="card">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#basicDetails">Basic Details</a></li>
+                    <li><a data-toggle="tab" href="#bankDetails">Bank Details</a></li>
+                    <li><a data-toggle="tab" href="#documentDetails">Document Details</a></li>
+                    <li><a data-toggle="tab" href="#paymentRequsitions">Payment Requsitions</a></li>
+                    <li><a data-toggle="tab" href="#paymentVouchers">Payment Vouchers</a></li>
+                    <li><a data-toggle="tab" href="#paymentSettlement">Payment Settlement</a></li>
+                    <li><a data-toggle="tab" href="#budgetMoniter">Budget Moniter</a></li>
+                    <li><a data-toggle="tab" href="#attchment">Attchment</a></li>
+                    <li><a data-toggle="tab" href="#cv">Cv</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="basicDetails" class="tab-pane fade in active">
+                        <div class="user_info_main">
+                            <div class="user_head">
+                                <h2>{{ $item->name ? $item->name : ""  }}</h2>
+                                <a href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}">Update</a>
+                            </div>
+                            <div class="user_info">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-6">   
+                                            <div class="user_filed">
+                                                <table class="table table-style1">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="right">EMP ID:</td>
+                                                            <td> 4154435</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="right">Name:</td>
+                                                            <td> {{ $item->name ? $item->name : "" }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="right">Joining Date:</td>
+                                                            <td> {{ $item->created_at ? $item->created_at : "" }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="right">Email:</td>
+                                                            <td> {{ $item->email ? $item->email : "" }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="right">Parent Address:</td>
+                                                            <td> {{ $item->profile->present_address ? $item->profile->present_address : "" }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>  
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="user_filed">
+                                                <table class="table table-style1">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="right">Full Name:</td>
+                                                            <td> {{ $item->profile->first_name ? $item->profile->first_name : ""  }} {{ $item->profile->last_name ? $item->profile->last_name : ""  }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="right">Password:</td>
+                                                            <td><a href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}">Change Password</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="right">Gender:</td>
+                                                            <td>
+                                                                @if($item->profile->gender == 1)
+                                                                    Male
+                                                                @elseif($item->profile->gender == 2)
+                                                                    Female
+                                                                @elseif($item->profile->gender == 3)
+                                                                    Common
+                                                                @elseif($item->profile->gender == 4)
+                                                                    Not Willing To Say
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        <tr> 
+                                                            <td align="right">Mothers Name:</td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="right">Phone:</td>
+                                                            <td> {{ $item->profile->phone_number ? $item->profile->phone_number : "" }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="bankDetails" class="tab-pane fade in">
+                        <h2>BankDetails</h2>
+                    </div>
+
+                    <div id="documentDetails" class="tab-pane fade in">
+                        <h2>documentDetails</h2>
+                    </div>
+
+                    <div id="paymentRequsitions" class="tab-pane fade in">
+                        <h2>paymentRequsitions</h2>
+                    </div>
+
+                    <div id="paymentVouchers" class="tab-pane fade in">
+                        <h2>paymentVouchers</h2>
+                    </div>
+
+                    <div id="paymentSettlement" class="tab-pane fade in">
+                        <h2>paymentSettlement</h2>
+                    </div>
+
+                    <div id="budgetMoniter" class="tab-pane fade in">
+                        <h2>budgetMoniter</h2>
+                    </div>
+
+                    <div id="attchment" class="tab-pane fade in">
+                        <h2>attchment</h2>
+                    </div>
+
+                    <div id="cv" class="tab-pane fade in">
+                        <h2>cv</h2>
+                    </div>
                 </div>
             </div>
+
         </div>
     </section>
 

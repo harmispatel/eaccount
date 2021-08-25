@@ -151,10 +151,35 @@ $ParentRouteName = 'user';
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <?php 
+                                            
+                                                $people = [];
+                                                if(count($item->hasManyUsertodepartment)>0){
+                                                    foreach($item->hasManyUsertodepartment as $key => $one){
+                                                        array_push($people,$one->department_id);
+                                                    }
+                                                }
+                                            ?>
+
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <select data-live-search="true" multiple class="form-control show-tick search-choice" name="suppoprt_department[]"
+                                                                id="suppoprt_department">
+                                                            <option value="0" class="font-custom-bold">Select Support Department</option>
+                                                            @foreach(App\Department::all() as $department)
+                                                                <option value="{{$department->id}}" @if (in_array($department->id,$people )) selected @endif > {{ $department->departmentName ? $department->departmentName : '' }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float" style="margin-top:10px">
-                                                    <input type="checkbox" id="department_head" name="department_head" class="filled-in" @if($item->profile->department_head == "1") checked="checked" @endif>
+                                                    <input type="checkbox" id="department_head" name="department_head" class="filled-in" @if($item->department_head == "1") checked="checked" @endif>
                                                     <label for="department_head">Is Head of Department</label>
                                                 </div>
                                             </div>
@@ -166,7 +191,7 @@ $ParentRouteName = 'user';
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="company_name" type="text" value="{{ $item->profile->company_name }}" class="form-control">
+                                                        <input name="company_name" type="text" value="{{ isset($item->profile->company_name) ? $item->profile->company_name : '' }}" class="form-control">
                                                         <label class="form-label">Company Name</label>
                                                     </div>
                                                 </div>
@@ -175,7 +200,7 @@ $ParentRouteName = 'user';
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="business_registration_no" type="text" class="form-control" value="{{ $item->profile->business_registration_no }}">
+                                                        <input name="business_registration_no" type="text" class="form-control" value="{{ isset($item->profile->business_registration_no) ? $item->profile->business_registration_no : ''  }}">
                                                         <label class="form-label">Business registration no</label>
                                                         
                                                     </div>
@@ -412,6 +437,7 @@ $ParentRouteName = 'user';
                 role_manage_id: 'role_manage_id',
                 department_id: 'department_id',
                 position_id: 'position_id',
+                suppoprt_department: 'suppoprt_department',
             };
 
             return {
@@ -427,6 +453,7 @@ $ParentRouteName = 'user';
                         getRole_manage_id: document.getElementById(DOMString.role_manage_id),
                         getDepartment_id: document.getElementById(DOMString.department_id),
                         getPosition_id: document.getElementById(DOMString.position_id),
+                        getSuppoprt_department: document.getElementById(DOMString.suppoprt_department),
                     }
                 },
                 getInputsValue: function () {
@@ -438,6 +465,7 @@ $ParentRouteName = 'user';
                         role_manage_id: Fields.getRole_manage_id.value == "" ? 0 : Fields.getRole_manage_id.value,
                         department_id: Fields.getDepartment_id.value == "" ? 0 : Fields.getDepartment_id.value,
                         position_id: Fields.getPosition_id.value == "" ? 0 : Fields.getPosition_id.value,
+                        suppoprt_department: Fields.getSuppoprt_department.value == "" ? 0 : Fields.getSuppoprt_department.value,
                     }
                 },
 
