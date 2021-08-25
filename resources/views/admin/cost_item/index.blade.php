@@ -6,7 +6,7 @@
 <?php
 
 
-$moduleName = " Cost_item";
+$moduleName = " Budget_items";
 $createItemName = "Create" . $moduleName;
 
 $breadcrumbMainName = $moduleName;
@@ -46,20 +46,23 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
 
     <section class="content">
         <div class="container-fluid">
+            <div class="block-header pjct-ttl">
+                @if(!empty($project))
+                {{ $project->projectName ? $project->projectName : ''  }} > 
+                @endif
+                @if(!empty($activity))
+                {{ $activity->title ? $activity->title : ''  }}
+                @endif
+            </div>
             <div class="block-header pull-left">
 
-                <a @if ( $create==0 )
-                   class="dis-none"
-                   @endif class="btn btn-sm btn-info waves-effect"
-                   href="{{ route($ParentRouteName.'.create') }}">Add New </a>
-
-
+                <a @if ( $create==0 ) class="dis-none" @endif class="btn btn-sm btn-info waves-effect" href="@if(!empty($activity)){{ route($ParentRouteName.'.create',['activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName.'.create') }}@endif">Add New </a>
+                
+                <a class="btn btn-sm btn-info waves-effect" href="{{ route("activity",["projectId"=>$projectId]) }}"> Back to activities </a>
             </div>
-
             <ol class="breadcrumb breadcrumb-col-cyan pull-right">
                 <li><a href="{{ route('dashboard') }}"><i class="material-icons">home</i> Home</a></li>
-                <li><a href="{{ route($ParentRouteName) }}"><i
-                                class="{{ $breadcrumbMainIcon  }}"></i>{{ $breadcrumbMainName  }}</a></li>
+                <li><a href="@if(!empty($activity)){{ route($ParentRouteName,['activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName) }}@endif"><i class="{{ $breadcrumbMainIcon  }}"></i>{{$moduleName}}</a></li>
                 <li class="active"><i
                             class="material-icons">{{ $breadcrumbCurrentIcon }}</i>{{ $breadcrumbCurrentName }}</li>
             </ol>
@@ -129,8 +132,9 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                             <label for="md_checkbox_p"></label>
                                         </th>
 
-                                        <th>Title</th>
-                                        <th>Description</th>                                        
+                                        <th>Activity code</th>
+                                        <th>Title</th>                                       
+                                        <th>Responsible staff</th>                                        
                                         <th>unit</th>
                                         <th>cost</th>
                                         <th>frequency</th>
@@ -154,9 +158,16 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                            class="chk-col-cyan selects "/>
                                                     <label for="md_checkbox_{{ $i }}"></label>
                                                 </th>
+                                                @php
+                                                    $activityObj = $item->hasOneSubActivity ? $item->hasOneSubActivity : [];
+                                                    $activityObj = empty($activityObj) ? $item->hasOneParentActivity : $activityObj;
+                                                    if(!empty($activityObj)){
+                                                        $department = $activityObj->hasOneDepartment ? $activityObj->hasOneDepartment : [];
+                                                    }   
+                                                @endphp
+                                                <td>{{ !empty($department) ? $department->department_code : '' }}/{{ !empty($activityObj) ? $activityObj->activity_code : '' }}</td>
                                                 <td>{{ $item->title }}</td>
-                                                <td>{{ $item->description }}</td>
-                                                
+                                                <td>{{ !empty($department) ? $department->departmentName : '' }}</td>
                                                 <td>{{ $item->unit }}</td>
                                                 <td>{{ $item->cost }}</td>
                                                 <td>{{ $item->frequency }}</td>
@@ -348,15 +359,8 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                     </td>
                                                 
                                                 <td class="tdTrashAction">
-                                                    <a @if ($edit==0)
-
-                                                            class="dis-none"
-
-                                                       @endif class="btn btn-xs btn-info waves-effect"
-                                                       href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}"
-                                                       data-toggle="tooltip"
-                                                       data-placement="top" title="Edit"><i
-                                                                class="material-icons">mode_edit</i></a>
+                                                   
+                                                    <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs btn-info waves-effect" href="@if(!empty($activity)){{ route($ParentRouteName.'.edit',['id'=>$item->id,'activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
                                                     <a data-target="#largeModal"
                                                        class="btn btn-xs btn-success waves-effect ajaxCall hidden"
                                                        href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}"
@@ -369,7 +373,7 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                        class="dis-none"
 
                                                        @endif class="btn btn-xs btn-danger waves-effect"
-                                                       href="{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}"
+                                                       href="@if(!empty($activity)){{ route($ParentRouteName.'.destroy',['id'=>$item->id,'activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}@endif"
                                                        data-toggle="tooltip"
                                                        data-placement="top" title="Trash"> <i
                                                                 class="material-icons">delete</i></a>
@@ -388,8 +392,9 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                             <label for="md_checkbox_footer"></label>
                                         </th>
 
+                                        <th>Activity code</th>
                                         <th>Title</th>
-                                        <th>Description</th>                                        
+                                        <th>Responsible staff</th>                                                                       
                                         <th>unit</th>
                                         <th>cost</th>
                                         <th>frequency</th>

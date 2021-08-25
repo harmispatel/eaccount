@@ -59,6 +59,7 @@ class DepartmentController extends Controller
         ]);
 
         $user = Department::create([
+            'department_code' => $request->department_code,
             'departmentName' => $request->departmentName,
             'status' => $request->status,
             
@@ -119,6 +120,7 @@ class DepartmentController extends Controller
 
         $user = Department::find($id);
         $user->departmentName = $request->departmentName;
+        $user->department_code = $request->department_code;
         $user->status = $request->status;
 
         $user->save();

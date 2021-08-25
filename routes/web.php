@@ -315,10 +315,6 @@ Route::group(['middleware' => 'auth'], function () {
         'uses' => 'ActivitysController@trashedAction',
         'as' => 'activity.trashed.action'
     ]);
-    Route::get('/project/project_activity/{projectId}', [
-        'uses' => 'ActivitysController@projectActivity',
-        'as' => 'activity.project_activity'
-    ]);
     //end activity
 
         //    Cost_item
@@ -407,10 +403,7 @@ Route::group(['middleware' => 'auth'], function () {
             'uses' => 'CostItemsController@update_status',
             'as' => 'cost_item.update_status'
         ]);
-        Route::get('/cost_item/activity_cost_item/{activityId}', [
-            'uses' => 'CostItemsController@activityCostItems',
-            'as' => 'activity.activity_cost_item'
-        ]);
+
         //end Cost_item
 
     //    department start

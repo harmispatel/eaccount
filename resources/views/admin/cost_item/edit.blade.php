@@ -4,7 +4,7 @@
 
 <?php
 
-$moduleName = " Cost_item";
+$moduleName = " Budget_items";
 $createItemName = "Create" . $moduleName;
 
 $breadcrumbMainName = $moduleName;
@@ -15,7 +15,8 @@ $breadcrumbCurrentIcon = "archive";
 
 $ModelName = 'App\Cost_item';
 $ParentRouteName = 'cost_item';
-
+$projectId = Request::get('projectId');
+$activityId = Request::get('activityId');
 ?>
 
 
@@ -165,6 +166,8 @@ $ParentRouteName = 'cost_item';
                                             </div>
                                         </div>
                                         <input value="" name="submitType" id="submitType" type="hidden" value="">
+                                        <input name="selectedProjectId" id="selectedProjectId" type="hidden" value="{{$projectId}}">
+                                        <input name="selectedActivityId" id="selectedActivityId" type="hidden" value="{{$activityId}}">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

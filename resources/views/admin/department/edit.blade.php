@@ -72,6 +72,15 @@ $ParentRouteName = 'department';
                                             </div>
                                         </div>
 
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input autofocus value="{{ $item->department_code ? $item->department_code : ''  }}" name="department_code" type="text"
+                                                           class="form-control">
+                                                    <label class="form-label">Department Code</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         
 
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">

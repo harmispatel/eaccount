@@ -54,8 +54,6 @@ $trash_show = config('role_manage.Project.TrashShow');
                    class="dis-none"
                    @endif class="btn btn-sm btn-info waves-effect"
                    href="{{ route($ParentRouteName.'.create') }}">Add New </a>
-
-
             </div>
 
             <ol class="breadcrumb breadcrumb-col-cyan pull-right">
@@ -159,7 +157,7 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                            class="chk-col-cyan selects "/>
                                                     <label for="md_checkbox_{{ $i }}"></label>
                                                 </th>
-                                                <td><a href="{{ url('project/project_activity/'.$project->id) }}"> {{$project->projectName ? $project->projectName : '' }}</a></td>
+                                                <td><a href="{{ route('activity',['projectId'=>$project->id]) }}"> {{$project->projectName ? $project->projectName : '' }}</a></td>
                                                 <td>{{ $project->region ? $project->region : '' }}</td>
                                                 <td>{{ !empty($supportDonor) ? $supportDonor->supportDonor : '-' }}</td>
                                                 <td>{{ !empty($user) ? $user->name : '-' }}</td>

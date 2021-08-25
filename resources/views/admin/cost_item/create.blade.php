@@ -3,7 +3,7 @@
 {{--Important Variables--}}
 
 <?php
-$moduleName = " Cost_item";
+$moduleName = " Budget_items";
 $createItemName = "Create" . $moduleName;
 
 $breadcrumbMainName = $moduleName;
@@ -15,6 +15,8 @@ $breadcrumbCurrentIcon = "archive";
 $ModelName = 'App\Cost_item';
 $ParentRouteName = 'cost_item';
 
+$projectId = Request::get('projectId');
+$activityId = Request::get('activityId');
 ?>
 
 @section('title')
@@ -147,6 +149,8 @@ $ParentRouteName = 'cost_item';
                                         </div>
                                         <input value="" name="submitType" id="submitType" type="hidden" value="">
 
+                                        <input name="selectedProjectId" id="selectedProjectId" type="hidden" value="{{$projectId}}">
+                                        <input name="selectedActivityId" id="selectedActivityId" type="hidden" value="{{$activityId}}">
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">

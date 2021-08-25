@@ -14,7 +14,7 @@ $breadcrumbCurrentIcon = "archive";
 
 $ModelName = 'App\Activity';
 $ParentRouteName = 'activity';
-
+$projectId = Request::get('projectId');
 ?>
 
 @section('title')
@@ -68,8 +68,9 @@ $ParentRouteName = 'activity';
                                                     <select data-live-search="true" class="form-control show-tick search-choice" name="project_id"
                                                             id="project_id">
                                                         <option value="0" class="font-custom-bold">Select Project</option>
+                                                        
                                                         @foreach(App\Projects::all() as $project)
-                                                            <option value="{{$project->id}}"> {{ $project->projectName }}
+                                                            <option value="{{$project->id}}" @if($projectId == $project->id) selected @endif> {{ $project->projectName }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -105,6 +106,15 @@ $ParentRouteName = 'activity';
                                                     <input autofocus value="{{ old('title')  }}" name="title" type="text"
                                                            class="form-control" required aria-required="true">
                                                     <label class="form-label">Name</label> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input autofocus value="{{ old('activity_code')  }}" name="activity_code" type="text"
+                                                           class="form-control" required aria-required="true">
+                                                    <label class="form-label">Activity Code</label> 
                                                 </div>
                                             </div>
                                         </div>
@@ -163,8 +173,29 @@ $ParentRouteName = 'activity';
                                         </div>                                        -->
                                         
                                         <input value="" name="submitType" id="submitType" type="hidden" value="">
+                                        <input name="selectedProjectId" id="selectedProjectId" type="hidden" value="{{$projectId}}">
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="button">
+                                                <button type="button" onclick="changeSubmitType('save')" class="one">
+                                                    <div class="btn-new-style"><i class="fa fa-home"></i></div>Save
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="one save-frm-btn">
+                                                    <div class="btn-new-style"><i class="fa fa-check"></i></div> Save & New
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="one save-frm-btn">
+                                                    <div class="btn-new-style"><i class="fa fa-plus"></i></div>Save & Copy
+                                                </button>
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="one save-frm-btn save-frm-btn-cls">
+                                                    <div class="btn-new-style"><i class="fa fa-times-circle"></i></div>Save & Close
+                                                </button>
+                                                {{-- <a href="#" class="one "><div class="btn-new-style"><i class="fa fa-home"></i></div>Home </a> --}}
+                                                {{-- <a href="#" class="one two"><div class="btn-new-style"><i class="fa fa-home"></i></div>Home </a> 
+                                                <a href="#" class="one three"><div class="btn-new-style"><i class="fa fa-home"></i></div>Home </a>
+                                                <a href="#" class="one"><div class="btn-new-style"><i class="fa fa-home"></i></div>Home </a> --}}
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
                                                 <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
                                                     Save
@@ -179,7 +210,7 @@ $ParentRouteName = 'activity';
                                                     Save & Close
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
 
                                     </div>

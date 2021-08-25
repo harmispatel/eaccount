@@ -27,15 +27,13 @@ class ActivitysController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $activity = $this->parentModel::with('hasOneParentActivity')->orderBy('created_at')->paginate(60);
-        return view($this->parentView . '.index',['items'=>$activity]);
-    }
-    public function projectActivity($projectId)
-    {
+        $projectId = $request->projectId;
         $project = Projects::find($projectId);
-        $activity = $this->parentModel::with('hasOneParentActivity')->where('project_id',$projectId)->orderBy('created_at')->paginate(60);
+        $activity = $this->parentModel::with(['hasManySubActivity'=>function ($query) use ($projectId) {
+            $query->where('project_id', $projectId);
+        },'hasOneParentActivity'])->where('parent_id',0)->where('project_id',$projectId)->orderBy('created_at')->paginate(60);
         return view($this->parentView . '.index',['items'=>$activity,'project'=>$project]);
     }
     /**
@@ -71,6 +69,7 @@ class ActivitysController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'parent_id' => $request->parent_id,
+            'activity_code' => $request->activity_code,
             // 'status' => $request->status,
             'project_id' => $request->project_id,
             'department_id' => $request->department_id,
@@ -91,7 +90,7 @@ class ActivitysController extends Controller
 
         Session::flash('success', "Successfully  Create");
         // return redirect()->back();
-        $redirect = $this->redirectButton($request,$user);
+        $redirect = $this->redirectButton($request,$user,);
         return $redirect;
         // return redirect()->route($this->parentRoute);
 
@@ -99,10 +98,10 @@ class ActivitysController extends Controller
 
     public function redirectButton($request,$object) {
         if($request->submitType == "saveAndClose"){
-            return redirect()->route($this->parentRoute);
+            return redirect()->route($this->parentRoute,['projectId'=>$request->selectedProjectId]);
         }
         elseif($request->submitType == "saveAndNew"){
-            return redirect()->route($this->parentRoute.'.create');
+            return redirect()->route($this->parentRoute.'.create',['projectId'=>$request->selectedProjectId]);
         }
         elseif($request->submitType == "saveAndCopy"){
             $user = Activity::create([
@@ -110,6 +109,7 @@ class ActivitysController extends Controller
                 'description' => $request->description,
                 'parent_id' => $request->parent_id,
                 'project_id' => $request->project_id,
+                'activity_code' => $request->activity_code,
                 'department_id' => $request->department_id,
                 'status' => 1,
             ]);
@@ -123,10 +123,10 @@ class ActivitysController extends Controller
                     $quarter->save();
                 }
             }
-            return redirect()->route($this->parentRoute);
+            return redirect()->route($this->parentRoute,['projectId'=>$request->selectedProjectId]);
         }
         elseif($request->submitType == "save"){
-            return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id]);
+            return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id,'projectId'=>$request->selectedProjectId]);
         }
     }
 
@@ -188,6 +188,7 @@ class ActivitysController extends Controller
         $user->description = $request->description;
         $user->parent_id = $request->parent_id;
         $user->project_id = $request->project_id;
+        $user->activity_code = $request->activity_code;
         $user->department_id = $request->department_id;
 
         if((isset($request->quarter)) && (count($request->quarter)>0)){
@@ -230,9 +231,8 @@ class ActivitysController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
-        
         $user = Activity::with('hasManyCost_item')->find($id);
         $costItems = $user->hasManyCost_item ? $user->hasManyCost_item : [];
         if(count($costItems)){
@@ -241,7 +241,7 @@ class ActivitysController extends Controller
         }
         $user->delete();
         Session::flash('success', "Successfully Trashed");
-        return redirect()->route($this->parentRoute);
+        return redirect()->route($this->parentRoute,['projectId'=>$request->projectId]);
     }
 
 
