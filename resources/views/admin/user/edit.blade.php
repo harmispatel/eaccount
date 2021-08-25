@@ -105,7 +105,7 @@ $ParentRouteName = 'user';
                                                 <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick search-choice" name="role_manage_id"
                                                             id="role_manage_id">
-                                                        <option value="0" >Select User Role</option>
+                                                        <option value="0" class="font-custom-bold">Select User Role</option>
                                                         @foreach(App\RoleManage::all() as $role)
                                                             <option @if ($item->role_manage_id==$role->id)
                                                                     selected
@@ -123,7 +123,7 @@ $ParentRouteName = 'user';
                                                     <div class="form-line">
                                                         <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
                                                                 id="department_id">
-                                                            <option value="0" >Select User Department</option>
+                                                            <option value="0" class="font-custom-bold">Select User Department</option>
                                                             @foreach(App\Department::all() as $department)
                                                                 <option @if ($item->department_id ==$department->id)
                                                                         selected
@@ -140,7 +140,7 @@ $ParentRouteName = 'user';
                                                     <div class="form-line">
                                                         <select data-live-search="true" class="form-control show-tick search-choice" name="position_id"
                                                                 id="department_id">
-                                                            <option value="0" >Select User Position</option>
+                                                            <option value="0" class="font-custom-bold">Select User Position</option>
                                                             @foreach(App\Orgenizationleader::all() as $Orgenizationleaderone)
                                                                 <option @if ($item->position_id ==$Orgenizationleaderone->id)
                                                                         selected
