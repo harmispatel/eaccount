@@ -45,6 +45,6 @@ class Activity extends Model
     {
         return $this->hasOne('App\Activity','id','parent_id')->where('parent_id', '!=' ,0);
     }
-    
+        
     
 }

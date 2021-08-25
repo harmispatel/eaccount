@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Projects;
 use App\Profile;
 use App\SupportDonor;
+use App\Projecttodonor;
+use App\Region;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,8 +44,9 @@ class ProjectsController extends Controller
     public function create()
     {  
         $supportDonors = SupportDonor::get();
+        $region = Region::get();
         $users = User::get();
-        return view($this->parentView . '.create',['supportDonors'=>$supportDonors,'users'=>$users]);
+        return view($this->parentView . '.create',['supportDonors'=>$supportDonors,'users'=>$users,'region'=>$region]);
     }
 
     /**
@@ -58,7 +61,6 @@ class ProjectsController extends Controller
         $request->validate([
             'projectName' => 'required|string|max:255',
             'region' => 'required',
-            'donor' => 'required',
             'coordinator' => 'required'
             
         ]);
@@ -66,11 +68,20 @@ class ProjectsController extends Controller
         $user = Projects::create([
             'projectName' => $request->projectName,
             'region' => $request->region,
-            'donor' =>$request->donor,
             'coordinator' => $request->coordinator,
-            'status' => $request->status,
-            
+            'over_budget' => $request->over_budget,
+            'total_budget' => $request->total_budget,
         ]);
+
+        if((isset($request->donor)) && (count($request->donor)>0)){
+            $del = Projecttodonor::where('project_id',$user->id)->delete();
+            foreach($request->donor as $key => $donorone){
+                $donr = new Projecttodonor;
+                $donr->project_id = $user->id;
+                $donr->donor_id = $donorone;
+                $donr->save();
+            }
+        }
 
         Session::flash('success', "Successfully  Create");
         $redirect = $this->redirectButton($request,$user);
@@ -110,8 +121,9 @@ class ProjectsController extends Controller
     {
         $items = $this->parentModel::find($id);
         $supportDonors = SupportDonor::get();
+        $region = Region::get();
         $users = User::get();
-        return view($this->parentView . '.edit',['item'=> $items,'supportDonors'=>$supportDonors,'users' =>$users]);
+        return view($this->parentView . '.edit',['item'=> $items,'supportDonors'=>$supportDonors,'users' =>$users,'region'=>$region]);
     }
 
     /**
@@ -135,11 +147,22 @@ class ProjectsController extends Controller
         $user = Projects::find($id);
         $user->projectName = $request->projectName;
         $user->region = $request->region;
-        $user->donor = $request->donor;
         $user->coordinator = $request->coordinator;
-        $user->status = $request->status;
-
+        $user->over_budget = $request->over_budget;
+        $user->total_budget = $request->total_budget;
+       
         $user->save();
+
+        if((isset($request->donor)) && (count($request->donor)>0)){
+            $del = Projecttodonor::where('project_id',$user->id)->delete();
+            foreach($request->donor as $key => $donorone){
+                $donr = new Projecttodonor;
+                $donr->project_id = $user->id;
+                $donr->donor_id = $donorone;
+                $donr->save();
+            }
+        }
+
         Session::flash('success', "Update Successfully");
         $redirect = $this->redirectButton($request,$user);
         return $redirect;
@@ -155,10 +178,21 @@ class ProjectsController extends Controller
             $projects = new Projects;
             $projects->projectName  = $request->projectName;
             $projects->region  = $request->region;
-            $projects->donor  =$request->donor;
             $projects->coordinator  = $request->coordinator;
-            $projects->status  = $request->status;
+            $user->over_budget = $request->over_budget;
+            $user->total_budget = $request->total_budget; 
             $projects->save();
+
+            if((isset($request->donor)) && (count($request->donor)>0)){
+                $del = Projecttodonor::where('project_id',$user->id)->delete();
+                foreach($request->donor as $key => $donorone){
+                    $donr = new Activitytoquarter;
+                    $donr->project_id = $user->id;
+                    $donr->donor_id = $donorone;
+                    $donr->save();
+                }
+            }
+
             return redirect()->route($this->parentRoute);
         }
         elseif($request->submitType == "save"){

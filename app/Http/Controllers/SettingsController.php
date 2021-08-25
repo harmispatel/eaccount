@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Setting;
 use App\Orgenizationleader;
 use App\Bankaccount;
+use App\Region;
+use App\Projects;
 use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -35,7 +37,9 @@ class SettingsController extends Controller
         $bankAccountdata = json_decode($bankAccount_settings_info->content, true);
 
         
-        $supportdonor = DB::table('supportdonor')->get();    
+        $supportdonor = DB::table('supportdonor')->get();  
+
+        $region = Region::get();    
         // $orgenizationleader = DB::table('orgenizationleader')->get();    
 
         $orgenizationleader = Orgenizationleader::get();
@@ -54,7 +58,7 @@ class SettingsController extends Controller
         // echo"<pre>"; print_r($Bankaccounts); exit;
         
         // return view('admin.settings.general')->with('settings', $data);
-        return view('admin.settings.general')->with(array('generalsettings'=>$generaldata, 'systemdata'=>$systemdata, 'quarterdata'=>$quarterdata, 'bankAccountdata'=>$bankAccountdata, 'supportdonor'=>$supportdonor, 'orgenizationleader'=>$orgenizationleader, 'Bankaccounts'=>$Bankaccounts, 'Bankaccountsedit'=>$Bankaccountsedit ));
+        return view('admin.settings.general')->with(array('generalsettings'=>$generaldata, 'systemdata'=>$systemdata, 'quarterdata'=>$quarterdata, 'bankAccountdata'=>$bankAccountdata, 'supportdonor'=>$supportdonor, 'orgenizationleader'=>$orgenizationleader, 'Bankaccounts'=>$Bankaccounts, 'Bankaccountsedit'=>$Bankaccountsedit,'region'=>$region));
 
     }
 
@@ -537,6 +541,52 @@ class SettingsController extends Controller
 
         // return redirect()->back();
 
+    }
+
+    public function region_show()
+    {
+        $region = Region::get();
+        return view('admin.settings.general')->with(array('region'=>$region ));
+    }
+
+    public function region_addnew(Request $request)
+    { 
+        //echo "<pre>"; print_r($request->all()); die;
+        $request->validate([
+            'region' => 'required',
+        ]);
+
+        $reg = new Region;
+        $reg->name = $request->region;
+        $reg->save();
+        
+        Session::flash('success', 'Successfully Update');
+        return redirect('settings/general#region');
+
+    }
+
+    public function region_update(Request $request)
+    { 
+        //echo "<pre>"; print_r($request->all()); die;
+        $reg = Region::find($request->id);
+        $reg->name = $request->supportDonor;
+        $reg->save();
+
+        Session::flash('success', 'Successfully Update');
+        return redirect()->back();
+    }
+
+    public function region_destroy($id)
+    { 
+        $getProject = Projects::where('region',$id)->first();
+        if(isset($getProject->id)){
+            Session::flash('error', 'This Region also used in Project');
+        }
+        else{
+            $del = Region::where('id',$id)->delete();
+            Session::flash('success', 'Successfully Delete');
+        }
+        return redirect('settings/general#region');
     }
 
 

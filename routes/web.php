@@ -667,6 +667,26 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'settings.supportDonor.destroy'
     ]);
 
+    Route::get('/settings/region', [
+        'uses' => 'SettingsController@region_show',
+        'as' => 'settings.region'
+    ])->middleware('settings.show');
+
+    Route::post('/settings/region/addnew', [
+        'uses' => 'SettingsController@region_addnew',
+        'as' => 'settings.region.addnew'
+    ]);
+
+    Route::post('/settings/region/update', [
+        'uses' => 'SettingsController@region_update',
+        'as' => 'settings.region.update'
+    ]);
+
+    Route::get('/settings/region/destroy/{id}', [
+        'uses' => 'SettingsController@region_destroy',
+        'as' => 'settings.region.destroy'
+    ]);
+
     Route::get('/settings/organizationLeader', [
         'uses' => 'SettingsController@organizationLeader_show',
         'as' => 'settings.organizationLeader'

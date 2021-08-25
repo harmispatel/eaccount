@@ -15,7 +15,7 @@ $breadcrumbCurrentIcon = "archive";
 $ModelName = 'App\Projects';
 $ParentRouteName = 'project';
 
-?>
+?> 
 
 @section('title')
     {{ $moduleName }}->{{ $createItemName }}
@@ -74,9 +74,14 @@ $ParentRouteName = 'project';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input value="{{ old('region')  }}" name="region" type="text"
-                                                           class="form-control">
-                                                    <label class="form-label">Region</label>
+                                                    <select data-live-search="true" class="form-control show-tick" name="region">
+                                                        <option value="0" class="font-custom-bold">Select Region</option>
+                                                        @if(count($region))
+                                                            @foreach ($region as $oneregion)
+                                                            <option value="{{$oneregion->id}}">{{$oneregion->name ? $oneregion->name : ''}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -84,8 +89,8 @@ $ParentRouteName = 'project';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick" name="donor">
-                                                        <option value="0">Select Donor</option>
+                                                    <select data-live-search="true" multiple class="form-control show-tick" name="donor[]">
+                                                        <option value="0" class="font-custom-bold">Select Donor</option>
                                                         @if(count($supportDonors))
                                                             @foreach ($supportDonors as $supportDonor)
                                                             <option value="{{$supportDonor->id}}">{{$supportDonor->supportDonor ? $supportDonor->supportDonor : ''}}</option>
@@ -100,7 +105,7 @@ $ParentRouteName = 'project';
                                             <div class="form-group form-float">
                                                 <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick" name="coordinator">
-                                                        <option value="0">Coordinator</option>
+                                                        <option value="0" class="font-custom-bold">Coordinator</option>
                                                         @if(count($users))
                                                             @foreach ($users as $user)
                                                             <option value="{{$user->id}}">{{$user->name ? $user->name : ''}}</option>
@@ -112,9 +117,29 @@ $ParentRouteName = 'project';
                                         </div>
 
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input autofocus value="{{ old('over_budget')  }}" name="over_budget" type="number"
+                                                           class="form-control">
+                                                    <label class="form-label">Over Budget (%)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input autofocus value="{{ old('total_budget')  }}" name="total_budget" type="number"
+                                                           class="form-control">
+                                                    <label class="form-label">Total Budget</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
-                                                    <option value="0">Select Status</option>
+                                                    <option value="0" class="font-custom-bold">Select Status</option>
                                                     <option value="1">Started</option>
                                                     <option value="2">In Progress</option>
                                                     <option value="3">Cancel</option>
@@ -123,7 +148,7 @@ $ParentRouteName = 'project';
                                                 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <input value="" name="submitType" id="submitType" type="hidden" value="">
 
