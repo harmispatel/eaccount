@@ -67,7 +67,7 @@ $ParentRouteName = 'activity';
                                                 <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick search-choice" name="project_id"
                                                             id="project_id">
-                                                        <option value="0" >Select Project</option>
+                                                        <option value="0" class="font-custom-bold">Select Project</option>
                                                         @foreach(App\Projects::all() as $project)
                                                             <option value="{{$project->id}}"> {{ $project->projectName }}
                                                             </option>
@@ -83,7 +83,7 @@ $ParentRouteName = 'activity';
                                                     <select data-live-search="true" class="form-control show-tick"
                                                             name="parent_id"
                                                             id="parent_id">
-                                                        <option value="0">Main Activity</option>
+                                                        <option value="0" class="font-custom-bold">Main Activity</option>
                                                         @foreach($items as $item)
                                                         <?php
                                                             if ($item->parent_id == 0) { 
@@ -138,7 +138,7 @@ $ParentRouteName = 'activity';
                                                 <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
                                                             id="department_id">
-                                                        <option value="0" >Responsible Department</option>
+                                                        <option value="0" class="font-custom-bold">Responsible Department</option>
                                                         @foreach(App\Department::all() as $department)
                                                             <option value="{{$department->id}}"> {{ $department->departmentName }}</option>
                                                         @endforeach

@@ -104,7 +104,7 @@ $ParentRouteName = 'user';
 
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
-                                                <div class="form-line">
+                                                <div class="form-line" class="font-custom-bold">
                                                     <select data-live-search="true" class="form-control show-tick"
                                                             name="role_manage_id"
                                                             id="role_manage_id">
@@ -123,7 +123,7 @@ $ParentRouteName = 'user';
                                                     <div class="form-line">
                                                         <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
                                                                 id="department_id">
-                                                            <option value="0" >Select User Department</option>
+                                                            <option value="0" class="font-custom-bold">Select User Department</option>
                                                             @foreach(App\Department::all() as $department)
                                                                 <option value="{{$department->id}}"> {{ $department->departmentName }}
                                                                 </option>
@@ -138,7 +138,7 @@ $ParentRouteName = 'user';
                                                     <div class="form-line">
                                                         <select data-live-search="true" class="form-control show-tick search-choice" name="position_id"
                                                                 id="department_id">
-                                                            <option value="0" >Select User Position</option>
+                                                            <option value="0" class="font-custom-bold">Select User Position</option>
                                                             @foreach(App\Orgenizationleader::all() as $Orgenizationleaderone)
                                                                 <option value="{{$Orgenizationleaderone->id}}"> {{ $Orgenizationleaderone->name }}
                                                                 </option>

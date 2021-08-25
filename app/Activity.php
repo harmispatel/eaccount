@@ -35,7 +35,7 @@ class Activity extends Model
     }
     public function hasManyCost_item()
     {
-        return $this->hasMany('App\Cost_item','activity_id','id');
+        return $this->hasMany('App\Cost_item','main_activity_id','id');
     }
     public function hasOneProject()
     {

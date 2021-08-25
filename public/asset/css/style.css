@@ -11175,3 +11175,6 @@ body.modal-open {
 .table.table-style1 td:first-child {
     width: 170px;
 }
+.font-custom-bold span:first-child {
+    font-weight: 800;
+}
