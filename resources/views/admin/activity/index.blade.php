@@ -119,7 +119,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                             class="chk-col-cyan selects "/>
                                                         <label for="md_checkbox_{{ $i }}"></label>
                                                     </th>
-                                                    <td>
+                                                    <td class="w-csm-40">
                                                     
                                                             @if (!empty($project))
                                                                     <a href="{{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id]) }}"> {{$item->title }}</a>

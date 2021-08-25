@@ -166,7 +166,7 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                     }   
                                                 @endphp
                                                 <td>{{ !empty($department) ? $department->department_code : '' }}/{{ !empty($activityObj) ? $activityObj->activity_code : '' }}</td>
-                                                <td>{{ $item->title }}</td>
+                                                <td class="w-csm-40">{{ $item->title }}</td>
                                                 <td>{{ !empty($department) ? $department->departmentName : '' }}</td>
                                                 <td>{{ $item->unit }}</td>
                                                 <td>{{ $item->cost }}</td>
