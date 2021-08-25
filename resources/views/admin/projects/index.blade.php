@@ -167,7 +167,7 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                     }
                                                 }
                                                 ?>
-                                                <td><a href="{{ route('activity',['projectId'=>$project->id]) }}">{{$project->projectName ? $project->projectName : '' }}</a></td>
+                                                <td class="w-csm-40"><a href="{{ route('activity',['projectId'=>$project->id]) }}">{{$project->projectName ? $project->projectName : '' }}</a></td>
                                                 <td>{{ isset($project->hasOneRegion->name) ? $project->hasOneRegion->name : '' }}</td>
                                                 <td>{{ implode(',',$donor) }}</td>
                                                 <td></td>

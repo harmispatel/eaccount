@@ -26,6 +26,7 @@ $permanently_delete = config('role_manage.Activity.PermanentlyDelete');
 $restore = config('role_manage.Activity.Restore');
 $show = config('role_manage.Activity.Show');
 $trash_show = config('role_manage.Activity.TrashShow');
+$projectId = Request::get('projectId');
 
 ?>
 @section('title')
@@ -47,7 +48,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
             </div>
             <ol class="breadcrumb breadcrumb-col-cyan pull-right">
                 <li><a href="{{ route('dashboard') }}"><i class="material-icons">home</i> Home</a></li>
-                <li><a href="{{ route($ParentRouteName) }}"><i
+                <li><a href="{{ route($ParentRouteName,['projectId'=>$projectId]) }}"><i
                                 class="{{ $breadcrumbMainIcon  }}"></i>{{ $breadcrumbMainName  }}</a></li>
                 <li class="active"><i
                             class="material-icons">{{ $breadcrumbCurrentIcon }}</i>{{ $breadcrumbCurrentName }}</li>
@@ -62,15 +63,15 @@ $trash_show = config('role_manage.Activity.TrashShow');
                             <a @if($all==0)
                                class="dis-none"
                                @endif class="text-black btn btn-xs btn-success"
-                               href="{{ route($ParentRouteName)  }}">All({{ $ModelName::all()->count() }})</a>
+                               href="{{ route($ParentRouteName,['projectId'=>$projectId])  }}">All({{ $ModelName::all()->count() }})</a>
 
 
                             <a class="btn btn-xs btn-danger "
-                               href="{{ route($ParentRouteName.'.trashed') }}">Trash({{ $ModelName::onlyTrashed()->count()  }}
+                               href="{{ route($ParentRouteName.'.trashed',['projectId'=>$projectId]) }}">Trash({{ $ModelName::onlyTrashed()->count()  }}
                                 )</a>
 
                             <ul class="header-dropdown m-r--5">
-                                <form class="search" action="{{ route($ParentRouteName.'.trashed.search') }}"
+                                <form class="search" action="{{ route($ParentRouteName.'.trashed.search',['projectId'=>$projectId]) }}"
                                       method="get">
                                     {{ csrf_field() }}
                                     <input type="search" name="search" class="form-control input-sm "
@@ -98,6 +99,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                             </div>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="projectId" value="{{$projectId}}">
                                     <div class=" margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
                                         <div class="form-group">
                                             <input class="btn btn-sm btn-info" type="submit" value="Apply"
@@ -288,14 +290,14 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                     <a @if ($restore==0)
                                                        class="dis-none"
                                                        @endif class="btn btn-xs btn-info waves-effect"
-                                                       href="{{ route($ParentRouteName.'.restore',['id'=>$item->id]) }}"
+                                                       href="{{ route($ParentRouteName.'.restore',['id'=>$item->id,'projectId'=>$projectId]) }}"
                                                        data-toggle="tooltip"
                                                        data-placement="top" title="Restore"><i
                                                                 class="material-icons">restore</i></a>
 
                                                     <a  data-target="#largeModal"
                                                        class="dis-none btn btn-xs btn-success waves-effect ajaxCall "
-                                                       href="{{ route($ParentRouteName.'.show',['id'=>$item ->id])  }}"
+                                                       href="{{ route($ParentRouteName.'.show',['id'=>$item ->id,'projectId'=>$projectId])  }}"
                                                        data-toggle="tooltip"
                                                        data-placement="top" title="Preview"><i
                                                                 class="material-icons">pageview</i></a>
@@ -304,7 +306,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                     <a @if ($permanently_delete==0)
                                                        class="dis-none"
                                                        @endif class="btn btn-xs btn-danger waves-effect"
-                                                       href="{{ route($ParentRouteName.'.kill',['id'=>$item->id]) }}"
+                                                       href="{{ route($ParentRouteName.'.kill',['id'=>$item->id,'projectId'=>$projectId]) }}"
                                                        data-toggle="tooltip"
                                                        data-placement="top" title="Parmanently Delete?"> <i
                                                                 class="material-icons">delete</i></a>

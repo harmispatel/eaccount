@@ -165,7 +165,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                                     class="chk-col-cyan selects "/>
                                                                 <label for="md_checkbox_{{ $i }}"></label>
                                                             </th>
-                                                            <td>
+                                                            <td class="w-csm-40">
                                                                     - <a href="@if(!empty($project)){{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id])}}@else{{ route('cost_item')}}@endif"> {{$item->title }}</a>
                                                             </td>
                                                             <td>     
@@ -224,13 +224,13 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                 <div class="container">
                                     <div class="activity-main-btn">
                                         <a class="btn btn-xs btn-info waves-effect"
-                                       href="{{ route($ParentRouteName)  }}">All({{ $ModelName::all()->count() }})</a>
+                                       href="@if(!empty($project)){{ route($ParentRouteName,['projectId'=>$project->id])  }}@else {{ route($ParentRouteName)  }} @endif">All({{ $ModelName::all()->count() }})</a>
                                     
                                     <a @if ( $trash_show==0)
                                        class="dis-none"
                                        @endif
                                         class="btn btn-xs btn-danger"
-                                       href="{{ route($ParentRouteName.'.trashed') }}">Trash({{ $ModelName::onlyTrashed()->count()  }}
+                                       href="@if(!empty($project)){{ route($ParentRouteName.'.trashed',['projectId'=>$project->id])  }}@else {{ route($ParentRouteName.'.trashed')  }} @endif">Trash({{ $ModelName::onlyTrashed()->count()  }}
                                         )</a>
                                     </div>
 

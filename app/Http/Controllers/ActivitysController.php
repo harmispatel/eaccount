@@ -90,9 +90,8 @@ class ActivitysController extends Controller
 
         Session::flash('success', "Successfully  Create");
         // return redirect()->back();
-        $redirect = $this->redirectButton($request,$user,);
+        $redirect = $this->redirectButton($request,$user);
         return $redirect;
-        // return redirect()->route($this->parentRoute);
 
     }
 
@@ -211,17 +210,16 @@ class ActivitysController extends Controller
 
         $redirect = $this->redirectButton($request,$user);
         return $redirect;
-        // return redirect()->route($this->parentRoute);
 
     }
 
-    public function update_status($id, $status)
+    public function update_status($id, $status,Request $request)
     {
         $items = Activity::find($id);
         $items->status = $status;
         $items->save();
         Session::flash('success', "Update Successfully");
-        return redirect()->route($this->parentRoute);
+        return redirect()->route($this->parentRoute,['projectId'=>$request->projectId]);
 
     }
 
@@ -237,7 +235,7 @@ class ActivitysController extends Controller
         $costItems = $user->hasManyCost_item ? $user->hasManyCost_item : [];
         if(count($costItems)){
             Session::flash('error', "This activity used in Cost Items");
-            return redirect()->route($this->parentRoute);    
+            return redirect()->route($this->parentRoute,['projectId'=>$request->projectId]);  
         }
         $user->delete();
         Session::flash('success', "Successfully Trashed");
@@ -261,17 +259,16 @@ class ActivitysController extends Controller
         return response()->json($trashedItem);
     }
 
-    public function restore($id)
+    public function restore($id,Request $request)
     {
         $user = $this->parentModel::onlyTrashed()->where('id', $id)->first();
 
         $user->restore();
         Session::flash('success', 'Successfully Restore');
-        // return redirect()->back();
-        return redirect()->route($this->parentRoute);
+        return redirect()->route($this->parentRoute,['projectId'=>$request->projectId]);
     }
 
-    public function kill($id)
+    public function kill($id,Request $request)
     {
         $user = $this->parentModel::onlyTrashed()->where('id', $id)->first();
         $user->forceDelete();
@@ -281,8 +278,7 @@ class ActivitysController extends Controller
 //         $profile->delete();
 
         Session::flash('success', 'Permanently Delete');
-        // return redirect()->back();
-        return redirect()->route($this->parentRoute);
+        return redirect()->route($this->parentRoute,['projectId'=>$request->projectId]);
     }
 
     public function activeSearch(Request $request)
