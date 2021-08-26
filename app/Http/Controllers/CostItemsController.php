@@ -35,7 +35,7 @@ class CostItemsController extends Controller
         $project = Projects::find($projectId);
         $activitySelect = Activity::find($activityId);
         $tasks = Tasks::with('hasManyTasksStatus')->where('id',1)->first();
-        $activity = $this->parentModel::where('main_activity_id',$activityId)->orderBy('created_at')->paginate(60);
+        $activity = $this->parentModel::where('main_activity_id',$activityId)->where('is_reallocation',0)->orderBy('created_at')->paginate(60);
         return view($this->parentView . '.index',['items'=> $activity,'activity'=>$activitySelect,'projectId'=>$projectId,'project'=>$project,'tasks'=>$tasks]);
     }
     
@@ -231,7 +231,7 @@ class CostItemsController extends Controller
     public function trashed()
     {
 
-        $items = $this->parentModel::onlyTrashed()->paginate(60);
+        $items = $this->parentModel::onlyTrashed()->where('is_reallocation',0)->paginate(60);
         // echo "<pre>"; print_r($items); die;
         return view($this->parentView . '.trashed')->with("items", $items);
     }
@@ -276,7 +276,7 @@ class CostItemsController extends Controller
         ]);
 
         $search = $request["search"];
-        $items = $this->parentModel::where('name', 'like', '%' . $search . '%')
+        $items = $this->parentModel::where('name', 'like', '%' . $search . '%')->where('is_reallocation',0)
             ->paginate(60);
 
         return view($this->parentView . '.index')

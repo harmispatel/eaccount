@@ -11194,6 +11194,12 @@ body.modal-open {
 .w-csm-40{
     width: 40%;
 }
+.w-csm-30{
+    width: 30%;
+}
+.w-csm-20{
+    width: 20%;
+}
 
 .btn-new-style{
     background: #fff;
