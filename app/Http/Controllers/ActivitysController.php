@@ -65,20 +65,19 @@ class ActivitysController extends Controller
             
         ]);
 
-        $user = Activity::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'parent_id' => $request->parent_id,
-            'activity_code' => $request->activity_code,
-            // 'status' => $request->status,
-            'project_id' => $request->project_id,
-            'department_id' => $request->department_id,
-            'status' => 1,
-        ]);
+        $user = new Activity;
+        $user->title = $request->title;
+        $user->description = $request->description;
+        $user->parent_id = $request->parent_id;
+        $user->activity_code = $request->activity_code;
+        // $user->status = $request->status;
+        $user->project_id = $request->project_id;
+        $user->department_id = $request->department_id;
+        $user->status = 1;
+        $user->save();
 
         if((isset($request->quarter)) && (count($request->quarter)>0)){
             foreach($request->quarter as $key => $quarterone){
-                //echo "<pre>"; print_r($quarterone); die;
                 $quarter = new Activitytoquarter;
                 $quarter->activity_id = $user->id;
                 $quarter->quarter_id = $quarterone;
@@ -86,10 +85,7 @@ class ActivitysController extends Controller
             }
         }
 
-        // echo "<pre>"; print_r ($user); exit;
-
         Session::flash('success', "Successfully  Create");
-        // return redirect()->back();
         $redirect = $this->redirectButton($request,$user);
         return $redirect;
 
