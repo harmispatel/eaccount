@@ -571,6 +571,88 @@ Route::group(['middleware' => 'auth'], function () {
 
     //    departmentnew End
 
+    //    Approval start
+    Route::get('/approval', [
+        'uses' => 'ApprovalController@index',
+        'as' => 'approval'
+    ])->middleware('approval.module_show');
+
+    Route::get('/approval/create', [
+        'uses' => 'ApprovalController@create',
+        'as' => 'approval.create'
+    ])->middleware('approval.create');
+
+    Route::post('/approval/store', [
+        'uses' => 'ApprovalController@store',
+        'as' => 'approval.store'
+    ])->middleware('approval.create');
+
+
+    Route::get('/approval/edit/{id}', [
+        'uses' => 'ApprovalController@edit',
+        'as' => 'approval.edit'
+    ])->middleware('approval.edit');
+
+    Route::post('/approval/update/{id}', [
+        'uses' => 'ApprovalController@update',
+        'as' => 'approval.update'
+    ])->middleware('approval.edit');
+
+    Route::get('/approval/show/{id}', [
+        'uses' => 'ApprovalController@show',
+        'as' => 'approval.show'
+    ]);
+
+    Route::get('/approval/destroy/{id}', [
+        'uses' => 'ApprovalController@destroy',
+        'as' => 'approval.destroy'
+    ])->middleware('approval.delete');
+
+    Route::get('/approval/trashed', [
+        'uses' => 'ApprovalController@trashed',
+        'as' => 'approval.trashed'
+    ])->middleware('approval.trash_show');
+
+    Route::post('/approval/trashed/show', [
+        'uses' => 'ApprovalController@trashedShow',
+        'as' => 'approval.trashed.show'
+    ]);
+
+
+    Route::get('/approval/restore/{id}', [
+        'uses' => 'ApprovalController@restore',
+        'as' => 'approval.restore'
+    ])->middleware('approval.restore');
+
+    Route::get('/approval/kill/{id}', [
+        'uses' => 'ApprovalController@kill',
+        'as' => 'approval.kill'
+    ])->middleware('approval.permanently_delete');
+
+    Route::get('/approval/active/search', [
+        'uses' => 'ApprovalController@activeSearch',
+        'as' => 'approval.active.search'
+    ]);
+
+    Route::get('/approval/trashed/search', [
+        'uses' => 'ApprovalController@trashedSearch',
+        'as' => 'approval.trashed.search'
+    ]);
+
+    Route::get('/approval/active/action', [
+        'uses' => 'ApprovalController@activeAction',
+        'as' => 'approval.active.action'
+    ]);
+
+    Route::get('/approval/trashed/action', [
+        'uses' => 'ApprovalController@trashedAction',
+        'as' => 'approval.trashed.action'
+    ]);
+
+
+
+    //    Approval End
+
 
 
 

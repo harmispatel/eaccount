@@ -127,6 +127,16 @@ class Kernel extends HttpKernel
         'department.trash_show' => \App\Http\Middleware\Roles\Department\TrashShow::class,
         'department.permanently_delete' => \App\Http\Middleware\Roles\Department\PermanentlyDelete::class,
 
+        'approval.module_show' => \App\Http\Middleware\Roles\Approval\ModuleShow::class,
+        'approval.show' => \App\Http\Middleware\Roles\Approval\Show::class,
+        'approval.create' => \App\Http\Middleware\Roles\Approval\Create::class,
+        'approval.edit' => \App\Http\Middleware\Roles\Approval\Edit::class,
+        'approval.delete' => \App\Http\Middleware\Roles\Approval\Delete::class,
+        'approval.pdf' => \App\Http\Middleware\Roles\Approval\Pdf::class,
+        'approval.restore' => \App\Http\Middleware\Roles\Approval\Restore::class,
+        'approval.trash_show' => \App\Http\Middleware\Roles\Approval\TrashShow::class,
+        'approval.permanently_delete' => \App\Http\Middleware\Roles\Approval\PermanentlyDelete::class,
+
 
         'settings.all' => \App\Http\Middleware\Roles\Settings\All::class,
         'settings.show' => \App\Http\Middleware\Roles\Settings\Show::class,
