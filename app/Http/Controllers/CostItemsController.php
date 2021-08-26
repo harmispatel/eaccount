@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Cost_item;
 use App\Activity;
+use App\Tasks;
 use App\Projects;
 
 use Illuminate\Http\Request;
@@ -29,15 +30,13 @@ class CostItemsController extends Controller
      */
     public function index(Request $request)
     {   
-        // echo "<pre>";
-        // print_r($request->all());
-        // exit;
         $projectId = $request->projectId; 
         $activityId = $request->activityId; 
         $project = Projects::find($projectId);
         $activitySelect = Activity::find($activityId);
+        $tasks = Tasks::with('hasManyTasksStatus')->where('id',1)->first();
         $activity = $this->parentModel::where('main_activity_id',$activityId)->orderBy('created_at')->paginate(60);
-        return view($this->parentView . '.index',['items'=> $activity,'activity'=>$activitySelect,'projectId'=>$projectId,'project'=>$project]);
+        return view($this->parentView . '.index',['items'=> $activity,'activity'=>$activitySelect,'projectId'=>$projectId,'project'=>$project,'tasks'=>$tasks]);
     }
     
     /**
