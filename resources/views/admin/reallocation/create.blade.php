@@ -116,7 +116,7 @@ $activityId = Request::get('activityId');
                                                     <div class="form-line">
                                                         {{-- <label for="cars">Choose a car:</label> --}}
                                                         <input autofocus value="{{ old('title')  }}" name="title" type="text"
-                                                               class="form-control" required aria-required="true">
+                                                               class="form-control">
                                                         <label class="form-label">Title</label> 
                                                     </div>
                                                 </div>
@@ -178,7 +178,15 @@ $activityId = Request::get('activityId');
                                                 </div>
                                             </div>
                                         </div>
-                                        
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input autofocus value="{{ old('comment')  }}" name="comment" type="text"
+                                                           class="form-control" >
+                                                    <label class="form-label">Comment</label> 
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
                                                 <button type="submit" class="btn-csm-save m-t-15 waves-effect"> <i class="fa fa-edit"></i> Save</button>

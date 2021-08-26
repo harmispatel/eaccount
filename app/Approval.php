@@ -17,19 +17,4 @@ class Approval extends Model
     use SoftDeletes;
     protected $table = 'reallocation';
     protected $dates = ['deleted_at'];
-    protected $fillable = [
-        'cost_item_id',
-        'created_user_id',
-        'comment',
-        'status',
-        
-    ];
-
-    
-    // public function hasOneHead()
-    // {
-    //     return $this->hasOne('App\User','department_id','id');
-    // }
-
-
 }

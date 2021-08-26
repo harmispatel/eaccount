@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Cost_item;
 use App\Reallocation;
 use App\Activity;
+use App\Approval;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,9 +37,9 @@ class ReallocationController extends Controller
     
     public function store(Request $request)
     {
-        echo "<pre>";
-        print_r($request->all());
-        exit;
+        $request->validate([
+            'comment' => 'required|string|max:255',
+        ]);
         $costItemId = 0;
         if($request->showBudgetItem == 1){
             $costItem = new Cost_item;
@@ -55,15 +56,34 @@ class ReallocationController extends Controller
             $costItem->frequency = $request->frequency;
             // $costItem->status = $request->status;
             $costItem->status = 1;
+            $costItem->is_reallocation = 1;
             $costItem->save();
             $costItemId = $costItem->id;
         }
         else if($request->showBudgetItem == 2){
+            $costItem = Cost_item::find($request->cost_item_id);
+            $newCostItem = new Cost_item;
+            $newCostItem->main_activity_id = $costItem->main_activity_id ? $costItem->main_activity_id : '';
+            $newCostItem->sub_activity_id= $costItem->sub_activity_id ? $costItem->sub_activity_id : '';
+            $newCostItem->title = $costItem->title ? $costItem->title : '';
+            $newCostItem->description = $costItem->description ? $costItem->description : '';
+            $newCostItem->single_unit = 1;
+            $newCostItem->single_cost = $costItem->single_cost ? $costItem->single_cost : '';
+            $newCostItem->unit = $costItem->unit ? $costItem->unit : '';
+            $newCostItem->cost = $costItem->cost ? $costItem->cost : '';
+            $newCostItem->frequency = $costItem->frequency ? $costItem->frequency : '';
+            $newCostItem->status = 1;
+            $newCostItem->is_reallocation = 1;
+            $newCostItem->save();
             $costItemId = $request->cost_item_id;
         }
-        
-
+        $approval = new Approval;
+        $approval->cost_item_id = $costItemId;
+        $approval->created_user_id = Auth::user()->id;
+        $approval->comment = $request->comment;
+        $approval->status = 1;
+        $approval->save();
         Session::flash('success', "Successfully  Create");
-        return redirect()->route($this->parentRoute,['activityId'=>$request->selectedActivityId,'projectId'=>$request->selectedProjectId]);
+        return redirect()->route('cost_item',['activityId'=>$request->selectedActivityId,'projectId'=>$request->selectedProjectId]);
     }
 }
