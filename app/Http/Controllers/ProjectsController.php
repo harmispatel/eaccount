@@ -71,6 +71,8 @@ class ProjectsController extends Controller
             'coordinator' => $request->coordinator,
             'over_budget' => $request->over_budget,
             'total_budget' => $request->total_budget,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
         ]);
 
         if((isset($request->donor)) && (count($request->donor)>0)){
@@ -150,7 +152,9 @@ class ProjectsController extends Controller
         $user->coordinator = $request->coordinator;
         $user->over_budget = $request->over_budget;
         $user->total_budget = $request->total_budget;
-       
+        $user->start_date = $request->start_date;
+        $user->end_date = $request->end_date;
+
         $user->save();
 
         if((isset($request->donor)) && (count($request->donor)>0)){
@@ -179,8 +183,11 @@ class ProjectsController extends Controller
             $projects->projectName  = $request->projectName;
             $projects->region  = $request->region;
             $projects->coordinator  = $request->coordinator;
-            $user->over_budget = $request->over_budget;
-            $user->total_budget = $request->total_budget; 
+            $projects->over_budget = $request->over_budget;
+            $projects->total_budget = $request->total_budget; 
+            $projects->start_date = $request->start_date;
+            $projects->end_date = $request->end_date;
+
             $projects->save();
 
             if((isset($request->donor)) && (count($request->donor)>0)){
@@ -232,7 +239,7 @@ class ProjectsController extends Controller
 
         $items = $this->parentModel::onlyTrashed()->paginate(60);
         // echo "<pre>"; print_r($items); die;
-        return view($this->parentView . '.trashed')->with("items", $items);
+        return view($this->parentView . '.trashed')->with("projects", $items);
     }
 
     public function trashedShow()
@@ -273,11 +280,11 @@ class ProjectsController extends Controller
         ]);
 
         $search = $request["search"];
-        $items = $this->parentModel::where('name', 'like', '%' . $search . '%')
+        $items = $this->parentModel::where('projectName', 'like', '%' . $search . '%')
             ->paginate(60);
 
         return view($this->parentView . '.index')
-            ->with('items', $items);
+            ->with('projects', $items);
 
     }
 
@@ -290,12 +297,12 @@ class ProjectsController extends Controller
 
 
         $search = $request["search"];
-        $items = $this->parentModel::where('name', 'like', '%' . $search . '%')
+        $items = $this->parentModel::where('projectName', 'like', '%' . $search . '%')
             ->onlyTrashed()
             ->paginate(60);
 
         return view($this->parentView . '.trashed')
-            ->with('items', $items);
+            ->with('projects', $items);
 
     }
 

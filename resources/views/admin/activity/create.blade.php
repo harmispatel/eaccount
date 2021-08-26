@@ -176,47 +176,15 @@ $projectId = Request::get('projectId');
                                         <input name="selectedProjectId" id="selectedProjectId" type="hidden" value="{{$projectId}}">
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="button">
-                                                <button type="button" onclick="changeSubmitType('save')" class="one">
-                                                    <div class="btn-new-style"><i class="fa fa-home"></i></div>Save
-                                                </button>
-                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="one save-frm-btn">
-                                                    <div class="btn-new-style"><i class="fa fa-check"></i></div> Save & New
-                                                </button>
-                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="one save-frm-btn">
-                                                    <div class="btn-new-style"><i class="fa fa-plus"></i></div>Save & Copy
-                                                </button>
-                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="one save-frm-btn save-frm-btn-cls">
-                                                    <div class="btn-new-style"><i class="fa fa-times-circle"></i></div>Save & Close
-                                                </button>
-                                                {{-- <a href="#" class="one "><div class="btn-new-style"><i class="fa fa-home"></i></div>Home </a> --}}
-                                                {{-- <a href="#" class="one two"><div class="btn-new-style"><i class="fa fa-home"></i></div>Home </a> 
-                                                <a href="#" class="one three"><div class="btn-new-style"><i class="fa fa-home"></i></div>Home </a>
-                                                <a href="#" class="one"><div class="btn-new-style"><i class="fa fa-home"></i></div>Home </a> --}}
+                                            <div class="form-line">
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn-csm-save m-t-15 waves-effect"> <i class="fa fa-edit"></i> Save</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn-new-style m-t-15 waves-effect"><span><i class="fa fa-plus"></i></span> Save & New</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn-new-style m-t-15 waves-effect"><span><i class="fa fa-copy"></i></span> Save & Copy</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn-new-style m-t-15 waves-effect"><span><i class="far fa-check-circle last_csm_btn"></i></span> Save & Close</button>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <div class="form-line">
-                                                <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
-                                                    Save
-                                                </button>
-                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
-                                                    Save & New
-                                                </button>
-                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn btn-primary m-t-15 waves-effect">
-                                                    Save & Copy
-                                                </button>
-                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
-                                                    Save & Close
-                                                </button>
-                                            </div>
-                                        </div> --}}
-
-
                                     </div>
-
                                 </form>
-
                             </div>
                         </div>
                     </div>
