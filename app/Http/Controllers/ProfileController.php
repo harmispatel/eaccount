@@ -135,7 +135,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         $user->profile->user_cv = "";
         $user->profile->save();
-        return redirect()->route('user.userdetails',['id'=>Auth::user()->id]);
+        return redirect()->back();
     }
 
     public function uploadcv(Request $request)
@@ -148,7 +148,7 @@ class ProfileController extends Controller
             $user->profile->user_cv = 'upload/user_cv/' . $temporaryName;
         }
         $user->profile->save();
-        return redirect()->route('user.userdetails',['id'=>Auth::user()->id]);
+        return redirect()->back();
     }
 
     /**
