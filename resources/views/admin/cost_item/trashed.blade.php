@@ -62,11 +62,11 @@ $trash_show = config('role_manage.Activity.TrashShow');
                             <a @if($all==0)
                                class="dis-none"
                                @endif class="text-black btn btn-xs btn-success"
-                               href="{{ route($ParentRouteName)  }}">All({{ $ModelName::all()->count() }})</a>
+                               href="{{ route($ParentRouteName)  }}">All({{ $ModelName::where('is_reallocation',0)->get()->count() }})</a>
 
 
                             <a class="btn btn-xs btn-danger "
-                               href="{{ route($ParentRouteName.'.trashed') }}">Trash({{ $ModelName::onlyTrashed()->count()  }}
+                               href="{{ route($ParentRouteName.'.trashed') }}">Trash({{ $ModelName::onlyTrashed()->where('is_reallocation',0)->count()  }}
                                 )</a>
 
                             <ul class="header-dropdown m-r--5">

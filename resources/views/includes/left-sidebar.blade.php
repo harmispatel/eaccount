@@ -815,7 +815,25 @@
 
                 </li>
 
-                {{-- Department stop --}} 
+                {{-- Department stop --}}
+                
+                {{-- Approval approval Start --}}
+
+                <li @if ( config('role_manage.Approval.All')==0 and  config('role_manage.Approval.TrashShow')==0 and config('role_manage.Approval.Create')==0  )
+                    class="dis-block"
+                    @endif  @if(Request::url() === route('approval') or Request::url() === route('approval.create') or Request::url() === route('approval.trashed') or Request::url() === route('approval.active.search') or Request::url() === route('approval.trashed.search') )
+                    class="active "
+                        @endif >
+                    <a class="" @if (config('role_manage.Approval.All')==0)
+                               class="dis-block"
+                               @endif href="{{ route('approval') }}">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Approval</span>
+                    </a>
+
+                </li>
+
+                {{-- Approval stop --}}
 
                 {{--User Start--}}
                 <li @if ( config('role_manage.User.All')==0 and  config('role_manage.User.TrashShow')==0 and config('role_manage.User.Create')==0  )

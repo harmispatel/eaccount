@@ -113,6 +113,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                     $parentActivity = $item->hasOneParentActivity ? $item->hasOneParentActivity : [];   
                                                     $subActivities = $item->hasManySubActivity ? $item->hasManySubActivity : [];   
                                                     $department = $item->hasOneDepartment ? $item->hasOneDepartment : [];   
+                                                    $parentActivityCode = $item->activity_code ? $item->activity_code : '';
                                                 @endphp
                                                 <tr @if (Auth::id()==$item->id) class="bg-tr" @endif >
                                                     <th class="text-center">
@@ -186,7 +187,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                                 {{$item->activity_code ? $item->activity_code : ''}}
                                                             </td>
                                                             <td class="w-csm-40">
-                                                                    - <a href="@if(!empty($project)){{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id])}}@else{{ route('cost_item')}}@endif"> {{$item->title }}</a>
+                                                                {{$parentActivityCode}} - <a href="@if(!empty($project)){{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id])}}@else{{ route('cost_item')}}@endif"> {{$item->title }}</a>
                                                             </td>
                                                             <td>     
                                                                 {{!empty($department) ? $department->departmentName : ''}}
@@ -206,7 +207,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                                 {{count($activitytoquarterName) ? implode(',',$activitytoquarterName) : '-' }}
                                                             </td>
                                                             
-                                                            <td class="tdTrashAction">
+                                                            <td class="tdTrashAction  w-csm-20">
                                                                 <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs btn-info waves-effect" href="@if (!empty($project)){{ route($ParentRouteName.'.edit',['id'=>$item->id,'projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
 
                                                                 <a data-target="#largeModal"
