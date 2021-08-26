@@ -84,18 +84,10 @@ $projectId = Request::get('projectId');
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick"
-                                                            name="parent_id"
-                                                            id="parent_id">
+                                                    <select data-live-search="true" class="form-control show-tick" name="parent_id" id="parent_id">
                                                         <option value="0" class="font-custom-bold">Main Activity</option>
                                                         @foreach($activitys as $activity)
-                                                        <?php
-                                                            if ($activity->parent_id == 0 && $item->id != $activity->id) { 
-                                                        ?>
                                                             <option value="{{ $activity->id }}" @if($item->parent_id == "$activity->id") {{ "selected" }} @endif >{{ $activity->title }}</option>
-                                                        <?php
-                                                            } 
-                                                        ?>                                                        
                                                         @endforeach
                                                     </select>
                                                 </div>
