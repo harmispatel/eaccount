@@ -74,13 +74,13 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                         <div class="header">
 
                             <a class="btn btn-xs btn-info waves-effect"
-                               href="{{ route($ParentRouteName)  }}">All({{ $ModelName::all()->count() }})</a>
+                               href="{{ route($ParentRouteName)  }}">All({{ $ModelName::where('is_reallocation',0)->get()->count() }})</a>
                             
                             <a @if ( $trash_show==0)
                                class="dis-none"
                                @endif
                                 class="btn btn-xs btn-danger"
-                               href="{{ route($ParentRouteName.'.trashed') }}">Trash({{ $ModelName::onlyTrashed()->count()  }}
+                               href="{{ route($ParentRouteName.'.trashed') }}">Trash({{ $ModelName::onlyTrashed()->where('is_reallocation',0)->count()  }}
                                 )</a>
 
                             <ul class="header-dropdown m-r--5">
@@ -200,30 +200,17 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                             </ul>
                                                         </div>      
                                                     @endif
-                                                    
-                                                    
-                                                    </td>
+                                                </td>
                                                 
-                                                <td class="tdTrashAction">
+                                                <td class="tdTrashAction w-csm-20">
                                                    
                                                     <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs btn-info waves-effect" href="@if(!empty($activity)){{ route($ParentRouteName.'.edit',['id'=>$item->id,'activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
-                                                    <a data-target="#largeModal"
-                                                       class="btn btn-xs btn-success waves-effect ajaxCall hidden"
-                                                       href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}"
-                                                       data-toggle="tooltip"
-                                                       data-placement="top" title="Preview"><i
-                                                                class="material-icons">pageview</i></a>
-
-                                                    <a @if ($delete==0)
-
-                                                       class="dis-none"
-
-                                                       @endif class="btn btn-xs btn-danger waves-effect"
-                                                       href="@if(!empty($activity)){{ route($ParentRouteName.'.destroy',['id'=>$item->id,'activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}@endif"
-                                                       data-toggle="tooltip"
-                                                       data-placement="top" title="Trash"> <i
-                                                                class="material-icons">delete</i></a>
-
+                                                    <a data-target="#largeModal" class="btn btn-xs btn-success waves-effect ajaxCall hidden" href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}" data-toggle="tooltip" data-placement="top" title="Preview"><i class="material-icons">pageview</i></a>
+                                                    <a @if ($delete==0) class="dis-none" @endif class="btn btn-xs btn-danger waves-effect" href="@if(!empty($activity)){{ route($ParentRouteName.'.destroy',['id'=>$item->id,'activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Trash"> <i class="material-icons">delete</i></a>
+                                                    @if (Auth::user()->department_head == 1)
+                                                        <a class="btn btn-xs btn-success waves-effect" href="@if(!empty($activity)){{ route('reallocation.create',['id'=>$item->id,'activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route('reallocation.create',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Reallocation">Reallocation</a>
+                                                    @endif
+                                                    
                                                 </td>
                                             </tr>
                                         <?php $i++; ?>

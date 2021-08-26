@@ -403,9 +403,21 @@ Route::group(['middleware' => 'auth'], function () {
             'uses' => 'CostItemsController@update_status',
             'as' => 'cost_item.update_status'
         ]);
-
+        
         //end Cost_item
-
+        //start Reallocation
+        Route::get('/reallocation', [
+            'uses' => 'ReallocationController@index',
+            'as' => 'reallocation'
+        ]);
+        Route::get('/reallocation/create', [
+            'uses' => 'ReallocationController@create',
+            'as' => 'reallocation.create'
+        ]);
+        Route::post('/reallocation/store', [
+            'uses' => 'ReallocationController@store',
+            'as' => 'reallocation.store'
+        ])->middleware('department.create');
     //    department start
     Route::get('/department', [
         'uses' => 'DepartmentController@index',
