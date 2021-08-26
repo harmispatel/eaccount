@@ -10,7 +10,7 @@ class Tasks extends Model
     public $timestamps = false;
     //
     public function hasManyTasksStatus()
-    {
+    { 
         return $this->hasMany('App\TasksStatus','task_id','id');
     }
 }
