@@ -45,11 +45,12 @@ class CostItemsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {  
-        $Activity = $this->parentModel::orderBy('created_at')->paginate(60);
         $activitys = Activity::all();
-        return view($this->parentView . '.create')->with('items', $Activity)->with('activitys', $activitys);
+        $activityId = $request->activityId ?  $request->activityId : 0;
+        $selectedActivity = Activity::find($activityId);
+        return view($this->parentView . '.create',['activitys'=>$activitys,'selectedActivity'=>$selectedActivity]);
         // return view($this->parentView . '.create');
     }
 
@@ -63,7 +64,7 @@ class CostItemsController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',           
+            // 'description' => 'required|string|max:255',           
             
         ]);
         
@@ -79,7 +80,8 @@ class CostItemsController extends Controller
         $costItem->unit = $request->unit;
         $costItem->cost = $request->cost;
         $costItem->frequency = $request->frequency;
-        $costItem->status = $request->status;
+        // $costItem->status = $request->status;
+        $costItem->status = 1;
         $costItem->save();
         Session::flash('success', "Successfully  Create");
         $redirect = $this->redirectButton($request,$costItem);
@@ -106,7 +108,8 @@ class CostItemsController extends Controller
             $costItemNew->unit = $request->unit;
             $costItemNew->cost = $request->cost;
             $costItemNew->frequency = $request->frequency;
-            $costItemNew->status = $request->status;
+            // $costItemNew->status = $request->status;
+            $costItemNew->status = 1;
             $costItemNew->save();
             // return redirect()->route($this->parentRoute);
             return redirect()->route($this->parentRoute,['activityId'=>$request->selectedActivityId,'projectId'=>$request->selectedProjectId]);
@@ -177,7 +180,7 @@ class CostItemsController extends Controller
         // echo "<pre>"; print_r($request->all()); die;
         $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
+            // 'description' => 'required|string|max:255',
             
         ]);
         $costItem = Cost_item::find($id);
@@ -192,7 +195,7 @@ class CostItemsController extends Controller
         $costItem->unit = $request->unit;
         $costItem->cost = $request->cost;
         $costItem->frequency = $request->frequency;
-        $costItem->status = $request->status;
+        // $costItem->status = $request->status;
         $costItem->save();
         Session::flash('success', "Update Successfully");
         // return redirect()->route($this->parentRoute);

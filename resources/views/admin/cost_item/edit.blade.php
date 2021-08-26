@@ -118,7 +118,7 @@ $activityId = Request::get('activityId');
                                                 <div class="form-line">
                                                     <input autofocus value="{{ $item->description  }}" name="description" type="text"
                                                            class="form-control">
-                                                    <label class="form-label">Description</label>
+                                                    <label class="form-label">Memo</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -152,40 +152,16 @@ $activityId = Request::get('activityId');
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-line">
-                                                <select data-live-search="true" class="form-control show-tick" name="status" id="status">
-                                                    <option @if($item->status == "0") {{ "selected" }} @endif value="0">Select Status</option>
-                                                    <option @if($item->status == "1") {{ "selected" }} @endif value="1">Pending</option>
-                                                    <option @if($item->status == "2") {{ "selected" }} @endif value="2">Approval Stage</option>
-                                                    <option @if($item->status == "3") {{ "selected" }} @endif value="3">On Progress</option>
-                                                    <option @if($item->status == "4") {{ "selected" }} @endif value="4">Wait Clearance</option>
-                                                    <option @if($item->status == "5") {{ "selected" }} @endif value="5">Half Cleared</option>
-                                                    <option @if($item->status == "6") {{ "selected" }} @endif value="6">Completed</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        
                                         <input value="" name="submitType" id="submitType" type="hidden" value="">
                                         <input name="selectedProjectId" id="selectedProjectId" type="hidden" value="{{$projectId}}">
                                         <input name="selectedActivityId" id="selectedActivityId" type="hidden" value="{{$activityId}}">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-line">
-                                                        <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update
-                                                        </button>
-                                                        <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update & New
-                                                        </button>
-                                                        <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update & Copy
-                                                        </button>
-                                                        <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update & Close
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn-csm-save m-t-15 waves-effect"> <i class="fa fa-edit"></i> Save</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn-new-style m-t-15 waves-effect"><span><i class="fa fa-plus"></i></span> Save & New</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn-new-style m-t-15 waves-effect"><span><i class="fa fa-copy"></i></span> Save & Copy</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn-new-style m-t-15 waves-effect"><span><i class="far fa-check-circle last_csm_btn"></i></span> Save & Close</button>
                                             </div>
                                         </div>
 

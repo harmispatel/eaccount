@@ -17,6 +17,7 @@ $ParentRouteName = 'cost_item';
 
 $projectId = Request::get('projectId');
 $activityId = Request::get('activityId');
+
 ?>
 
 @section('title')
@@ -71,14 +72,9 @@ $activityId = Request::get('activityId');
                                                             id="main_activity_id" onchange="getSubActivity()">
                                                         <option value="0" class="font-custom-bold">Select Activity</option>
                                                         @foreach($activitys as $activity)
-                                                        <?php
-                                                            if ($activity->parent_id == 0) { 
-                                                        ?>
-                                                            <option value="{{ $activity->id }}" @if(old('frequency') == $activity->id) selected @endif>{{ $activity->title }}</option>
-                                                        <?php
-                                                            } 
-                                                        ?>
-                                                        
+                                                            @if ($activity->parent_id == 0 )
+                                                                <option value="{{ $activity->id }}" @if($selectedActivity->parent_id == $activity->id || $selectedActivity->id == $activity->id) selected @endif>{{ $activity->title }}</option>
+                                                            @endif
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -91,7 +87,13 @@ $activityId = Request::get('activityId');
                                                     <select data-live-search="true" class="form-control show-tick"
                                                             name="sub_activity_id"
                                                             id="sub_activity_id">
-                                                        
+                                                            @if(!empty($selectedActivity))
+                                                                @foreach($activitys as $activity)
+                                                                    @if ($activity->parent_id != 0 && ($activity->parent_id == $selectedActivity->parent_id || $activity->parent_id == $selectedActivity->id))
+                                                                        <option value="{{ $activity->id }}" @if($activity->id == $selectedActivity->id) selected @endif>{{ $activity->title }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
                                                     </select>
                                                 </div>
                                             </div>
@@ -113,7 +115,7 @@ $activityId = Request::get('activityId');
                                                 <div class="form-line">
                                                     <input autofocus value="{{ old('description')  }}" name="description" type="text"
                                                            class="form-control">
-                                                    <label class="form-label">Description</label>
+                                                    <label class="form-label">Memo</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -148,46 +150,18 @@ $activityId = Request::get('activityId');
                                             </div>
                                         </div>
                                         <input value="" name="submitType" id="submitType" type="hidden" value="">
-
                                         <input name="selectedProjectId" id="selectedProjectId" type="hidden" value="{{$projectId}}">
                                         <input name="selectedActivityId" id="selectedActivityId" type="hidden" value="{{$activityId}}">
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-line">
-                                                <select data-live-search="true" class="form-control show-tick" name="status" id="status">
-                                                    <option value="0" class="font-custom-bold">Select Status</option>
-                                                    <option value="1">Pending</option>
-                                                    <option value="2">Approval Stage</option>
-                                                    <option value="3">On Progress</option>
-                                                    <option value="4">Wait Clearance</option>
-                                                    <option value="5">Half Cleared</option>
-                                                    <option value="6">Completed</option>
-                                                
-                                                </select>
-                                            </div>
-                                        </div>  
-
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
-                                                    Save
-                                                </button>
-                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
-                                                    Save & New
-                                                </button>
-                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn btn-primary m-t-15 waves-effect">
-                                                    Save & Copy
-                                                </button>
-                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
-                                                    Save & Close
-                                                </button>
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn-csm-save m-t-15 waves-effect"> <i class="fa fa-edit"></i> Save</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn-new-style m-t-15 waves-effect"><span><i class="fa fa-plus"></i></span> Save & New</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn-new-style m-t-15 waves-effect"><span><i class="fa fa-copy"></i></span> Save & Copy</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn-new-style m-t-15 waves-effect"><span><i class="far fa-check-circle last_csm_btn"></i></span> Save & Close</button>
                                             </div>
                                         </div>
-
-
                                     </div>
-
                                 </form>
-
                             </div>
                         </div>
                     </div>
