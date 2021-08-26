@@ -96,9 +96,10 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                             <label for="md_checkbox_p"></label>
                                         </th>
 
-                                        <th>Activity</th>
                                         <th>Activity code</th>
-                                        <th>Project</th>                                        
+                                        <th>Activity</th>
+                                        <th>Department</th>
+                                        <th>Quater</th>                                        
                                         <th>Action</th>
 
                                     </tr>
@@ -111,6 +112,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                 @php
                                                     $parentActivity = $item->hasOneParentActivity ? $item->hasOneParentActivity : [];   
                                                     $subActivities = $item->hasManySubActivity ? $item->hasManySubActivity : [];   
+                                                    $department = $item->hasOneDepartment ? $item->hasOneDepartment : [];   
                                                 @endphp
                                                 <tr @if (Auth::id()==$item->id) class="bg-tr" @endif >
                                                     <th class="text-center">
@@ -119,18 +121,30 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                             class="chk-col-cyan selects "/>
                                                         <label for="md_checkbox_{{ $i }}"></label>
                                                     </th>
-                                                    <td class="w-csm-40">
-                                                    
-                                                            @if (!empty($project))
-                                                                    <a href="{{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id]) }}"> {{$item->title }}</a>
-                                                            @endif
-                                                        
-                                                    </td>
                                                     <td>     
                                                         {{$item->activity_code ? $item->activity_code : ''}}
                                                     </td>
+                                                    <td class="w-csm-40">
+                                                            @if (!empty($project))
+                                                                    <a href="{{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id]) }}"> {{$item->title }}</a><span style="color: red">({{count($subActivities)}})</span>
+                                                            @endif
+                                                    </td>
+                                                    <td>     
+                                                        {{!empty($department) ? $department->departmentName : ''}}
+                                                    </td>
                                                     <td>
-                                                        {{ isset($item->hasOneProject->projectName) ? $item->hasOneProject->projectName : "-" }}
+                                                        @php
+                                                            $activitytoquarters = $item->hasManyActivitytoquarter ? $item->hasManyActivitytoquarter : [];
+                                                            $activitytoquarterName = [];
+                                                       
+                                                            if (count($activitytoquarters)){
+                                                                foreach ($activitytoquarters as $activitytoquarter){
+                                                                    $quarter = $activitytoquarter->hasOneQuarter ? $activitytoquarter->hasOneQuarter : [];
+                                                                    $activitytoquarterName[] = $quarter->name ? $quarter->name : '';
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        {{count($activitytoquarterName) ? implode(',',$activitytoquarterName) : '-' }}
                                                     </td>
                                                     
                                                     <td class="tdTrashAction">
@@ -158,6 +172,9 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                 <?php $i++; ?>
                                                 @if(count($subActivities))
                                                     @foreach ($subActivities as $item)
+                                                        @php
+                                                            $department = $item->hasOneDepartment ? $item->hasOneDepartment : [];   
+                                                        @endphp
                                                         <tr @if (Auth::id()==$item->id) class="bg-tr" @endif >
                                                             <th class="text-center">
                                                                 <input name="items[id][]" value="{{ $item->id }}"
@@ -165,14 +182,28 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                                     class="chk-col-cyan selects "/>
                                                                 <label for="md_checkbox_{{ $i }}"></label>
                                                             </th>
+                                                            <td>     
+                                                                {{$item->activity_code ? $item->activity_code : ''}}
+                                                            </td>
                                                             <td class="w-csm-40">
                                                                     - <a href="@if(!empty($project)){{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id])}}@else{{ route('cost_item')}}@endif"> {{$item->title }}</a>
                                                             </td>
                                                             <td>     
-                                                                {{$item->activity_code ? $item->activity_code : ''}}
+                                                                {{!empty($department) ? $department->departmentName : ''}}
                                                             </td>
                                                             <td>
-                                                                {{ isset($item->hasOneProject->projectName) ? $item->hasOneProject->projectName : "-" }}
+                                                                @php
+                                                                    $activitytoquarters = $item->hasManyActivitytoquarter ? $item->hasManyActivitytoquarter : [];
+                                                                    $activitytoquarterName = [];
+                                                            
+                                                                    if (count($activitytoquarters)){
+                                                                        foreach ($activitytoquarters as $activitytoquarter){
+                                                                            $quarter = $activitytoquarter->hasOneQuarter ? $activitytoquarter->hasOneQuarter : [];
+                                                                            $activitytoquarterName[] = $quarter->name ? $quarter->name : '';
+                                                                        }
+                                                                    }
+                                                                @endphp
+                                                                {{count($activitytoquarterName) ? implode(',',$activitytoquarterName) : '-' }}
                                                             </td>
                                                             
                                                             <td class="tdTrashAction">
@@ -209,9 +240,10 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                             <label for="md_checkbox_footer"></label>
                                         </th>
 
-                                        <th>Activity</th>
                                         <th>Activity code</th>
-                                        <th>Project</th>                                        
+                                        <th>Activity</th>
+                                        <th>Department</th>
+                                        <th>Quater</th>                                        
                                         <th>Action</th>
                                     </tr>
                                     </thead>
