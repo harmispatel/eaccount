@@ -174,188 +174,34 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                 
                                                 
                                                 <td>
-                                                    @if($item->status == "1")
-                                                        <span class="label label-default">Pending</span>
+                                                    @if (!empty($tasks))
+                                                        @php
+                                                            $taskStatus = $tasks->hasManyTasksStatus ? $tasks->hasManyTasksStatus : [];
+                                                        @endphp
+                                                        @foreach ($taskStatus as $taskStatu)
+                                                            @php
+                                                                $status = $taskStatu->hasOneStatus ? $taskStatu->hasOneStatus : [];
+                                                            @endphp
+                                                            @if($item->status == $status->id)
+                                                            <span class="label" style="background-color: {{$status->color_code ? $status->color_code : ''}}">{{$status->name ? $status->name : ''}}</span>
+                                                            @endif  
+                                                        @endforeach  
                                                         <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
+                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                                                             <ul class="dropdown-menu ">
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
-                                                                </li>
+                                                                @foreach ($taskStatus as $taskStatu)
+                                                                    @php
+                                                                    $status = $taskStatu->hasOneStatus ? $taskStatu->hasOneStatus : [];
+                                                                    @endphp
+                                                                    <li>
+                                                                        <a href="{{ url('cost_item/update_status/'.$item->id.'/'.$status->id) }}">{{$status->name ? $status->name : ''}}</a>
+                                                                    </li>
+                                                                @endforeach
                                                             </ul>
-                                                        </div>
-                                                    @elseif($item->status == "2")
-                                                        <span class="label label-warning">Approval Stage</span>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu ">
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    @elseif($item->status == "3")
-                                                        <span class="label label-primary">On Progress</span>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu ">
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    @elseif($item->status == "4")
-                                                        <span class="label label-warning">Wait Clearance</span>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu ">
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    @elseif($item->status == "5")
-                                                        <span class="label label-info">Half Cleared</span>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu ">
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        @elseif($item->status == "6")
-                                                        <span class="label label-success">Completed</span>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu ">
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    @else
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu ">
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/1') }}">Pending</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/2') }}">Approval Stage</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/3') }}">On Progress</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/4') }}">Wait Clearance</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/5') }}">Half Cleared</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="{{ url('cost_item/update_status/'.$item->id.'/6') }}">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                        </div>      
                                                     @endif
+                                                    
+                                                    
                                                     </td>
                                                 
                                                 <td class="tdTrashAction">

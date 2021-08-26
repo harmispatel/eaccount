@@ -86,14 +86,7 @@ $projectId = Request::get('projectId');
                                                             id="parent_id">
                                                         <option value="0" class="font-custom-bold">Main Activity</option>
                                                         @foreach($items as $item)
-                                                        <?php
-                                                            if ($item->parent_id == 0) { 
-                                                        ?>
                                                             <option value="{{ $item->id }}">{{ $item->title }}</option>
-                                                        <?php
-                                                            } 
-                                                        ?>
-                                                        
                                                         @endforeach
                                                     </select>
                                                 </div>
