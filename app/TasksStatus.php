@@ -10,7 +10,7 @@ class TasksStatus extends Model
     public $timestamps = false;
     
     public function hasOneStatus()
-    {
+    { 
         return $this->hasOne('App\Status','id','status_id');
     }
 }
