@@ -147,7 +147,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                         {{count($activitytoquarterName) ? implode(',',$activitytoquarterName) : '-' }}
                                                     </td>
                                                     
-                                                    <td class="tdTrashAction">
+                                                    <td class="tdTrashAction w-csm-10">
                                                         
                                                             <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs btn-info waves-effect" href="@if (!empty($project)){{ route($ParentRouteName.'.edit',['id'=>$item->id,'projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
                                                         <a data-target="#largeModal"
