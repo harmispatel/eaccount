@@ -281,17 +281,34 @@
                                             </div>
 
                                             @if($profile->role_manage_id == "3")
-                                            <div class="form-group">
-                                                <label for="description"
-                                                       class="col-sm-2 control-label">Signature</label>
-                                                <div class="col-sm-10" style="display:flex;">
-                                                    <input name="signature" type="file" class="form-control">
-                                                    @if($profile->profile['signature'] != "")<img height="50px" src="{{ url('/').'/'.$profile->profile['signature'] }}" />@endif
+                                                <div class="form-group">
+                                                    <label for="description" class="col-sm-2 control-label">Signature</label>
+                                                    <div class="col-sm-10" style="display:flex;">
+                                                        <input name="signature" type="file" class="form-control">
+                                                        @if($profile->profile['signature'] != "")<img height="50px" src="{{ url('/').'/'.$profile->profile['signature'] }}" />@endif
+                                                    </div>
                                                 </div>
-                                            </div>
+
+                                                <div class="form-group">
+                                                    <label for="description" class="col-sm-2 control-label">Upload Cv</label>
+                                                    <div class="col-sm-10" style="display:flex;">
+                                                        <input name="user_cv" type="file" class="form-control">
+                                                        @if($profile->profile['user_cv'] != "")
+                                                        
+                                                        <div class="image_newicon-main">
+                                                            <div class="image_newicon">
+                                                                <a target="_blank" href="{{ url($profile->profile->user_cv) }}" class="icon_new">
+                                                                    <i style="font-size: 40px;" class="fas fa-file-pdf"></i>
+                                                                </a>
+                                                                <a href="{{ route('profile.deletecv') }}" class="icon-above"><i class="icon-above-inr" ></i>x</a>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                    </div>
+                                                </div>   
+                                            @endif
 
                                             
-                                            @endif
                                          
                                             <div class="form-group">
                                                 <div class="col-sm-offset-2 col-sm-10">

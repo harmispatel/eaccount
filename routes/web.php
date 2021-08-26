@@ -47,6 +47,16 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'profile.update'
     ]);
 
+    Route::get('/profile/deletecv', [
+        'uses' => 'ProfileController@deletecv',
+        'as' => 'profile.deletecv'
+    ]);
+
+    Route::post('/profile/uploadcv', [
+        'uses' => 'ProfileController@uploadcv',
+        'as' => 'profile.uploadcv'
+    ]);
+
 
     //    User
     Route::get('/user', [
@@ -141,6 +151,7 @@ Route::group(['middleware' => 'auth'], function () {
         'uses' => 'UsersController@userdetails',
         'as' => 'user.userdetails'
     ]);
+    
 
     //    User End
 

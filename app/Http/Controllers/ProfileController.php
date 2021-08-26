@@ -117,10 +117,38 @@ class ProfileController extends Controller
             $user->profile->signature = 'upload/signature/' . $temporaryName;
         }
 
+        if ($request->hasFile('user_cv')) {
+            $user_cv = $request->user_cv;
+            $temporaryName = time() . $user_cv->getClientOriginalName();
+            $user_cv->move("public/upload/user_cv", $temporaryName);
+            $user->profile->user_cv = 'upload/user_cv/' . $temporaryName;
+        }
+
         $user->profile->save();
         Session::flash('success', 'Successfully Updated');
         return redirect()->route('profile');
 
+    }
+
+    public function deletecv()
+    {
+        $user = Auth::user();
+        $user->profile->user_cv = "";
+        $user->profile->save();
+        return redirect()->back();
+    }
+
+    public function uploadcv(Request $request)
+    {
+        $user = Auth::user();
+        if ($request->hasFile('user_cv')) {
+            $user_cv = $request->user_cv;
+            $temporaryName = time() . $user_cv->getClientOriginalName();
+            $user_cv->move("public/upload/user_cv", $temporaryName);
+            $user->profile->user_cv = 'upload/user_cv/' . $temporaryName;
+        }
+        $user->profile->save();
+        return redirect()->back();
     }
 
     /**

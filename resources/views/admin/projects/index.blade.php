@@ -258,7 +258,7 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                         @endif
                                                     </td>
                                                     
-                                                    <td class="tdTrashAction">
+                                                    <td class="tdTrashAction w-csm-10">
                                                         <a @if ($edit==0) class="dis-none" @endif  class="btn btn-xs btn-info waves-effect"
                                                         @if($project->status == "3") href="{{ route($ParentRouteName.'.edit',['id'=>$project->id]) }}" @endif
                                                         data-toggle="tooltip"

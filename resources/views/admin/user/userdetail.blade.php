@@ -234,15 +234,15 @@ $ParentRouteName = 'user';
                         </div>
                     </div>
 
-                    <div id="bankDetails" class="tab-pane fade in">
+                    <div id="bankDetails" class="tab-pane fade">
                         <h2>BankDetails</h2>
                     </div>
 
-                    <div id="documentDetails" class="tab-pane fade in">
+                    <div id="documentDetails" class="tab-pane fade">
                         <h2>documentDetails</h2>
                     </div>
 
-                    <div id="paymentRequsitions" class="tab-pane fade in">
+                    <div id="paymentRequsitions" class="tab-pane fade">
                         <h2>paymentRequsitions</h2>
                     </div>
 
@@ -262,8 +262,56 @@ $ParentRouteName = 'user';
                         <h2>attchment</h2>
                     </div>
 
-                    <div id="cv" class="tab-pane fade in">
-                        <h2>cv</h2>
+                    <div id="cv" class="tab-pane fade">
+                        <?php 
+                            $stat = "none";
+                            if($item->id == auth()->user()->id){ $stat = "block"; }
+                        ?>
+                        <div class="user_info_main">
+                            <div class="user_head">
+                                <h2>User Cv</h2>
+                                
+                            </div>
+                            <div class="user_info">
+                                <div class="container">
+                                
+                                <div class="col-sm-10" style="display:flex;">
+                                    @if($stat == "block")
+                                        <form enctype="multipart/form-data" class="form-horizontal" method="post"
+                                        action="{{route('profile.uploadcv',['id'=>$item->id])}}">
+                                        {{ csrf_field() }}
+
+                                            <div class="form-group">
+                                                <label for="user_cv" class="col-sm-3 control-label">Upload</label>
+                                                <div class="col-sm-9">
+                                                    <input name="user_cv" type="file" accept="application/pdf">
+
+                                                    <button type="submit" style="margin-top:20px" class="btn btn-info">submit</button>
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+                                    @endif
+                                    @if($item->profile->user_cv != "")
+                                        <a target="_blank" href="{{ url($item->profile->user_cv) }}"></a>
+                                        <div class="user-cv-design" style="position: relative;">
+                                        <div class="image_newicon-main">
+                                            <div class="image_newicon">
+                                                <div class="icon_new">
+                                                    <i style="font-size: 40px;" class="fas fa-file-pdf"></i>
+                                                </div>
+
+                                                <a href="{{ route('profile.deletecv') }}" class="icon-above"><i class="icon-above-inr" ></i>x</a>
+                                            </div>
+                                        </div>
+                                            <a target="_blank" href="{{ url($item->profile->user_cv) }}" class="btn btn-info"><i class="icon-above-inr"></i>Download</a>
+                                        </div>
+                                    @endif
+                                </div>
+                           
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -11201,6 +11201,10 @@ body.modal-open {
     width: 20%;
 }
 
+.w-csm-10{
+    width: 10%;
+}
+
 .btn-new-style{
     background: #fff;
     border: 1px solid #ccc7c7;
@@ -11224,3 +11228,28 @@ button.btn-csm-save{
 button i.last_csm_btn {
     color: #942a25;
 }
+.image_newicon a.icon-above {
+    right: -10px;
+    background-color: red;
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    position: absolute;
+    top: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;    font-weight: bold; text-decoration: none !important;
+}
+.icon-above-inr{
+    display: flex;
+    justify-content: center;
+}
+.image_newicon {
+    display: inline-block;
+    position: relative;
+}
+.image_newicon-main {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
