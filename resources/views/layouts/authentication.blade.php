@@ -8,7 +8,7 @@
     <!-- Seo meta tag -->
     <meta name="author" content="mamun2074">
     <meta name="keywords" content="account, Accounting Software, balance sheet, cash flow, Cost Of Revenue, fixed asset schedule, ledger, multi branch, Profit Or Loss Account, receive payment, trial balance">
-    <meta name="description" content="E-Account is a dynamic, open source, easy to use, user friendly web base application. Which is built in PHP – MySQL">
+    <meta name="description" content="Sikika MIS is Open Source Data Management System for daily NGO operations processes automation">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- End -->
 
