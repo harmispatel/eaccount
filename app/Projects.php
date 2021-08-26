@@ -23,7 +23,8 @@ class Projects extends Model
         'total_budget',
         'coordinator',
         'status',
-        
+        'start_date',
+        'end_date',
         'created_by',
         'updated_by',
         'deleted_by'

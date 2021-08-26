@@ -11194,3 +11194,27 @@ body.modal-open {
 .w-csm-40{
     width: 40%;
 }
+
+.btn-new-style{
+    background: #fff;
+    border: 1px solid #ccc7c7;
+    padding: 5px 20px;
+    border-radius: 3px;
+}
+button.btn-new-style span{
+    background: #e6e6e6;
+    padding: 7px 10px;
+    margin-left: -20px;
+    margin-right: 5px;
+    color: #018738;
+}
+button.btn-csm-save{
+    background-color:#018738;
+    color: #fff; 
+    padding: 5px 20px;
+    border: 1px solid #018738;
+    border-radius: 3px;
+}
+button i.last_csm_btn {
+    color: #942a25;
+}

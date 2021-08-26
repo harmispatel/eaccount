@@ -146,6 +146,24 @@ $ParentRouteName = 'project';
                                             </div>
                                         </div>
 
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input  name="start_date" value="{{ $item->start_date }}" type="text" id="startdate" class="form-control floating-label">
+                                                    <label class="form-label">Start Date</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <input  name="end_date" type="text" value="{{ $item->end_date }}" id="enddate" class="form-control floating-label">
+                                                    <label class="form-label">End Date</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
@@ -164,25 +182,10 @@ $ParentRouteName = 'project';
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                {{-- <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                    Update
-                                                </button> --}}
-                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-line">
-                                                        <button type="button" onclick="changeSubmitType('save')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update
-                                                        </button>
-                                                        <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update & New
-                                                        </button>
-                                                        <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update & Copy
-                                                        </button>
-                                                        <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn btn-primary m-t-15 waves-effect">
-                                                            Update & Close
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn-csm-save m-t-15 waves-effect"> <i class="fa fa-edit"></i> Save</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn-new-style m-t-15 waves-effect"><span><i class="fa fa-plus"></i></span> Save & New</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn-new-style m-t-15 waves-effect"><span><i class="fa fa-copy"></i></span> Save & Copy</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn-new-style m-t-15 waves-effect"><span><i class="far fa-check-circle last_csm_btn"></i></span> Save & Close</button>
                                             </div>
                                         </div>
 
@@ -282,6 +285,8 @@ $ParentRouteName = 'project';
             $("#form_validation").submit();
         }
 
+        $('#startdate').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
+        $('#enddate').bootstrapMaterialDatePicker({ weekStart : 0, time: false });
 
         // Validation and calculation
         var UiController = (function () {
