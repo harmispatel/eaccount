@@ -127,17 +127,6 @@ class Kernel extends HttpKernel
         'department.trash_show' => \App\Http\Middleware\Roles\Department\TrashShow::class,
         'department.permanently_delete' => \App\Http\Middleware\Roles\Department\PermanentlyDelete::class,
 
-        'approval.module_show' => \App\Http\Middleware\Roles\Approval\ModuleShow::class,
-        'approval.show' => \App\Http\Middleware\Roles\Approval\Show::class,
-        'approval.create' => \App\Http\Middleware\Roles\Approval\Create::class,
-        'approval.edit' => \App\Http\Middleware\Roles\Approval\Edit::class,
-        'approval.delete' => \App\Http\Middleware\Roles\Approval\Delete::class,
-        'approval.pdf' => \App\Http\Middleware\Roles\Approval\Pdf::class,
-        'approval.restore' => \App\Http\Middleware\Roles\Approval\Restore::class,
-        'approval.trash_show' => \App\Http\Middleware\Roles\Approval\TrashShow::class,
-        'approval.permanently_delete' => \App\Http\Middleware\Roles\Approval\PermanentlyDelete::class,
-
-
         'settings.all' => \App\Http\Middleware\Roles\Settings\All::class,
         'settings.show' => \App\Http\Middleware\Roles\Settings\Show::class,
 
@@ -244,6 +233,26 @@ class Kernel extends HttpKernel
         'jnl_voucher.restore' => \App\Http\Middleware\Roles\JnlVoucher\Restore::class,
         'jnl_voucher.trash_show' => \App\Http\Middleware\Roles\JnlVoucher\TrashShow::class,
         'jnl_voucher.permanently_delete' => \App\Http\Middleware\Roles\JnlVoucher\PermanentlyDelete::class,
+
+        'project_approval.module_show' => \App\Http\Middleware\Roles\Project_approval\ModuleShow::class,
+        'project_approval.show' => \App\Http\Middleware\Roles\Project_approval\Show::class,
+        'project_approval.create' => \App\Http\Middleware\Roles\Project_approval\Create::class,
+        'project_approval.edit' => \App\Http\Middleware\Roles\Project_approval\Edit::class,
+        'project_approval.delete' => \App\Http\Middleware\Roles\Project_approval\Delete::class,
+        'project_approval.pdf' => \App\Http\Middleware\Roles\Project_approval\Pdf::class,
+        'project_approval.restore' => \App\Http\Middleware\Roles\Project_approval\Restore::class,
+        'project_approval.trash_show' => \App\Http\Middleware\Roles\Project_approval\TrashShow::class,
+        'project_approval.permanently_delete' => \App\Http\Middleware\Roles\Project_approval\PermanentlyDelete::class,
+
+        'reallocation_approval.module_show' => \App\Http\Middleware\Roles\Reallocation_approval\ModuleShow::class,
+        'reallocation_approval.show' => \App\Http\Middleware\Roles\Reallocation_approval\Show::class,
+        'reallocation_approval.create' => \App\Http\Middleware\Roles\Reallocation_approval\Create::class,
+        'reallocation_approval.edit' => \App\Http\Middleware\Roles\Reallocation_approval\Edit::class,
+        'reallocation_approval.delete' => \App\Http\Middleware\Roles\Reallocation_approval\Delete::class,
+        'reallocation_approval.pdf' => \App\Http\Middleware\Roles\Reallocation_approval\Pdf::class,
+        'reallocation_approval.restore' => \App\Http\Middleware\Roles\Reallocation_approval\Restore::class,
+        'reallocation_approval.trash_show' => \App\Http\Middleware\Roles\Reallocation_approval\TrashShow::class,
+        'reallocation_approval.permanently_delete' => \App\Http\Middleware\Roles\Reallocation_approval\PermanentlyDelete::class,
 
         'contra_voucher.all' => \App\Http\Middleware\Roles\ContraVoucher\All::class,
         'contra_voucher.show' => \App\Http\Middleware\Roles\ContraVoucher\Show::class,

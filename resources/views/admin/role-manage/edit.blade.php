@@ -127,7 +127,7 @@ $ParentRouteName = 'role-manage';
                                                                         <div class="switch">
                                                                             <label>
                                                                                 <input name="details[{{ $key }}][{{ $key_content }}]"
-                                                                                       type="checkbox"><span
+                                                                                       type="checkbox"><spans
                                                                                         class="lever switch-col-cyan"></span>
                                                                             </label>
                                                                         </div>

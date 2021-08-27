@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Middleware\Roles\Approval;
+namespace App\Http\Middleware\Roles\Project_approval;
 
 use Closure;
+use App\Http\Controllers\RoleManageController;
 use Illuminate\Support\Facades\Session;
 
-class PermanentlyDelete
+class Restore
 {
     /**
      * Handle an incoming request.
@@ -17,7 +18,7 @@ class PermanentlyDelete
     public function handle($request, Closure $next)
     {
 
-        if (config('role_manage.Approval.PermanentlyDelete')){ //Permanently Delete
+        if (config('role_manage.Project_approval.Restore')){ // Restore
             return $next($request);
         }else{
             Session::flash('error', 'You Can Not Perform This Action.Please Contact Your It Officer');

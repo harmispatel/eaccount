@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Middleware\Roles\Approval;
+namespace App\Http\Middleware\Roles\Project_approval;
 
 use Closure;
-use App\Http\Controllers\RoleManageController;
 use Illuminate\Support\Facades\Session;
-
-class Restore
+class Delete
 {
     /**
      * Handle an incoming request.
@@ -18,12 +16,14 @@ class Restore
     public function handle($request, Closure $next)
     {
 
-        if (config('role_manage.Approval.Restore')){ // Restore
+        $UserDelete=config('role_manage.Project_approval.Delete');
+        if ($UserDelete){ // Delete
             return $next($request);
         }else{
             Session::flash('error', 'You Can Not Perform This Action.Please Contact Your It Officer');
             return redirect()->back();
         }
+
 
     }
 }

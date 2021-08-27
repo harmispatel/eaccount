@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Middleware\Roles\Approval;
+namespace App\Http\Middleware\Roles\Project_approval;
 
 use Closure;
 
-class Show
+class Pdf
 {
     /**
      * Handle an incoming request.

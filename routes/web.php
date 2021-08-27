@@ -333,107 +333,108 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
     //end activity
 
-        //    Cost_item
-        Route::get('/cost_item', [
-            'uses' => 'CostItemsController@index',
-            'as' => 'cost_item'
-        ])->middleware('cost_item.module_show');
-    
-        Route::get('/cost_item/create', [
-            'uses' => 'CostItemsController@create',
-            'as' => 'cost_item.create'
-        ])->middleware('cost_item.create');
-    
-        Route::post('/cost_item/store', [
-            'uses' => 'CostItemsController@store',
-            'as' => 'cost_item.store'
-        ])->middleware('cost_item.create');
-    
-    
-        Route::get('/cost_item/edit/{id}', [
-            'uses' => 'CostItemsController@edit',
-            'as' => 'cost_item.edit'
-        ])->middleware('cost_item.edit');
-    
-        Route::post('/cost_item/update/{id}', [
-            'uses' => 'CostItemsController@update',
-            'as' => 'cost_item.update'
-        ])->middleware('cost_item.edit');
-    
-        Route::get('/cost_item/show/{id}', [
-            'uses' => 'CostItemsController@show',
-            'as' => 'cost_item.show'
-        ]);
-    
-        Route::get('/cost_item/destroy/{id}', [
-            'uses' => 'CostItemsController@destroy',
-            'as' => 'cost_item.destroy'
-        ])->middleware('cost_item.delete');
-    
-        Route::get('/cost_item/trashed', [
-            'uses' => 'CostItemsController@trashed',
-            'as' => 'cost_item.trashed'
-        ])->middleware('cost_item.trash_show');
-    
-        Route::post('/cost_item/trashed/show', [
-            'uses' => 'CostItemsController@trashedShow',
-            'as' => 'cost_item.trashed.show'
-        ]);
-    
-    
-        Route::get('/cost_item/restore/{id}', [
-            'uses' => 'CostItemsController@restore',
-            'as' => 'cost_item.restore'
-        ])->middleware('cost_item.restore');
-    
-        Route::get('/cost_item/kill/{id}', [
-            'uses' => 'CostItemsController@kill',
-            'as' => 'cost_item.kill'
-        ])->middleware('cost_item.permanently_delete');
-    
-        Route::get('/cost_item/active/search', [
-            'uses' => 'CostItemsController@activeSearch',
-            'as' => 'cost_item.active.search'
-        ]);
-    
-        Route::get('/cost_item/trashed/search', [
-            'uses' => 'CostItemsController@trashedSearch',
-            'as' => 'cost_item.trashed.search'
-        ]);
-    
-        Route::get('/cost_item/active/action', [
-            'uses' => 'CostItemsController@activeAction',
-            'as' => 'cost_item.active.action'
-        ]);
-    
-        Route::get('/cost_item/trashed/action', [
-            'uses' => 'CostItemsController@trashedAction',
-            'as' => 'cost_item.trashed.action'
-        ]);
+    //    Cost_item
+    Route::get('/cost_item', [
+        'uses' => 'CostItemsController@index',
+        'as' => 'cost_item'
+    ])->middleware('cost_item.module_show');
 
-        Route::post('/cost_item/get_sub_activity', [
-            'uses' => 'CostItemsController@get_sub_activity',
-            'as' => 'cost_item.get_sub_activity'            
-        ]);
-        Route::get('/cost_item/update_status/{id}/{status}', [
-            'uses' => 'CostItemsController@update_status',
-            'as' => 'cost_item.update_status'
-        ]);
-        
-        //end Cost_item
-        //start Reallocation
-        Route::get('/reallocation', [
-            'uses' => 'ReallocationController@index',
-            'as' => 'reallocation'
-        ]);
-        Route::get('/reallocation/create', [
-            'uses' => 'ReallocationController@create',
-            'as' => 'reallocation.create'
-        ]);
-        Route::post('/reallocation/store', [
-            'uses' => 'ReallocationController@store',
-            'as' => 'reallocation.store'
-        ])->middleware('department.create');
+    Route::get('/cost_item/create', [
+        'uses' => 'CostItemsController@create',
+        'as' => 'cost_item.create'
+    ])->middleware('cost_item.create');
+
+    Route::post('/cost_item/store', [
+        'uses' => 'CostItemsController@store',
+        'as' => 'cost_item.store'
+    ])->middleware('cost_item.create');
+
+
+    Route::get('/cost_item/edit/{id}', [
+        'uses' => 'CostItemsController@edit',
+        'as' => 'cost_item.edit'
+    ])->middleware('cost_item.edit');
+
+    Route::post('/cost_item/update/{id}', [
+        'uses' => 'CostItemsController@update',
+        'as' => 'cost_item.update'
+    ])->middleware('cost_item.edit');
+
+    Route::get('/cost_item/show/{id}', [
+        'uses' => 'CostItemsController@show',
+        'as' => 'cost_item.show'
+    ]);
+
+    Route::get('/cost_item/destroy/{id}', [
+        'uses' => 'CostItemsController@destroy',
+        'as' => 'cost_item.destroy'
+    ])->middleware('cost_item.delete');
+
+    Route::get('/cost_item/trashed', [
+        'uses' => 'CostItemsController@trashed',
+        'as' => 'cost_item.trashed'
+    ])->middleware('cost_item.trash_show');
+
+    Route::post('/cost_item/trashed/show', [
+        'uses' => 'CostItemsController@trashedShow',
+        'as' => 'cost_item.trashed.show'
+    ]);
+
+
+    Route::get('/cost_item/restore/{id}', [
+        'uses' => 'CostItemsController@restore',
+        'as' => 'cost_item.restore'
+    ])->middleware('cost_item.restore');
+
+    Route::get('/cost_item/kill/{id}', [
+        'uses' => 'CostItemsController@kill',
+        'as' => 'cost_item.kill'
+    ])->middleware('cost_item.permanently_delete');
+
+    Route::get('/cost_item/active/search', [
+        'uses' => 'CostItemsController@activeSearch',
+        'as' => 'cost_item.active.search'
+    ]);
+
+    Route::get('/cost_item/trashed/search', [
+        'uses' => 'CostItemsController@trashedSearch',
+        'as' => 'cost_item.trashed.search'
+    ]);
+
+    Route::get('/cost_item/active/action', [
+        'uses' => 'CostItemsController@activeAction',
+        'as' => 'cost_item.active.action'
+    ]);
+
+    Route::get('/cost_item/trashed/action', [
+        'uses' => 'CostItemsController@trashedAction',
+        'as' => 'cost_item.trashed.action'
+    ]);
+
+    Route::post('/cost_item/get_sub_activity', [
+        'uses' => 'CostItemsController@get_sub_activity',
+        'as' => 'cost_item.get_sub_activity'            
+    ]);
+    Route::get('/cost_item/update_status/{id}/{status}', [
+        'uses' => 'CostItemsController@update_status',
+        'as' => 'cost_item.update_status'
+    ]);
+    
+    //end Cost_item
+    //start Reallocation
+    Route::get('/reallocation', [
+        'uses' => 'ReallocationController@index',
+        'as' => 'reallocation'
+    ]);
+    Route::get('/reallocation/create', [
+        'uses' => 'ReallocationController@create',
+        'as' => 'reallocation.create'
+    ]);
+    Route::post('/reallocation/store', [
+        'uses' => 'ReallocationController@store',
+        'as' => 'reallocation.store'
+    ])->middleware('department.create');
+    
     //    department start
     Route::get('/department', [
         'uses' => 'DepartmentController@index',
@@ -598,90 +599,159 @@ Route::group(['middleware' => 'auth'], function () {
 
     //    departmentnew End
 
-    //    Approval start
-    Route::get('/approval', [
-        'uses' => 'ApprovalController@index',
-        'as' => 'approval'
-    ])->middleware('approval.module_show');
+    //   project Approval start
+    Route::get('/project_approval', [
+        'uses' => 'ProjectApprovalController@index',
+        'as' => 'project_approval'
+    ])->middleware('project_approval.module_show');
 
-    Route::get('/approval/create', [
-        'uses' => 'ApprovalController@create',
-        'as' => 'approval.create'
-    ])->middleware('approval.create');
+    Route::get('/project_approval/create', [
+        'uses' => 'ProjectApprovalController@create',
+        'as' => 'project_approval.create'
+    ])->middleware('project_approval.create');
 
-    Route::post('/approval/store', [
-        'uses' => 'ApprovalController@store',
-        'as' => 'approval.store'
-    ])->middleware('approval.create');
+    Route::post('/project_approval/store', [
+        'uses' => 'ProjectApprovalController@store',
+        'as' => 'project_approval.store'
+    ])->middleware('project_approval.create');
 
+    Route::get('/project_approval/edit/{id}', [
+        'uses' => 'ProjectApprovalController@edit',
+        'as' => 'project_approval.edit'
+    ])->middleware('project_approval.edit');
 
-    Route::get('/approval/edit/{id}', [
-        'uses' => 'ApprovalController@edit',
-        'as' => 'approval.edit'
-    ])->middleware('approval.edit');
+    Route::post('/project_approval/update/{id}', [
+        'uses' => 'ProjectApprovalController@update',
+        'as' => 'project_approval.update'
+    ])->middleware('project_approval.edit');
 
-    Route::post('/approval/update/{id}', [
-        'uses' => 'ApprovalController@update',
-        'as' => 'approval.update'
-    ])->middleware('approval.edit');
-
-    Route::get('/approval/show/{id}', [
-        'uses' => 'ApprovalController@show',
-        'as' => 'approval.show'
+    Route::get('/project_approval/show/{id}', [
+        'uses' => 'ProjectApprovalController@show',
+        'as' => 'project_approval.show'
     ]);
 
-    Route::get('/approval/destroy/{id}', [
-        'uses' => 'ApprovalController@destroy',
-        'as' => 'approval.destroy'
-    ])->middleware('approval.delete');
+    Route::get('/project_approval/destroy/{id}', [
+        'uses' => 'ProjectApprovalController@destroy',
+        'as' => 'project_approval.destroy'
+    ])->middleware('project_approval.delete');
 
-    Route::get('/approval/trashed', [
-        'uses' => 'ApprovalController@trashed',
-        'as' => 'approval.trashed'
-    ])->middleware('approval.trash_show');
+    Route::get('/project_approval/trashed', [
+        'uses' => 'ProjectApprovalController@trashed',
+        'as' => 'project_approval.trashed'
+    ])->middleware('project_approval.trash_show');
 
-    Route::post('/approval/trashed/show', [
-        'uses' => 'ApprovalController@trashedShow',
-        'as' => 'approval.trashed.show'
+    Route::post('/project_approval/trashed/show', [
+        'uses' => 'ProjectApprovalController@trashedShow',
+        'as' => 'project_approval.trashed.show'
     ]);
 
+    Route::get('/project_approval/restore/{id}', [
+        'uses' => 'ProjectApprovalController@restore',
+        'as' => 'project_approval.restore'
+    ])->middleware('project_approval.restore');
 
-    Route::get('/approval/restore/{id}', [
-        'uses' => 'ApprovalController@restore',
-        'as' => 'approval.restore'
-    ])->middleware('approval.restore');
+    Route::get('/project_approval/kill/{id}', [
+        'uses' => 'ProjectApprovalController@kill',
+        'as' => 'project_approval.kill'
+    ])->middleware('project_approval.permanently_delete');
 
-    Route::get('/approval/kill/{id}', [
-        'uses' => 'ApprovalController@kill',
-        'as' => 'approval.kill'
-    ])->middleware('approval.permanently_delete');
-
-    Route::get('/approval/active/search', [
-        'uses' => 'ApprovalController@activeSearch',
-        'as' => 'approval.active.search'
+    Route::get('/project_approval/active/search', [
+        'uses' => 'ProjectApprovalController@activeSearch',
+        'as' => 'project_approval.active.search'
     ]);
 
-    Route::get('/approval/trashed/search', [
-        'uses' => 'ApprovalController@trashedSearch',
-        'as' => 'approval.trashed.search'
+    Route::get('/project_approval/trashed/search', [
+        'uses' => 'ProjectApprovalController@trashedSearch',
+        'as' => 'project_approval.trashed.search'
     ]);
 
-    Route::get('/approval/active/action', [
-        'uses' => 'ApprovalController@activeAction',
-        'as' => 'approval.active.action'
+    Route::get('/project_approval/active/action', [
+        'uses' => 'ProjectApprovalController@activeAction',
+        'as' => 'project_approval.active.action'
     ]);
 
-    Route::get('/approval/trashed/action', [
-        'uses' => 'ApprovalController@trashedAction',
-        'as' => 'approval.trashed.action'
+    Route::get('/project_approval/trashed/action', [
+        'uses' => 'ProjectApprovalController@trashedAction',
+        'as' => 'project_approval.trashed.action'
+    ]);
+    //    project approval End
+
+    //   reallcoation Approval start
+    Route::get('/reallocation_approval', [
+        'uses' => 'ReallocationApprovalController@index',
+        'as' => 'reallocation_approval'
+    ])->middleware('reallocation_approval.module_show');
+
+    Route::get('/reallocation_approval/create', [
+        'uses' => 'ReallocationApprovalController@create',
+        'as' => 'reallocation_approval.create'
+    ])->middleware('reallocation_approval.create');
+
+    Route::post('/reallocation_approval/store', [
+        'uses' => 'ReallocationApprovalController@store',
+        'as' => 'reallocation_approval.store'
+    ])->middleware('reallocation_approval.create');
+
+    Route::get('/reallocation_approval/edit/{id}', [
+        'uses' => 'ReallocationApprovalController@edit',
+        'as' => 'reallocation_approval.edit'
+    ])->middleware('reallocation_approval.edit');
+
+    Route::post('/reallocation_approval/update/{id}', [
+        'uses' => 'ReallocationApprovalController@update',
+        'as' => 'reallocation_approval.update'
+    ])->middleware('reallocation_approval.edit');
+
+    Route::get('/reallocation_approval/show/{id}', [
+        'uses' => 'ReallocationApprovalController@show',
+        'as' => 'reallocation_approval.show'
     ]);
 
+    Route::get('/reallocation_approval/destroy/{id}', [
+        'uses' => 'ReallocationApprovalController@destroy',
+        'as' => 'reallocation_approval.destroy'
+    ])->middleware('reallocation_approval.delete');
 
+    Route::get('/reallocation_approval/trashed', [
+        'uses' => 'ReallocationApprovalController@trashed',
+        'as' => 'reallocation_approval.trashed'
+    ])->middleware('reallocation_approval.trash_show');
 
-    //    Approval End
+    Route::post('/reallocation_approval/trashed/show', [
+        'uses' => 'ReallocationApprovalController@trashedShow',
+        'as' => 'reallocation_approval.trashed.show'
+    ]);
 
+    Route::get('/reallocation_approval/restore/{id}', [
+        'uses' => 'ReallocationApprovalController@restore',
+        'as' => 'reallocation_approval.restore'
+    ])->middleware('reallocation_approval.restore');
 
+    Route::get('/reallocation_approval/kill/{id}', [
+        'uses' => 'ReallocationApprovalController@kill',
+        'as' => 'reallocation_approval.kill'
+    ])->middleware('reallocation_approval.permanently_delete');
 
+    Route::get('/reallocation_approval/active/search', [
+        'uses' => 'ReallocationApprovalController@activeSearch',
+        'as' => 'reallocation_approval.active.search'
+    ]);
+
+    Route::get('/reallocation_approval/trashed/search', [
+        'uses' => 'ReallocationApprovalController@trashedSearch',
+        'as' => 'reallocation_approval.trashed.search'
+    ]);
+
+    Route::get('/reallocation_approval/active/action', [
+        'uses' => 'ReallocationApprovalController@activeAction',
+        'as' => 'reallocation_approval.active.action'
+    ]);
+
+    Route::get('/reallocation_approval/trashed/action', [
+        'uses' => 'ReallocationApprovalController@trashedAction',
+        'as' => 'reallocation_approval.trashed.action'
+    ]);
+    //    reallcoation approval End
 
     //    Settings
 

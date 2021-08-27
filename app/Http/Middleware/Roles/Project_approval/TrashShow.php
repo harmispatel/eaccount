@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Middleware\Roles\Approval;
+namespace App\Http\Middleware\Roles\Project_approval;
 
 use Closure;
 
-use App\Http\Controllers\RoleManageController;
 use Illuminate\Support\Facades\Session;
 
-class Edit
+class TrashShow
 {
     /**
      * Handle an incoming request.
@@ -19,12 +18,12 @@ class Edit
     public function handle($request, Closure $next)
     {
 
-        $UserEdit=config('role_manage.Approval.Edit');
-        if ($UserEdit){ // Edit
+        if (config('role_manage.Project_approval.TrashShow')){ // Trash Show Module
             return $next($request);
         }else{
             Session::flash('error', 'You Can Not Perform This Action.Please Contact Your It Officer');
             return redirect()->back();
         }
+
     }
 }

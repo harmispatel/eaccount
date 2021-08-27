@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Middleware\Roles\Approval;
+namespace App\Http\Middleware\Roles\Reallocation_approval;
 
 use Closure;
 
+use App\Http\Controllers\RoleManageController;
 use Illuminate\Support\Facades\Session;
 
-class Create
+class Edit
 {
     /**
      * Handle an incoming request.
@@ -17,8 +18,9 @@ class Create
      */
     public function handle($request, Closure $next)
     {
-        $UserCreate=config('role_manage.Approval.Create');
-        if ($UserCreate){ // Create
+
+        $UserEdit=config('role_manage.Reallocation_approval.Edit');
+        if ($UserEdit){ // Edit
             return $next($request);
         }else{
             Session::flash('error', 'You Can Not Perform This Action.Please Contact Your It Officer');
