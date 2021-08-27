@@ -35,7 +35,9 @@ class CostItemsController extends Controller
         $project = Projects::find($projectId);
         $activitySelect = Activity::find($activityId);
         $tasks = Tasks::with('hasManyTasksStatus')->where('id',1)->first();
-        $activity = $this->parentModel::where('main_activity_id',$activityId)->where('is_reallocation',0)->orderBy('created_at')->paginate(60);
+        $activity = $this->parentModel::where(function ($query) use ($activityId) {
+            $query->where('sub_activity_id',$activityId)->orwhere('main_activity_id',$activityId);
+        })->where('is_reallocation',0)->orderBy('created_at')->paginate(60);
         return view($this->parentView . '.index',['items'=> $activity,'activity'=>$activitySelect,'projectId'=>$projectId,'project'=>$project,'tasks'=>$tasks]);
     }
     
@@ -146,11 +148,8 @@ class CostItemsController extends Controller
     public function edit($id)
     {
         $items = $this->parentModel::find($id);        
-        
         $activitys = Activity::all();
-        // echo "<pre>"; print_r ($Activity); exit;
-
-        return view($this->parentView . '.edit')->with('item', $items)->with('activitys', $activitys);
+        return view($this->parentView . '.edit',['item'=> $items,'activitys'=>$activitys]);
     }
 
     public function get_sub_activity(Request $request)

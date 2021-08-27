@@ -43,7 +43,7 @@ class ActivitysController extends Controller
      */
     public function create()
     {  
-        $Activity = $this->parentModel::orderBy('created_at')->paginate(60);
+        $Activity = $this->parentModel::where('parent_id',0)->get();
         return view($this->parentView . '.create')->with('items', $Activity);
         // return view($this->parentView . '.create');
     }
@@ -151,14 +151,28 @@ class ActivitysController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
+        $projectId = $request->projectId;
         $items = $this->parentModel::find($id);        
-        
-        $activitys = $this->parentModel::orderBy('created_at')->paginate(60);
-        // echo "<pre>"; print_r ($Activity); exit;
-
-        return view($this->parentView . '.edit')->with('item', $items)->with('activitys', $activitys);
+        $activitys = $this->parentModel::where('department_id',$items->department_id)->where('project_id',$projectId)->where('parent_id',0)->orderBy('created_at')->get();
+        return view($this->parentView . '.edit',['item'=> $items,'activitys'=>$activitys]);
+    }
+    public function get_activity_to_department(Request $request)
+    {
+        $department_id = $request->department_id;
+        $projectId = $request->projectId;
+        $departments = Department::with(['hasManyActivity'=>function ($query) use ($projectId) {
+            $query->where('project_id', $projectId);
+        }])->find($department_id);
+        $html = "<option value='0'>Main Activity</option>";
+        if(!empty($departments)){
+            $activities = $departments->hasManyActivity ? $departments->hasManyActivity : [];
+            if(count($activities)){
+                $html = createActivitySelectBox($activities);
+            }
+        }
+        return response()->json(['success'=>'Got Simple Ajax Request.', 'result'=> $html]);
     }
 
     

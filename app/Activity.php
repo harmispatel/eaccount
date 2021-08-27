@@ -35,7 +35,11 @@ class Activity extends Model
     }
     public function hasManyCost_item()
     {
-        return $this->hasMany('App\Cost_item','main_activity_id','id');
+        return $this->hasMany('App\Cost_item','main_activity_id','id')->where('is_reallocation',0);
+    }
+    public function hasManySubCost_item()
+    {
+        return $this->hasMany('App\Cost_item','sub_activity_id','id')->where('is_reallocation',0);
     }
     public function hasOneProject()
     {

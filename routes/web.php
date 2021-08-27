@@ -326,6 +326,11 @@ Route::group(['middleware' => 'auth'], function () {
         'uses' => 'ActivitysController@trashedAction',
         'as' => 'activity.trashed.action'
     ]);
+    
+    Route::post('/activity/get_activity_to_department', [
+        'uses' => 'ActivitysController@get_activity_to_department',
+        'as' => 'activity.get_activity_to_department'            
+    ]);
     //end activity
 
     //    Cost_item
@@ -507,7 +512,6 @@ Route::group(['middleware' => 'auth'], function () {
         'uses' => 'DepartmentController@trashedAction',
         'as' => 'department.trashed.action'
     ]);
-
 
 
     //    Department End

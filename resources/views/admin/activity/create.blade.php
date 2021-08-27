@@ -81,18 +81,27 @@ $projectId = Request::get('projectId');
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick"
-                                                            name="parent_id"
-                                                            id="parent_id">
-                                                        <option value="0" class="font-custom-bold">Main Activity</option>
-                                                        @foreach($items as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->title }}</option>
+                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
+                                                            id="department_id" onchange="getactivitybasedondepartment()">
+                                                        <option value="0" class="font-custom-bold">Responsible Department</option>
+                                                        @foreach(App\Department::all() as $department)
+                                                            <option value="{{$department->id}}"> {{ $department->departmentName }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <select data-live-search="true" class="form-control show-tick"
+                                                            name="parent_id"
+                                                            id="parent_id">
+                                                        <option value="0" class="font-custom-bold">Main Activity</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
@@ -135,21 +144,6 @@ $projectId = Request::get('projectId');
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
-                                                            id="department_id">
-                                                        <option value="0" class="font-custom-bold">Responsible Department</option>
-                                                        @foreach(App\Department::all() as $department)
-                                                            <option value="{{$department->id}}"> {{ $department->departmentName }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-line">
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
@@ -251,6 +245,7 @@ $projectId = Request::get('projectId');
 
 
     <script>
+        $('#parent_id').selectpicker('refresh');           
         function changeSubmitType(submitType){
             jQuery("#submitType").val(submitType);
             $("#form_validation").submit();
@@ -270,7 +265,26 @@ $projectId = Request::get('projectId');
         @endforeach
         @endif
 
-
+        function getactivitybasedondepartment(){
+            var department_id = jQuery("#department_id").val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "{{ route('activity.get_activity_to_department') }}",
+                data: {'department_id':department_id,'projectId':"{{$projectId}}"},     
+                success: function (data) {
+                    $('#parent_id').html(data.result);
+                    $('#parent_id').selectpicker('refresh');           
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
 
         // Validation and calculation
         var UiController = (function () {
@@ -303,8 +317,6 @@ $projectId = Request::get('projectId');
                         getProject_id: document.getElementById(DOMString.project_id),
                         getDepartment_id: document.getElementById(DOMString.department_id),
                         getQuarter: document.getElementById(DOMString.quarter),
-
-
                     }
                 },
                 getInputsValue: function () {

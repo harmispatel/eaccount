@@ -19,7 +19,7 @@
                     <ul class="dropdown-menu pull-right">
                         <li><a href="{{ route("profile") }}" class=" waves-effect waves-block"><i class="material-icons">person</i>Profile</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="javascript:void(0); document.getElementById('logout-form').submit();"" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
+                        <li><a href="javascript:void(0); document.getElementById('logout-form').submit();" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="dis-none">
                             @csrf
                         </form>
