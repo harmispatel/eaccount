@@ -237,7 +237,7 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
     Route::get('/project/update_status/{id}/{status}', [
         'uses' => 'ProjectsController@update_status',
-        'as' => 'activity.update_status'
+        'as' => 'project.update_status'
     ]);
     
     //end project

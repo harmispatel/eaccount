@@ -1635,7 +1635,13 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 </div>
                                             </div>
 
-                                            
+                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
+                                                <div class="form-group form-float" style="margin-top:10px">
+                                                    <input type="checkbox" id="budget_approval" name="budget_approval" class="filled-in">
+                                                    <label for="budget_approval">Budget Approval</label>
+                                                </div>
+                                            </div>
+      
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
@@ -1656,6 +1662,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                         <tr>
                                             <th>Id</th>
                                             <th>name</th>
+                                            <th>Budget Approval</th>
                                             <th>Order</th>
                                             <th>Action</th>
                                         </tr>
@@ -1670,6 +1677,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <tr>
                                                 <td>{{ $orgenization->id }}</td>
                                                 <td>{{ $orgenization->name }}</td>
+                                                <td>{{ $orgenization->budget_approval == "1" ? "Yes" : "No" }}</td>
                                                 <td>{{ $orgenization->order }}</td>
                                                 <td class="tdTrashAction">
                                                     <a 
@@ -1689,6 +1697,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                         <tr>
                                             <th>Id</th>
                                             <th>Name</th>
+                                            <th>Budget Approval</th>
                                             <th>Order</th>
                                             <th>Action</th>
                                         </tr>
