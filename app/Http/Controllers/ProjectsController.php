@@ -8,6 +8,7 @@ use App\SupportDonor;
 use App\Projecttodonor;
 use App\Region;
 use App\User;
+use App\Tasks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -30,9 +31,9 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-
+        $tasks = Tasks::with('hasManyTasksStatus')->where('id',2)->first();
         $projects = $this->parentModel::with('hasOneSupportDonor','hasOneUser')->orderBy('created_at', 'desc')->paginate(60);
-        return view($this->parentView . '.index')->with('projects', $projects);
+        return view($this->parentView . '.index',['tasks'=>$tasks,'projects'=> $projects]);
         // return view($this->parentView . '.index');
     }
 
@@ -208,7 +209,7 @@ class ProjectsController extends Controller
     }
     public function update_status($id,$status)
     {
-        $projects = Projects::find($id);
+        $projects = Projects::find(decrypt($id));
         $projects->status = $status;
         $projects->save();
         Session::flash('success', "Update Successfully");

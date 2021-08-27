@@ -173,105 +173,68 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                     <td>{{ implode(',',$donor) }}</td>
                                                     <td>{{ $project->start_date }} <br/>{{ $project->end_date }}</td>
                                                     <td>
-                                                        @if($project->status == "1")
-                                                            <span class="label label-warning">Active</span>
-                                                            <div class="btn-group user-helper-dropdown">
-                                                                <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="true" aria-haspopup="true">
-                                                                    <span class="caret"></span></button>
+                                                        @if (!empty($tasks))
+                                                            @php
+                                                                $taskStatus = $tasks->hasManyTasksStatus ? $tasks->hasManyTasksStatus : [];
+                                                            @endphp
+                                                            @foreach ($taskStatus as $taskStatu)
+                                                                @php
+                                                                    $status = $taskStatu->hasOneStatus ? $taskStatu->hasOneStatus : [];
+                                                                @endphp
+                                                                @if($project->status == $status->id)
+                                                                <span class="label" style="background-color: {{$status->color_code ? $status->color_code : ''}}">{{$status->name ? $status->name : ''}}</span>
+                                                                @endif  
+                                                            @endforeach  
+                                                            <div class="btn-group">
+                                                                <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
                                                                 <ul class="dropdown-menu ">
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Active</a>
+                                                                    @foreach ($taskStatus as $taskStatu)
+                                                                        @php
+                                                                        $status = $taskStatu->hasOneStatus ? $taskStatu->hasOneStatus : [];
+                                                                        @endphp
+                                                                        <li>
+                                                                            <!-- <a href="{{ url('projects/update_status/'.$project->id.'/'.$status->id) }}">{{$status->name ? $status->name : ''}}</a> -->
+                                                                            <a href="javascript:void(0)">{{$status->name ? $status->name : ''}}</a>
                                                                         </li>
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/2') }}">Default</a>
-                                                                        </li>
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/3') }}">Pending</a>
-                                                                        </li>
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/4') }}">Ended</a>
-                                                                        </li>
+                                                                    @endforeach
                                                                 </ul>
-                                                            </div>
-                                                        @elseif($project->status == "2")
-                                                            <span class="label label-primary">Default</span>
-                                                            <div class="btn-group">
-                                                                <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                    <span class="caret"></span></button>
-                                                                
-                                                                <ul class="dropdown-menu">
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Active</a>
-                                                                        </li>
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/2') }}">Default</a>
-                                                                        </li>
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/3') }}">Pending</a>
-                                                                        </li>
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/4') }}">Ended</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        @elseif($project->status == "3")
-                                                            <span class="label label-danger">Pending</span>
-                                                            <div class="btn-group">
-                                                                <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                    <span class="caret"></span></button>
-                                                                <ul class="dropdown-menu">
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Active</a>
-                                                                        </li>
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/2') }}">Default</a>
-                                                                        </li>
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/3') }}">Pending</a>
-                                                                        </li>
-                                                                    <li>
-                                                                        <a href="{{ url('project/update_status/'.$project->id.'/4') }}">Ended</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        @else
-                                                            <span class="label label-warning">Ended</span>
-                                                            <div class="btn-group">
-                                                                <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                    <span class="caret"></span></button>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li>
-                                                                            <a href="{{ url('project/update_status/'.$project->id.'/1') }}">Active</a>
-                                                                            </li>
-                                                                        <li>
-                                                                            <a href="{{ url('project/update_status/'.$project->id.'/2') }}">Default</a>
-                                                                            </li>
-                                                                        <li>
-                                                                            <a href="{{ url('project/update_status/'.$project->id.'/3') }}">Pending</a>
-                                                                            </li>
-                                                                        <li>
-                                                                            <a href="{{ url('project/update_status/'.$project->id.'/4') }}">Ended</a>
-                                                                        </li>
-                                                                    </ul>
-                                                            </div>
-                                                        
+                                                            </div>      
                                                         @endif
                                                     </td>
                                                     
                                                     <td class="tdTrashAction w-csm-10">
-                                                        <a @if ($edit==0) class="dis-none" @endif  class="btn btn-xs btn-info waves-effect"
-                                                        @if($project->status == "3") href="{{ route($ParentRouteName.'.edit',['id'=>$project->id]) }}" @endif
-                                                        data-toggle="tooltip"
-                                                        data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
-                                                        
-                                                        <a data-target="#largeModal"
-                                                        class="btn btn-xs btn-success waves-effect ajaxCall hidden"
-                                                        @if($project->status == "3") href="{{  route($ParentRouteName.'.show',['id'=>$project->id])  }}" @endif
-                                                        data-toggle="tooltip"
-                                                        data-placement="top" title="Preview"><i class="material-icons">pageview</i></a>
+                                                        @if($project->status == "8")
 
-                                                        <a @if ($delete==0) class="dis-none" @endif  class="btn btn-xs btn-danger waves-effect"
-                                                        @if($project->status == "3") href="{{ route($ParentRouteName.'.destroy',['id'=>$project->id]) }}" @endif data-toggle="tooltip" data-placement="top" title="Trash"> <i class="material-icons">delete</i></a>
+                                                            <a @if ($edit==0) class="dis-none" @endif  class="btn btn-xs btn-info waves-effect"
+                                                            href="{{ route($ParentRouteName.'.edit',['id'=>$project->id]) }}"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
+                                                            
+                                                            <a data-target="#largeModal"
+                                                            class="btn btn-xs btn-success waves-effect ajaxCall hidden"
+                                                            href="{{  route($ParentRouteName.'.show',['id'=>$project->id])  }}"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top" title="Preview"><i class="material-icons">pageview</i></a>
+
+                                                            <a @if ($delete==0) class="dis-none" @endif  class="btn btn-xs btn-danger waves-effect"
+                                                            href="{{ route($ParentRouteName.'.destroy',['id'=>$project->id]) }}" data-toggle="tooltip" data-placement="top" title="Trash"> <i class="material-icons" >delete</i></a>
+
+                                                            <a style="margin-top:5px;background-color:#1f91f3;color:#fff;" class="btn waves-effect" href="{{ route($ParentRouteName.'.update_status',['id'=>encrypt($project->id),'status'=>'1']) }}"  data-toggle="tooltip" data-placement="top" title="Submit"> Submit</a>
+
+                                                        @else
+                                                            <a style="background-color:#808080" @if ($edit==0) class="dis-none" @endif  class="btn btn-xs waves-effect"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top" ><i class="material-icons" style="color:#fff">mode_edit</i></a>
+                                                            
+                                                            <a style="background-color:#808080" data-target="#largeModal"
+                                                            class="btn btn-xs waves-effect ajaxCall hidden"
+                                                            data-toggle="tooltip"
+                                                            data-placement="top"><i class="material-icons" style="color:#fff">pageview</i></a>
+
+                                                            <a style="background-color:#808080" @if ($delete==0) class="dis-none" @endif  class="btn btn-xs waves-effect"
+                                                            data-toggle="tooltip" data-placement="top"> <i class="material-icons" style="color:#fff" >delete</i></a>
+                                                        @endif
+
                                                     </td>
                                                 </tr>
                                             <?php $i++; ?>
@@ -388,6 +351,9 @@ $trash_show = config('role_manage.Project.TrashShow');
 
 
     <script>
+        function fal(){
+            return false;
+        }
         @if(Session::has('success'))
             toastr["success"]('{{ Session::get('success') }}');
         @endif

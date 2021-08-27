@@ -593,7 +593,7 @@ class SettingsController extends Controller
     public function organizationLeader_show()
     {
 
-        $orgenizationleader = DB::table('orgenizationleader')->get();
+        $orgenizationleader = Orgenizationleader::get();
 
         // echo"<pre>"; print_r($bankAccountdata); exit;
         
@@ -604,58 +604,34 @@ class SettingsController extends Controller
 
     public function organizationLeader_update(Request $request)
     { 
-
         // echo "<pre>"; print_r($request->all()); die;
         $request->validate([
             'orgenizationLeader' => 'required',
             'order' => 'required',
-        
         ]);
 
-
-        DB::table('orgenizationleader')->insert([
-            'name' => $request->orgenizationLeader,
-            'order' => $request->order,
-        ]);
-
-    
+        $create = new Orgenizationleader;
+        $create->name = $request->orgenizationLeader;
+        $create->order = $request->order;
+        $create->budget_approval = isset($request->budget_approval) ? 1 : 0;
+        $create->save();
 
         Session::flash('success', 'Successfully Update');
-
-        // return redirect()->back();
         return redirect('settings/general#orgenizationLeader');
-
     }
 
     public function organizationLeader_destroy($id)
     { 
-
-        // echo "<pre>"; print_r($request->all()); die;
-        
         $setting_general = Orgenizationleader::where('id',$id)->delete();;
-
-       // DB::table('orgenizationleader')->where('id',$id)->delete();
-
         Session::flash('success', 'Successfully Delete');
-
-        // return redirect()->back();
         return redirect('settings/general#orgenizationLeader');
-
     }
-
 
     public function bankaccount_destroy($id)
     { 
-
         // echo "<pre>"; print_r($id); die;
-        
-
         Bankaccount::where('id',$id)->delete();
-
         Session::flash('success', 'Successfully Delete');
-
-        // return redirect()->back();
         return redirect('settings/general#bankaccountsetting');
-
     }
 }
