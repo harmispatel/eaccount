@@ -67,6 +67,7 @@ class ProjectsController extends Controller
         ]);
 
         $user = Projects::create([
+            'user_id' => Auth()->user()->id,
             'projectName' => $request->projectName,
             'region' => $request->region,
             'coordinator' => $request->coordinator,
@@ -181,6 +182,7 @@ class ProjectsController extends Controller
         }
         elseif($request->submitType == "saveAndCopy"){
             $projects = new Projects;
+            $projects->user_id = Auth()->user()->id;
             $projects->projectName  = $request->projectName;
             $projects->region  = $request->region;
             $projects->coordinator  = $request->coordinator;
@@ -213,7 +215,7 @@ class ProjectsController extends Controller
         $projects->status = $status;
         $projects->save();
         Session::flash('success', "Update Successfully");
-        return redirect()->route($this->parentRoute);
+        return redirect()->back();
     }
     /**
      * Remove the specified resource from storage.

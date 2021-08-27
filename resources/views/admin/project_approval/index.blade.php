@@ -96,10 +96,11 @@ $trash_show = config('role_manage.Project_approval.TrashShow');
                                     <div class="form-group">
                                         <div class="form-line">
                                             <select class="form-control" name="select_cat" id="select_cat">
-                                                <option value="all" class="font-custom-bold">Select Category</option>
-                                                @foreach(App\RoleManage::orderBy('created_at','desc')->get() as $role)
-                                                    <option value="{{ $role->id  }}">{{ $role->name  }}</option>
-                                                @endforeach
+                                                <option value="" class="font-custom-bold">Select Category</option>
+                                                <option value="all">All</option>
+                                                <option value="requisiting">Payment Requisiting</option>
+                                                <option value="voucher">Payment Voucher</option>
+                                                <option value="settlement">Payment Settlement</option>
                                             </select>
                                         </div>
                                     </div>
@@ -109,10 +110,10 @@ $trash_show = config('role_manage.Project_approval.TrashShow');
                                     <div class="form-group">
                                         <div class="form-line">
                                             <select class="form-control" name="select_cat" id="select_cat">
-                                                <option value="all" class="font-custom-bold">Select Type</option>
-                                                @foreach(App\RoleManage::orderBy('created_at','desc')->get() as $role)
-                                                    <option value="{{ $role->id  }}">{{ $role->name  }}</option>
-                                                @endforeach
+                                                <option value="" class="font-custom-bold">Select Type</option>
+                                                <option value="all">All</option>
+                                                <option value="incoming">Incoming</option>
+                                                <option value="outgoing">Outgoing</option>
                                             </select>
                                         </div>
                                     </div>
@@ -120,174 +121,105 @@ $trash_show = config('role_manage.Project_approval.TrashShow');
 
                                 <div class=" margin-bottom-0 col-md-8 col-sm-8 col-xs-8">
                                     <div class="custom-paginate pull-right">
-                                        {{ $items->links() }}
+                                        {{ $projects->links() }}
                                     </div>
                                 </div>
                             </div>
                             
                             <div class="body table-responsive">
                                 {{ csrf_field() }}
-                                <table class="table table-hover table-bordered table-sm">
-                                    <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Category</th>
-                                        <th>Request User</th>
-                                        <th>Department</th>                                        
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                                @if(count($projects)>0)
+                                    <table class="table table-hover table-bordered table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Category</th>
+                                            <th>Request User</th>                                      
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
 
                                         <?php $i = 1; ?>
-                                        @if(count($items))
-                                            @foreach($items as $item)
+                                            @foreach($projects as $project)
                                                 @php
-                                                    $parentActivity = $item->hasOneParentActivity ? $item->hasOneParentActivity : [];   
-                                                    $subActivities = $item->hasManySubActivity ? $item->hasManySubActivity : [];   
-                                                    $department = $item->hasOneDepartment ? $item->hasOneDepartment : [];   
-                                                    $parentActivityCode = $item->activity_code ? $item->activity_code : '';
+                                                    $supportDonor = $project->hasOneSupportDonor ? $project->hasOneSupportDonor : [];
+                                                    $user = $project->hasOneUser ? $project->hasOneUser : [];
                                                 @endphp
-                                                <tr @if (Auth::id()==$item->id) class="bg-tr" @endif >
-                                                    <th class="text-center">
-                                                        <input name="items[id][]" value="{{ $item->id }}"
-                                                            type="checkbox" id="md_checkbox_{{ $i }}"
-                                                            class="chk-col-cyan selects "/>
-                                                        <label for="md_checkbox_{{ $i }}"></label>
-                                                    </th>
-                                                    <td>     
-                                                        {{$item->activity_code ? $item->activity_code : ''}}
-                                                    </td>
-                                                    <td class="w-csm-40">
-                                                            @if (!empty($project))
-                                                                    <a href="{{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id]) }}"> {{$item->title }}</a><span style="color: red">({{count($subActivities)}})</span>
-                                                            @endif
-                                                    </td>
-                                                    <td>     
-                                                        {{!empty($department) ? $department->departmentName : ''}}
-                                                    </td>
+                                                <tr>
+                                                    <?php 
+                                                    $getdonor = isset($project->hasManyProjecttodonor) ? $project->hasManyProjecttodonor : []; 
+                                                    $donor = [];
+                                                    if(count($getdonor)){
+                                                        foreach($getdonor as $key => $getdonorone){
+                                                            isset($getdonorone->hasOneSupportDonor->supportDonor) ? array_push($donor,$getdonorone->hasOneSupportDonor->supportDonor) : '';
+                                                        }
+                                                    }
+                                                    ?>
+                                                    <td class="w-csm-40">{{$project->projectName ? $project->projectName : '' }}</td>
+                                                    <td>Project</td>
+                                                    <td>{{ isset($project->hasOneUserApplied->name) ? $project->hasOneUserApplied->name : '' }}</td>
+                                                    <td>{{ date('Y-m-d',strtotime($project->created_at)) }} </td>
                                                     <td>
-                                                        @php
-                                                            $activitytoquarters = $item->hasManyActivitytoquarter ? $item->hasManyActivitytoquarter : [];
-                                                            $activitytoquarterName = [];
-                                                       
-                                                            if (count($activitytoquarters)){
-                                                                foreach ($activitytoquarters as $activitytoquarter){
-                                                                    $quarter = $activitytoquarter->hasOneQuarter ? $activitytoquarter->hasOneQuarter : [];
-                                                                    $activitytoquarterName[] = $quarter->name ? $quarter->name : '';
-                                                                }
-                                                            }
-                                                        @endphp
-                                                        {{count($activitytoquarterName) ? implode(',',$activitytoquarterName) : '-' }}
+                                                        @if (!empty($tasks))
+                                                            @php
+                                                                $taskStatus = $tasks->hasManyTasksStatus ? $tasks->hasManyTasksStatus : [];
+                                                            @endphp
+                                                            @foreach ($taskStatus as $taskStatu)
+                                                                @php
+                                                                    $status = $taskStatu->hasOneStatus ? $taskStatu->hasOneStatus : [];
+                                                                @endphp
+                                                                @if($project->status == $status->id)
+                                                                <span class="label" style="background-color: {{$status->color_code ? $status->color_code : ''}}">{{$status->name ? $status->name : ''}}</span>
+                                                                @endif  
+                                                            @endforeach
+                                                        @endif
                                                     </td>
                                                     
                                                     <td class="tdTrashAction w-csm-10">
-                                                        
-                                                            <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs btn-info waves-effect" href="@if (!empty($project)){{ route($ParentRouteName.'.edit',['id'=>$item->id,'projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
-                                                        <a data-target="#largeModal"
-                                                        class="btn btn-xs btn-success waves-effect ajaxCall hidden"
-                                                        href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}"
-                                                        data-toggle="tooltip"
-                                                        data-placement="top" title="Preview"><i
-                                                                    class="material-icons">pageview</i></a>
+                                                        <a class="btn btn-xs btn-info waves-effect"
+                                                        href="{{ route('project.update_status',['id'=>encrypt($project->id),'status'=>'9']) }}"
+                                                        data-toggle="tooltip" data-placement="top" title="Approve"><i class="material-icons">check_circle_outline</i></a>
+                                                      
+                                                        <a class="btn btn-xs btn-danger waves-effect"
+                                                        href="{{ route('project.update_status',['id'=>encrypt($project->id),'status'=>'8']) }}" data-toggle="tooltip" data-placement="top" title="Reject"><i class="material-icons" style="color:#fff">cancel</i></a>
 
-                                                        <a @if ($delete==0)
-
-                                                        class="dis-none"
-
-                                                        @endif class="btn btn-xs btn-danger waves-effect"
-                                                        href="@if (!empty($project)){{ route($ParentRouteName.'.destroy',['id'=>$item->id,'projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}@endif"
-                                                        data-toggle="tooltip"
-                                                        data-placement="top" title="Trash"> <i
-                                                                    class="material-icons">delete</i></a>
 
                                                     </td>
                                                 </tr>
-                                                <?php $i++; ?>
-                                                @if(count($subActivities))
-                                                    @foreach ($subActivities as $item)
-                                                        @php
-                                                            $department = $item->hasOneDepartment ? $item->hasOneDepartment : [];   
-                                                        @endphp
-                                                        <tr @if (Auth::id()==$item->id) class="bg-tr" @endif >
-                                                            <th class="text-center">
-                                                                <input name="items[id][]" value="{{ $item->id }}"
-                                                                    type="checkbox" id="md_checkbox_{{ $i }}"
-                                                                    class="chk-col-cyan selects "/>
-                                                                <label for="md_checkbox_{{ $i }}"></label>
-                                                            </th>
-                                                            <td>     
-                                                                {{$item->activity_code ? $item->activity_code : ''}}
-                                                            </td>
-                                                            <td class="w-csm-40">
-                                                                {{$parentActivityCode}} - <a href="@if(!empty($project)){{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id])}}@else{{ route('cost_item')}}@endif"> {{$item->title }}</a>
-                                                            </td>
-                                                            <td>     
-                                                                {{!empty($department) ? $department->departmentName : ''}}
-                                                            </td>
-                                                            <td>
-                                                                @php
-                                                                    $activitytoquarters = $item->hasManyActivitytoquarter ? $item->hasManyActivitytoquarter : [];
-                                                                    $activitytoquarterName = [];
-                                                            
-                                                                    if (count($activitytoquarters)){
-                                                                        foreach ($activitytoquarters as $activitytoquarter){
-                                                                            $quarter = $activitytoquarter->hasOneQuarter ? $activitytoquarter->hasOneQuarter : [];
-                                                                            $activitytoquarterName[] = $quarter->name ? $quarter->name : '';
-                                                                        }
-                                                                    }
-                                                                @endphp
-                                                                {{count($activitytoquarterName) ? implode(',',$activitytoquarterName) : '-' }}
-                                                            </td>
-                                                            
-                                                            <td class="tdTrashAction  w-csm-20">
-                                                                <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs btn-info waves-effect" href="@if (!empty($project)){{ route($ParentRouteName.'.edit',['id'=>$item->id,'projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
-
-                                                                <a data-target="#largeModal"
-                                                                class="btn btn-xs btn-success waves-effect ajaxCall hidden"
-                                                                href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}"
-                                                                data-toggle="tooltip"
-                                                                data-placement="top" title="Preview"><i
-                                                                            class="material-icons">pageview</i></a>
-        
-                                                                <a @if ($delete==0) class="dis-none"@endif class="btn btn-xs btn-danger waves-effect" href="@if (!empty($project)){{ route($ParentRouteName.'.destroy',['id'=>$item->id,'projectId'=>$project->id]) }}@else{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}@endif"
-                                                                data-toggle="tooltip"
-                                                                data-placement="top" title="Trash"> <i
-                                                                            class="material-icons">delete</i></a>
-        
-                                                            </td>
-                                                            <?php $i++; ?>
-
-                                                        </tr>        
-                                                    @endforeach
-                                                @endif
-                                                
+                                            <?php $i++; ?>
                                             @endforeach
-                                        @endif
 
-                                    
-                                    <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Category</th>
-                                        <th>Request User</th>
-                                        <th>Department</th>                                        
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
+                                        <thead>
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Category</th>
+                                            <th>Request User</th>                                    
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <table class="table table-hover table-bordered table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center text-danger">There has No data</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                @endif
                             </div>
 
                             <div class="row body">
                                 <div class=" margin-bottom-0 col-md-8 col-sm-8 col-xs-8">
                                     <div class="custom-paginate pull-right">
-                                        {{ $items->links() }}
+                                        {{ $projects->links() }}
                                     </div>
                                 </div>
                             </div>

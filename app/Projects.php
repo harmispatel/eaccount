@@ -22,6 +22,7 @@ class Projects extends Model
         'over_budget',
         'total_budget',
         'coordinator',
+        'user_id',
         'status',
         'start_date',
         'end_date',
@@ -48,6 +49,10 @@ class Projects extends Model
     public function hasOneRegion()
     {
        return $this->hasOne('App\Region','id','region');
+    }
+    public function hasOneUserApplied()
+    {
+       return $this->hasOne('App\User','id','user_id');
     }
     
 

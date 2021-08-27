@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Project_approval;
 use App\Profile;
+use App\Projects;
+use App\Tasks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -26,10 +28,12 @@ class ProjectApprovalController extends Controller
      */
     public function index()
     {
-        $Department = $this->parentModel::orderBy('created_at', 'desc')->paginate(60);
-        // echo "<pre>"; print_r($Department); die;
-        return view($this->parentView . '.index')->with('items', $Department);
-        // return view($this->parentView . '.index');
+
+        //Executive Director role
+        // pending =1
+        $tasks = Tasks::with('hasManyTasksStatus')->where('id',2)->first();
+        $projects = Projects::with('hasOneSupportDonor','hasOneUser','hasOneUserApplied')->orderBy('created_at', 'desc')->where('status',1)->paginate(60);
+        return view($this->parentView . '.index',['projects'=> $projects,'tasks'=>$tasks]);
     }
 
     /**
@@ -186,11 +190,11 @@ class ProjectApprovalController extends Controller
         ]);
 
         $search = $request["search"];
-        $items = $this->parentModel::where('name', 'like', '%' . $search . '%')
-            ->paginate(60);
+       
+        $tasks = Tasks::with('hasManyTasksStatus')->where('id',2)->first();
+        $projects = Projects::with('hasOneSupportDonor','hasOneUser','hasOneUserApplied')->orderBy('created_at', 'desc')->where('projectName', 'like', '%' . $search . '%')->where('status',1)->paginate(60);
 
-        return view($this->parentView . '.index')
-            ->with('items', $items);
+        return view($this->parentView . '.index',['projects'=>$projects,'tasks'=>$tasks]);
 
     }
 

@@ -92,7 +92,7 @@ $trash_show = config('role_manage.Project.TrashShow');
                         <form class="actionForm" action="{{ route($ParentRouteName.'.active.action') }}"
                               method="get">
                             <div class="row body">
-                                <div class="margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
+                                <!-- <div class="margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
                                     <div class="form-group">
                                         <div class="form-line">
                                             <select class="form-control" name="apply_comand_top" id="">
@@ -111,7 +111,7 @@ $trash_show = config('role_manage.Project.TrashShow');
                                         <input class="btn btn-sm btn-info" type="submit" value="Apply"
                                                name="ApplyTop">
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class=" margin-bottom-0 col-md-8 col-sm-8 col-xs-8">
                                     <div class="custom-paginate pull-right">
                                         {{ $projects->links() }}
@@ -125,7 +125,7 @@ $trash_show = config('role_manage.Project.TrashShow');
                                         <thead>
                                         <tr>
                                             <th class="checkbox_custom_style text-center">
-                                                <input name="selectTop" type="checkbox" id="md_checkbox_p"
+                                                <input name="selectTop"  type="checkbox" id="md_checkbox_p"
                                                     class="chk-col-cyan"/>
                                                 <label for="md_checkbox_p"></label>
                                             </th>
@@ -184,21 +184,7 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                                 @if($project->status == $status->id)
                                                                 <span class="label" style="background-color: {{$status->color_code ? $status->color_code : ''}}">{{$status->name ? $status->name : ''}}</span>
                                                                 @endif  
-                                                            @endforeach  
-                                                            <div class="btn-group">
-                                                                <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                                                                <ul class="dropdown-menu ">
-                                                                    @foreach ($taskStatus as $taskStatu)
-                                                                        @php
-                                                                        $status = $taskStatu->hasOneStatus ? $taskStatu->hasOneStatus : [];
-                                                                        @endphp
-                                                                        <li>
-                                                                            <!-- <a href="{{ url('projects/update_status/'.$project->id.'/'.$status->id) }}">{{$status->name ? $status->name : ''}}</a> -->
-                                                                            <a href="javascript:void(0)">{{$status->name ? $status->name : ''}}</a>
-                                                                        </li>
-                                                                    @endforeach
-                                                                </ul>
-                                                            </div>      
+                                                            @endforeach
                                                         @endif
                                                     </td>
                                                     
@@ -231,8 +217,7 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                             data-toggle="tooltip"
                                                             data-placement="top"><i class="material-icons" style="color:#fff">pageview</i></a>
 
-                                                            <a style="background-color:#808080" @if ($delete==0) class="dis-none" @endif  class="btn btn-xs waves-effect"
-                                                            data-toggle="tooltip" data-placement="top"> <i class="material-icons" style="color:#fff" >delete</i></a>
+                                                            <span  class="btn btn-xs waves-effect" style="background-color:#808080" ><i class="material-icons"style="color:#fff">delete</i></span>
                                                         @endif
 
                                                     </td>
@@ -273,7 +258,7 @@ $trash_show = config('role_manage.Project.TrashShow');
                             </div>
 
                             <div class="row body">
-                                <div class="m-0 col-md-2 col-lg-2 col-sm-2">
+                                <!-- <div class="m-0 col-md-2 col-lg-2 col-sm-2">
                                     <div class="form-group">
                                         <div class="form-line">
                                             <select class="form-control" name="apply_comand_bottom" id="">
@@ -290,7 +275,7 @@ $trash_show = config('role_manage.Project.TrashShow');
                                         <input class="btn btn-sm btn-info" type="submit" value="Apply"
                                                name="ApplyButtom">
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class=" margin-bottom-0 col-md-8 col-sm-8 col-xs-8">
                                     <div class="custom-paginate pull-right">
                                         {{ $projects->links() }}
