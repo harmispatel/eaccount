@@ -203,14 +203,17 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                 </td>
                                                 
                                                 <td class="tdTrashAction w-csm-20">
-                                                    @if($project->status != 1 && $project->status != 4)
+                                                    @if($project->status == 8)
                                                         <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs btn-info waves-effect" href="@if(!empty($activity)){{ route($ParentRouteName.'.edit',['id'=>$item->id,'activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons">mode_edit</i></a>
-                                                    @endif
-                                                    <a data-target="#largeModal" class="btn btn-xs btn-success waves-effect ajaxCall hidden" href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}" data-toggle="tooltip" data-placement="top" title="Preview"><i class="material-icons">pageview</i></a>
-                                                    @if($project->status != 1 && $project->status != 4)
+                                                        <a data-target="#largeModal" class="btn btn-xs btn-success waves-effect ajaxCall hidden" href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}" data-toggle="tooltip" data-placement="top" title="Preview"><i class="material-icons">pageview</i></a>
                                                         <a @if ($delete==0) class="dis-none" @endif class="btn btn-xs btn-danger waves-effect" href="@if(!empty($activity)){{ route($ParentRouteName.'.destroy',['id'=>$item->id,'activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Trash"> <i class="material-icons">delete</i></a>
+                                                        
+                                                    @else
+                                                        <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs waves-effect" style="background-color:#808080" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons" style="color:#fff">mode_edit</i></a>
+                                                        <a data-target="#largeModal" class="btn btn-xs btn-success waves-effect ajaxCall hidden" data-toggle="tooltip" data-placement="top" title="Preview"><i class="material-icons">pageview</i></a>
+                                                        <a @if ($delete==0) class="dis-none" @endif class="btn btn-xs waves-effect" style="background-color:#808080" data-toggle="tooltip" data-placement="top" title="Trash"> <i class="material-icons"style="color:#fff">delete</i></a>
                                                     @endif
-                                                    @if($project->status != 2 && $project->status != 3 && $project->status != 4)
+                                                    @if($project->status != 8 && $project->status != 9)
                                                         @if (Auth::user()->department_head == 1)
                                                             <a class="btn btn-xs btn-success waves-effect" href="@if(!empty($activity)){{ route('reallocation.create',['id'=>$item->id,'activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route('reallocation.create',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Reallocation">Reallocation</a>
                                                         @endif
