@@ -955,6 +955,57 @@ $ParentRouteName = 'role-manage';
                                                     @endfor
                                                 </tr>
 
+                                                <tr>
+                                                    <th class="text-center">
+                                                        <input type="checkbox" id="md_checkbox_33"
+                                                               class="chk-col-cyan selects "/>
+                                                        <label for="md_checkbox_33"></label>
+                                                    </th>
+                                                    <th scope="row" class="text-center">33</th>
+                                                    <td class="text-center">
+                                                        <input type="hidden" name="ReallocationApproval[0]"
+                                                               value="ReallocationApproval">
+                                                        ReallocationApproval
+                                                    </td>
+
+                                                    @for ($i = 1; $i <=9; $i++)
+                                                        <td class="text-center">
+                                                            <div class="switch">
+                                                                <label>
+                                                                    <input name="ReallocationApproval[{{$i}}]"
+                                                                           type="checkbox"><span
+                                                                            class="lever switch-col-cyan"></span>
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    @endfor
+                                                </tr>
+
+                                                <tr>
+                                                    <th class="text-center">
+                                                        <input type="checkbox" id="md_checkbox_34"
+                                                               class="chk-col-cyan selects "/>
+                                                        <label for="md_checkbox_34"></label>
+                                                    </th>
+                                                    <th scope="row" class="text-center">34</th>
+                                                    <td class="text-center">
+                                                        <input type="hidden" name="ProjectApproval[0]"
+                                                               value="ProjectApproval">
+                                                        ProjectApproval
+                                                    </td>
+
+                                                    @for ($i = 1; $i <=9; $i++)
+                                                        <td class="text-center">
+                                                            <div class="switch">
+                                                                <label>
+                                                                    <input name="ProjectApproval[{{$i}}]"
+                                                                           type="checkbox"><span
+                                                                            class="lever switch-col-cyan"></span>
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    @endfor
+                                                </tr>
 
                                                 </tbody>
 

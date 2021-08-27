@@ -160,6 +160,8 @@ class RoleManageController extends Controller
             'Department' => $this->arrangeRoleItem($request->Department, 'Department'),
             'Activity' => $this->arrangeRoleItem($request->Activity, 'Activity'),
             'CostItem' => $this->arrangeRoleItem($request->CostItem, 'CostItem'),
+            'ReallocationApproval' => $this->arrangeRoleItem($request->ReallocationApproval, 'ReallocationApproval'),
+            'ProjectApproval' => $this->arrangeRoleItem($request->ProjectApproval, 'ProjectApproval'),
 
         );
 
@@ -231,7 +233,6 @@ class RoleManageController extends Controller
         ]);
         $item = $this->parentModel::find($id);
 
-
         $items = array(
             'User' => $this->arrangeRoleItem($request->details['User'], 'User '),
             'RoleManager' => $this->arrangeRoleItem($request->details['RoleManager'], 'Role Manager'),
@@ -269,6 +270,8 @@ class RoleManageController extends Controller
             'Department' => $this->arrangeRoleItem($request->details['Department'], 'Department'),
             'Activity' => $this->arrangeRoleItem($request->details['Activity'], 'Activity'),
             'CostItem' => $this->arrangeRoleItem($request->details['CostItem'], 'CostItem'),
+            'ReallocationApproval' => $this->arrangeRoleItem($request->details['ReallocationApproval'], 'ReallocationApproval'),
+            'ProjectApproval' => $this->arrangeRoleItem($request->details['ProjectApproval'], 'ProjectApproval'),
 
         
         );

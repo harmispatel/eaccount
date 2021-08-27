@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Approval;
+use App\ReallocationApproval;
 use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\Session;
 
 use App\Http\Controllers\RoleManageController;
 
-class ApprovalController extends Controller
+class ReallocationApprovalController extends Controller
 {
 
 //    Important properties
-    public $parentModel = Approval::class;
-    public $parentRoute = 'approval';
-    public $parentView = "admin.approval";
+    public $parentModel = ReallocationApproval::class;
+    public $parentRoute = 'reallocation_approval';
+    public $parentView = "admin.reallocation_approval";
 
 
     /**

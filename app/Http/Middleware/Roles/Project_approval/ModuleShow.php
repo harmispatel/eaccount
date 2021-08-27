@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware\Roles\Approval;
+namespace App\Http\Middleware\Roles\Project_approval;
 
 use Closure;
 
@@ -17,9 +17,8 @@ class ModuleShow
      */
     public function handle($request, Closure $next)
     {
-        
-        // echo config('role_manage.Approval.All'); die; 
-        if (config('role_manage.Approval.All')){  // Module Show
+        // echo config('role_manage.Activity.All'); die; 
+        if (config('role_manage.Project_approval.All')){  // Module Show
             return $next($request);
         }else{ 
             Session::flash('error', 'You Can Not Perform This Action.Please Contact Your It Officer');

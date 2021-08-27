@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class Approval extends Model
+class Project_approval extends Model
 {
     use Notifiable;
     use SoftDeletes;
