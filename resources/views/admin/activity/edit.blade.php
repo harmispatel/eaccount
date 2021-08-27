@@ -80,20 +80,31 @@ $projectId = Request::get('projectId');
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick" name="parent_id" id="parent_id">
-                                                        <option value="0" class="font-custom-bold">Main Activity</option>
-                                                        @foreach($activitys as $activity)
-                                                            <option value="{{ $activity->id }}" @if($item->parent_id == "$activity->id") {{ "selected" }} @endif >{{ $activity->title }}</option>
+                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
+                                                            id="department_id" onchange="getactivitybasedondepartment()">
+                                                        <option value="0" class="font-custom-bold">Responsible Department</option>
+                                                        @foreach(App\Department::all() as $department)
+                                                            <option @if ($item->department_id==$department->id)
+                                                                    selected
+                                                                    @endif value="{{$department->id}}"> {{ $department->departmentName }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                          
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <select data-live-search="true" class="form-control show-tick" name="parent_id" id="parent_id">
+                                                        <option value="0" class="font-custom-bold">Main Activity</option>
+                                                        {!! createActivitySelectBox($activitys,$item->parent_id) !!}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
@@ -148,24 +159,6 @@ $projectId = Request::get('projectId');
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick search-choice" name="department_id"
-                                                            id="department_id">
-                                                        <option value="0" class="font-custom-bold">Responsible Department</option>
-                                                        @foreach(App\Department::all() as $department)
-                                                            <option @if ($item->department_id==$department->id)
-                                                                    selected
-                                                                    @endif value="{{$department->id}}"> {{ $department->departmentName }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        
 
                                         <input value="" name="submitType" id="submitType" type="hidden" value="">
                                         <input name="selectedProjectId" id="selectedProjectId" type="hidden" value="{{$projectId}}">
@@ -258,7 +251,26 @@ $projectId = Request::get('projectId');
             jQuery("#submitType").val(submitType);
             $("#form_validation").submit();
         }
-
+        function getactivitybasedondepartment(){
+            var department_id = jQuery("#department_id").val();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type: "POST",
+                url: "{{ route('activity.get_activity_to_department') }}",
+                data: {'department_id':department_id,'projectId':"{{$projectId}}"},     
+                success: function (data) {
+                    $('#parent_id').html(data.result);
+                    $('#parent_id').selectpicker('refresh');           
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
         @if(Session::has('success'))
             toastr["success"]('{{ Session::get('success') }}');
         @endif

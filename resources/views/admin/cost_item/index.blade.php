@@ -44,6 +44,9 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
 @stop
 @section('content')
 
+    <style>
+        .block-header.pjct-ttl {font-size: 18px; font-weight: 600; color: #444;} 
+    </style>
     <section class="content">
         <div class="container-fluid">
             <div class="block-header pjct-ttl">
@@ -55,10 +58,10 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                 @endif
             </div>
             <div class="block-header pull-left">
-
-                <a @if ( $create==0 ) class="dis-none" @endif class="btn btn-sm btn-info waves-effect" href="@if(!empty($activity)){{ route($ParentRouteName.'.create',['activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName.'.create') }}@endif">Add New </a>
-                
                 <a class="btn btn-sm btn-info waves-effect" href="{{ route("activity",["projectId"=>$projectId]) }}"> Back to activities </a>
+                @if($project->status == 8)
+                    <a @if ( $create==0 ) class="dis-none" @endif class="btn btn-sm btn-info waves-effect" href="@if(!empty($activity)){{ route($ParentRouteName.'.create',['activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route($ParentRouteName.'.create') }}@endif">Add New </a>
+                @endif
             </div>
             <ol class="breadcrumb breadcrumb-col-cyan pull-right">
                 <li><a href="{{ route('dashboard') }}"><i class="material-icons">home</i> Home</a></li>
@@ -185,20 +188,7 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                             @if($item->status == $status->id)
                                                             <span class="label" style="background-color: {{$status->color_code ? $status->color_code : ''}}">{{$status->name ? $status->name : ''}}</span>
                                                             @endif  
-                                                        @endforeach  
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
-                                                            <ul class="dropdown-menu ">
-                                                                @foreach ($taskStatus as $taskStatu)
-                                                                    @php
-                                                                    $status = $taskStatu->hasOneStatus ? $taskStatu->hasOneStatus : [];
-                                                                    @endphp
-                                                                    <li>
-                                                                        <a href="{{ url('cost_item/update_status/'.$item->id.'/'.$status->id) }}">{{$status->name ? $status->name : ''}}</a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>      
+                                                        @endforeach     
                                                     @endif
                                                 </td>
                                                 
@@ -211,9 +201,9 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                                                     @else
                                                         <a @if ($edit==0) class="dis-none" @endif class="btn btn-xs waves-effect" style="background-color:#808080" data-toggle="tooltip" data-placement="top" title="Edit"><i class="material-icons" style="color:#fff">mode_edit</i></a>
                                                         <a data-target="#largeModal" class="btn btn-xs btn-success waves-effect ajaxCall hidden" data-toggle="tooltip" data-placement="top" title="Preview"><i class="material-icons">pageview</i></a>
-                                                        <a @if ($delete==0) class="dis-none" @endif class="btn btn-xs waves-effect" style="background-color:#808080" data-toggle="tooltip" data-placement="top" title="Trash"> <i class="material-icons"style="color:#fff">delete</i></a>
+                                                        <span  class="btn btn-xs waves-effect" style="background-color:#808080" ><i class="material-icons"style="color:#fff">delete</i></span>
                                                     @endif
-                                                    @if($project->status != 8 && $project->status != 9)
+                                                    @if($project->status == 9)
                                                         @if (Auth::user()->department_head == 1)
                                                             <a class="btn btn-xs btn-success waves-effect" href="@if(!empty($activity)){{ route('reallocation.create',['id'=>$item->id,'activityId'=>$activity->id,'projectId'=>$projectId]) }}@else{{ route('reallocation.create',['id'=>$item->id]) }}@endif" data-toggle="tooltip" data-placement="top" title="Reallocation">Reallocation</a>
                                                         @endif
@@ -248,24 +238,26 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                             </div>
 
                             <div class="row body">
-                                <div class="m-0 col-md-2 col-lg-2 col-sm-2">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <select class="form-control" name="apply_comand_bottom" id="">
-                                                <option value="0">Select Action</option>
-                                                @if ($delete)
-                                                    <option value="3">Move To trash</option>
-                                                @endif
-                                            </select>
+                                @if($project->status == 8)
+                                    <div class="m-0 col-md-2 col-lg-2 col-sm-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control" name="apply_comand_bottom" id="">
+                                                    <option value="0">Select Action</option>
+                                                    @if ($delete)
+                                                        <option value="3">Move To trash</option>
+                                                    @endif
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
-                                    <div class="form-group">
-                                        <input class="btn btn-sm btn-info" type="submit" value="Apply"
-                                               name="ApplyButtom">
+                                    <div class="margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
+                                        <div class="form-group">
+                                            <input class="btn btn-sm btn-info" type="submit" value="Apply"
+                                                name="ApplyButtom">
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                                 <div class=" margin-bottom-0 col-md-8 col-sm-8 col-xs-8">
                                     <div class="custom-paginate pull-right">
                                         {{ $items->links() }}

@@ -31,6 +31,10 @@ class Department extends Model
     {
         return $this->hasOne('App\User','department_id','id');
     }
-
+    public function hasManyActivity()
+    {
+        return $this->hasMany('App\Activity','department_id','id');
+    }
+    
 
 }
