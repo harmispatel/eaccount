@@ -133,8 +133,8 @@ $trash_show = config('role_manage.Department.TrashShow');
 
                                         <th>Department Name</th>
                                         <th>Department code</th>
-                                        <!-- <th>parent</th> -->
                                         <th>Head of Department</th>
+                                        <th>Status</th>
                                         <th>Action</th>
 
                                     </tr>
@@ -156,9 +156,15 @@ $trash_show = config('role_manage.Department.TrashShow');
                                                 </th>
                                                 <td>{{ $item->departmentName }}</td>
                                                 <td>{{ $item->department_code ? $item->department_code : '' }}</td>
-                                                <!-- <td>{{ $item->parent_id }}</td> -->
                                                 <td>
                                                     {{ isset($item->hasOneHead->name) ? $item->hasOneHead->name : 'Not Assigned Yet' }}
+                                                </td>
+                                                <td> 
+                                                    @if($item->status == 0)
+                                                    <span class="label" style="background-color: #fb3737">Inactive</span>
+                                                    @else
+                                                    <span class="label" style="background-color: #308430">Active</span>
+                                                    @endif
                                                 </td>
                                                 
                                                 <td class="tdTrashAction">
@@ -203,9 +209,9 @@ $trash_show = config('role_manage.Department.TrashShow');
                                         </th>
 
                                         <th>Department Name</th>
-                                        <th>Department Code</th>
-                                        <!-- <th>parent</th> -->
+                                        <th>Department code</th>
                                         <th>Head of Department</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>

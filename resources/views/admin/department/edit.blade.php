@@ -88,7 +88,7 @@ $ParentRouteName = 'department';
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
                                                     <option value="0">Select Status</option>
                                                     <option @if($item->status == "1") {{ "selected" }} @endif value="1">Active</option>
-                                                    <option @if($item->status == "0") {{ "selected" }} @endif value="0">In Active</option>
+                                                    <option @if($item->status == "0") {{ "selected" }} @endif value="0">Inactive</option>
                                                 </select>
                                             </div>
                                         </div>

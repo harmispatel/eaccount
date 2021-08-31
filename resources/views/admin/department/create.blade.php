@@ -87,7 +87,7 @@ $ParentRouteName = 'department';
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
                                                     <option value="0">Select Status</option>
                                                     <option value="1">Active</option>
-                                                    <option value="0">In Active</option>
+                                                    <option value="0">Inactive</option>
                                                 </select>
                                             </div>
                                         </div>

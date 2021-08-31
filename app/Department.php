@@ -35,6 +35,10 @@ class Department extends Model
     {
         return $this->hasMany('App\Activity','department_id','id');
     }
+    public function hasManyDepartmentStatus()
+    { 
+        return $this->hasMany('App\DepartmentStatus','department_id','id');
+    }
     
 
 }
