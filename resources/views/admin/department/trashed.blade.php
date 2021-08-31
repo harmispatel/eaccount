@@ -123,6 +123,8 @@ $trash_show = config('role_manage.Department.TrashShow');
                                             </th>
 
                                             <th>Department Name</th>
+                                            <th>Department code</th>
+                                            <th>Head of Department</th>
                                             <th>Status</th>
                                             <th>Action</th>
 
@@ -142,146 +144,17 @@ $trash_show = config('role_manage.Department.TrashShow');
                                                 </th>
 
                                                 <td>{{ $item->departmentName }}</td>
+                                                <td>{{ $item->department_code ? $item->department_code : '' }}</td>
                                                 <td>
-                                                    @if($item->status == "1")
-                                                        <span class="label label-warning">Started</span>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu animated zoomIn">
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/started">Started</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/in_progress">In Progress</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/cancel">Cancel</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/on_hold">On Hold</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/completed">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    @elseif($item->status == "2")
-                                                        <span class="label label-primary">In Progress</span>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu animated zoomIn">
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/started">Started</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/in_progress">In Progress</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/cancel">Cancel</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/on_hold">On Hold</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/completed">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    @elseif($item->status == "3")
-                                                        <span class="label label-danger">Cancel</span>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu animated zoomIn">
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/started">Started</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/in_progress">In Progress</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/cancel">Cancel</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/on_hold">On Hold</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/completed">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    @elseif($item->status == "4")
-                                                        <span class="label label-warning">On Hold</span>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu animated zoomIn">
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/started">Started</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/in_progress">In Progress</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/cancel">Cancel</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/on_hold">On Hold</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/completed">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    @elseif($item->status == "5")
-                                                        <span class="label label-success">Completed</span>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu animated zoomIn">
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/started">Started</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/in_progress">In Progress</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/cancel">Cancel</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/on_hold">On Hold</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/completed">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                    {{ isset($item->hasOneHead->name) ? $item->hasOneHead->name : 'Not Assigned Yet' }}
+                                                </td>
+                                                <td> 
+                                                    @if($item->status == 0)
+                                                    <span class="label" style="background-color: #fb3737">Inactive</span>
                                                     @else
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                <span class="caret"></span></button>
-                                                            <ul class="dropdown-menu animated zoomIn">
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/started">Started</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/in_progress">In Progress</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/cancel">Cancel</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/on_hold">On Hold</a>
-                                                                    </li>
-                                                                <li>
-                                                                    <a href="https://ziscoerp.com/admin/projects/change_status/105/completed">Completed</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
+                                                    <span class="label" style="background-color: #308430">Active</span>
                                                     @endif
-                                                    </td>
+                                                </td>
                                                 <td class="tdAction ">
                                                     <a @if ($restore==0)
                                                        class="dis-none"
@@ -297,7 +170,6 @@ $trash_show = config('role_manage.Department.TrashShow');
                                                        data-toggle="tooltip"
                                                        data-placement="top" title="Preview"><i
                                                                 class="material-icons">pageview</i></a>
-
 
                                                     <a @if ($permanently_delete==0)
                                                        class="dis-none"
@@ -319,6 +191,8 @@ $trash_show = config('role_manage.Department.TrashShow');
                                                 <label for="md_checkbox_footer"></label>
                                             </th>
                                             <th>Department Name</th>
+                                            <th>Department code</th>
+                                            <th>Head of Department</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
