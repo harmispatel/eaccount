@@ -55,8 +55,7 @@ class DepartmentController extends Controller
         // echo "<pre>"; print_r($request->all()); die;
         $request->validate([
             'departmentName' => 'required|string|max:255',
-            
-            
+            'department_code' => 'required|string|unique:departments'
         ]);
 
         $user = Department::create([
@@ -116,7 +115,7 @@ class DepartmentController extends Controller
         // echo "<pre>"; print_r($request->all()); die;
         $request->validate([
             'departmentName' => 'required|string|max:255',
-            
+            'department_code' => 'required|string|unique:departments,department_code,'.$id,
         ]);
 
         $user = Department::find($id);

@@ -46,6 +46,10 @@ class Projects extends Model
     {
        return $this->hasMany('App\Projecttodonor','project_id','id');
     }
+    public function hasManyProjecttoregion()
+    {
+       return $this->hasMany('App\Projecttoregion','project_id','id');
+    }
     public function hasOneRegion()
     {
        return $this->hasOne('App\Region','id','region');

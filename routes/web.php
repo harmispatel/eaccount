@@ -869,6 +869,10 @@ Route::group(['middleware' => 'auth'], function () {
         'as' => 'settings.organizationLeader.update'
     ]);
 
+    Route::get('/settings/organizationLeader/edit/{id}', [
+        'uses' => 'SettingsController@general_show',
+        'as' => 'settings.organizationLeader.edit'
+    ]);
 
     Route::get('/settings/organizationLeader/destroy/{id}', [
         'uses' => 'SettingsController@organizationLeader_destroy',

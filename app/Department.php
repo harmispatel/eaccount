@@ -20,7 +20,7 @@ class Department extends Model
         'departmentName',
         'parent_id',
         'status',
-        
+        'department_code',
         'created_by',
         'updated_by',
         'deleted_at'
