@@ -6,6 +6,7 @@ use App\Project_approval;
 use App\Profile;
 use App\Projects;
 use App\Tasks;
+use App\Orgenizationleader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -33,7 +34,15 @@ class ProjectApprovalController extends Controller
         // pending =1
         $tasks = Tasks::with('hasManyTasksStatus')->where('id',2)->first();
         $projects = Projects::with('hasOneSupportDonor','hasOneUser','hasOneUserApplied')->orderBy('created_at', 'desc')->where('status',1)->paginate(60);
-        return view($this->parentView . '.index',['projects'=> $projects,'tasks'=>$tasks]);
+        $getleader = Orgenizationleader::get();
+        
+        $checkrole = 0;
+        if(count($getleader)>0){
+            foreach($getleader as $getleaderone){
+                if(($getleaderone->id == Auth::user()->position_id) && ($getleaderone->budget_approval == "1")){ $checkrole = 1; }
+            }
+        }
+        return view($this->parentView . '.index',['projects'=> $projects,'tasks'=>$tasks,'checkrole'=>$checkrole]);
     }
 
     /**

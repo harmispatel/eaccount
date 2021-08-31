@@ -75,17 +75,7 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
-
-                            <a class="btn btn-xs btn-info waves-effect"
-                               href="{{ route($ParentRouteName)  }}">All({{ $ModelName::where('is_reallocation',0)->get()->count() }})</a>
                             
-                            <a @if ( $trash_show==0)
-                               class="dis-none"
-                               @endif
-                                class="btn btn-xs btn-danger"
-                               href="{{ route($ParentRouteName.'.trashed') }}">Trash({{ $ModelName::onlyTrashed()->where('is_reallocation',0)->count()  }}
-                                )</a>
-
                             <ul class="header-dropdown m-r--5">
                                 <form class="search" action="{{ route($ParentRouteName.'.active.search') }}"
                                       method="get">
@@ -97,27 +87,8 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                         </div>
                         <form class="actionForm" action="{{ route($ParentRouteName.'.active.action') }}"
                               method="get">
+                            
                             <div class="row body">
-                                <div class="margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <select class="form-control" name="apply_comand_top" id="">
-                                                <option value="0">Select Action</option>
-
-                                                @if ($delete)
-                                                    <option value="3">Move To trash</option>
-                                                @endif
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class=" margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
-                                    <div class="form-group">
-                                        <input class="btn btn-sm btn-info" type="submit" value="Apply"
-                                               name="ApplyTop">
-                                    </div>
-                                </div>
                                 <div class=" margin-bottom-0 col-md-8 col-sm-8 col-xs-8">
                                     <div class="custom-paginate pull-right">
                                         {{ $items->links() }}
@@ -238,26 +209,6 @@ $trash_show = config('role_manage.Cost_item.TrashShow');
                             </div>
 
                             <div class="row body">
-                                @if($project->status == 8)
-                                    <div class="m-0 col-md-2 col-lg-2 col-sm-2">
-                                        <div class="form-group">
-                                            <div class="form-line">
-                                                <select class="form-control" name="apply_comand_bottom" id="">
-                                                    <option value="0">Select Action</option>
-                                                    @if ($delete)
-                                                        <option value="3">Move To trash</option>
-                                                    @endif
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
-                                        <div class="form-group">
-                                            <input class="btn btn-sm btn-info" type="submit" value="Apply"
-                                                name="ApplyButtom">
-                                        </div>
-                                    </div>
-                                @endif
                                 <div class=" margin-bottom-0 col-md-8 col-sm-8 col-xs-8">
                                     <div class="custom-paginate pull-right">
                                         {{ $items->links() }}

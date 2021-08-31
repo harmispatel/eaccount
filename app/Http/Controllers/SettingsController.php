@@ -609,8 +609,12 @@ class SettingsController extends Controller
             'orgenizationLeader' => 'required',
             'order' => 'required',
         ]);
-
-        $create = new Orgenizationleader;
+        
+        if ($request->orgid != "") {
+            $create = Orgenizationleader::find($request->orgid);
+        } else {
+            $create = new Orgenizationleader;
+        }
         $create->name = $request->orgenizationLeader;
         $create->order = $request->order;
         $create->budget_approval = isset($request->budget_approval) ? 1 : 0;
@@ -622,8 +626,14 @@ class SettingsController extends Controller
 
     public function organizationLeader_destroy($id)
     { 
-        $setting_general = Orgenizationleader::where('id',$id)->delete();;
-        Session::flash('success', 'Successfully Delete');
+        $getUser = User::where('position_id',$id)->first();
+        if(isset($getUser->id)){
+            Session::flash('error', 'This Postion also used in User');
+        }
+        else{
+            $del = Orgenizationleader::where('id',$id)->delete();
+            Session::flash('success', 'Successfully Delete');
+        }
         return redirect('settings/general#orgenizationLeader');
     }
 

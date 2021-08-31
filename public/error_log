@@ -1,0 +1,7 @@
+[28-Aug-2021 19:43:22 Africa/Nairobi] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/sikikamis/public_html/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php on line 1019
+[28-Aug-2021 19:43:33 Africa/Nairobi] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/sikikamis/public_html/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 1030
+[28-Aug-2021 19:44:16 Africa/Nairobi] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/sikikamis/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 332
+[28-Aug-2021 19:45:05 Africa/Nairobi] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/sikikamis/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 380
+[28-Aug-2021 19:45:35 Africa/Nairobi] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/sikikamis/public_html/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php on line 1515
+[28-Aug-2021 19:46:42 Africa/Nairobi] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/sikikamis/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 332
+[28-Aug-2021 20:00:48 Africa/Nairobi] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/sikikamis/public_html/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php on line 1610

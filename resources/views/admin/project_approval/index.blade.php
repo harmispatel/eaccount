@@ -70,7 +70,7 @@ $trash_show = config('role_manage.Project_approval.TrashShow');
                     <div class="card">
                         <div class="header">
                             <a class="btn btn-xs btn-info waves-effect"
-                               href="{{ route($ParentRouteName)  }}">All({{ $ModelName::all()->count() }})</a>
+                               href="{{ route($ParentRouteName)  }}">All({{ count($projects) }})</a>
                             
                             <a @if ( $trash_show==0)
                                class="dis-none"
@@ -179,13 +179,21 @@ $trash_show = config('role_manage.Project_approval.TrashShow');
                                                     </td>
                                                     
                                                     <td class="tdTrashAction w-csm-10">
-                                                        <a class="btn btn-xs btn-info waves-effect"
+                                                        <?php 
+                                                       // echo Auth::user()->id;
+                                                        ?>
+                                                    @if($checkrole == 1)
+                                                      <a class="btn btn-xs btn-info waves-effect"
                                                         href="{{ route('project.update_status',['id'=>encrypt($project->id),'status'=>'9']) }}"
                                                         data-toggle="tooltip" data-placement="top" title="Approve"><i class="material-icons">check_circle_outline</i></a>
                                                       
                                                         <a class="btn btn-xs btn-danger waves-effect"
                                                         href="{{ route('project.update_status',['id'=>encrypt($project->id),'status'=>'8']) }}" data-toggle="tooltip" data-placement="top" title="Reject"><i class="material-icons" style="color:#fff">cancel</i></a>
-
+                                                    @else
+                                                       
+                                                        <span class="btn btn-xs waves-effect" style="background-color:#808080;cursor: not-allowed;"><i class="material-icons" style="color:#fff">check_circle_outline</i></span>
+                                                        <span class="btn btn-xs waves-effect" style="background-color:#808080;cursor: not-allowed;"><i class="material-icons" style="color:#fff">cancel</i></span>
+                                                    @endif
 
                                                     </td>
                                                 </tr>
