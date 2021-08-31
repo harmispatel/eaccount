@@ -4,32 +4,28 @@
 {{--Important Variable--}}
 
 <?php
- 
-
-$moduleName = " Department";
+$moduleName = "Email Template";
 $createItemName = "Create" . $moduleName;
 
 $breadcrumbMainName = $moduleName;
 $breadcrumbCurrentName = " All";
 
-$breadcrumbMainIcon = "fas fa-user";
+$breadcrumbMainIcon = "fas fa-envelope-open-text";
 $breadcrumbCurrentIcon = "archive";
 
-$ModelName = 'App\Department';
+$ModelName = 'App\EmailTemplate';
+$ParentRouteName = 'emailTemplate';
 
 
-$ParentRouteName = 'department';
-
-
-$all = config('role_manage.Department.All');
-$create = config('role_manage.Department.Create');
-$delete = config('role_manage.Department.Delete');
-$edit = config('role_manage.Department.Edit');
-$pdf = config('role_manage.Department.Pdf');
-$permanently_delete = config('role_manage.Department.PermanentlyDelete');
-$restore = config('role_manage.Department.Restore');
-$show = config('role_manage.Department.Show');
-$trash_show = config('role_manage.Department.TrashShow');
+$all = config('role_manage.EmailTemplate.All');
+$create = config('role_manage.EmailTemplate.Create');
+$delete = config('role_manage.EmailTemplate.Delete');
+$edit = config('role_manage.EmailTemplate.Edit');
+$pdf = config('role_manage.EmailTemplate.Pdf');
+$permanently_delete = config('role_manage.EmailTemplate.PermanentlyDelete');
+$restore = config('role_manage.EmailTemplate.Restore');
+$show = config('role_manage.EmailTemplate.Show');
+$trash_show = config('role_manage.EmailTemplate.TrashShow');
 
 ?>
 
@@ -74,7 +70,7 @@ $trash_show = config('role_manage.Department.TrashShow');
 
                             <a class="btn btn-xs btn-info waves-effect"
                                href="{{ route($ParentRouteName)  }}">All({{ $ModelName::all()->count() }})</a>
-                            
+
                             <a @if ( $trash_show==0)
                                class="dis-none"
                                @endif
@@ -108,6 +104,7 @@ $trash_show = config('role_manage.Department.TrashShow');
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class=" margin-bottom-0 col-md-2 col-lg-2 col-sm-2">
                                     <div class="form-group">
                                         <input class="btn btn-sm btn-info" type="submit" value="Apply"
@@ -131,75 +128,64 @@ $trash_show = config('role_manage.Department.TrashShow');
                                             <label for="md_checkbox_p"></label>
                                         </th>
 
-                                        <th>Department Name</th>
-                                        <th>Department code</th>
-                                        <th>Head of Department</th>
-                                        <th>Status</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
                                         <th>Action</th>
 
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                        <?php $i = 1; ?>
-                                        @foreach($items as $item)
-                                            <tr @if (Auth::id()==$item->id)
+                                    <?php $i = 1; ?>
+                                    @foreach($items as $item)
+                                        <tr @if (Auth::id()==$item->id)
 
-                                                    class="bg-tr"
+                                                class="bg-tr"
 
-                                                    @endif >
-                                                <th class="text-center">
-                                                    <input name="items[id][]" value="{{ $item->id }}"
-                                                           type="checkbox" id="md_checkbox_{{ $i }}"
-                                                           class="chk-col-cyan selects "/>
-                                                    <label for="md_checkbox_{{ $i }}"></label>
-                                                </th>
-                                                <td>{{ $item->departmentName }}</td>
-                                                <td>{{ $item->department_code ? $item->department_code : '' }}</td>
-                                                <td>
-                                                    {{ isset($item->hasOneHead->name) ? $item->hasOneHead->name : 'Not Assigned Yet' }}
-                                                </td>
-                                                <td> 
-                                                    @if($item->status == 0)
-                                                    <span class="label" style="background-color: #fb3737">Inactive</span>
-                                                    @else
-                                                    <span class="label" style="background-color: #308430">Active</span>
-                                                    @endif
-                                                </td>
+                                                @endif >
+                                            <th class="text-center">
+                                                <input name="items[id][]" value="{{ $item->id }}"
+                                                       type="checkbox" id="md_checkbox_{{ $i }}"
+                                                       class="chk-col-cyan selects "/>
+                                                <label for="md_checkbox_{{ $i }}"></label>
+                                            </th>
+                                            <td><a href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}">{{ $item->type }}</a></td>
+                                            <td>{{ $item->description }}</td>
+
+                                            <td class="tdTrashAction">
                                                 
-                                                <td class="tdTrashAction">
-                                                    <a @if ($edit==0)
 
-                                                            class="dis-none"
+                                                <a @if ($edit==0)
 
-                                                       @endif class="btn btn-xs btn-info waves-effect"
-                                                       href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}"
-                                                       data-toggle="tooltip"
-                                                       data-placement="top" title="Edit"><i
-                                                                class="material-icons">mode_edit</i></a>
-                                                    <a data-target="#largeModal"
-                                                       class="btn btn-xs btn-success waves-effect ajaxCall hidden"
-                                                       href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}"
-                                                       data-toggle="tooltip"
-                                                       data-placement="top" title="Preview"><i
-                                                                class="material-icons">pageview</i></a>
+                                                        class="dis-none"
 
-                                                    <a @if ($delete==0)
+                                                   @endif class="btn btn-xs btn-info waves-effect"
+                                                   href="{{ route($ParentRouteName.'.edit',['id'=>$item->id]) }}"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top" title="Edit"><i
+                                                            class="material-icons">mode_edit</i></a>
+                                                <a data-target="#largeModal"
+                                                   class="btn btn-xs btn-success waves-effect ajaxCall hidden"
+                                                   href="{{  route($ParentRouteName.'.show',['id'=>$item->id])  }}"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top" title="Preview"><i
+                                                            class="material-icons">pageview</i></a>
 
-                                                       class="dis-none"
 
-                                                       @endif class="btn btn-xs btn-danger waves-effect"
-                                                       href="{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}"
-                                                       data-toggle="tooltip"
-                                                       data-placement="top" title="Trash"> <i
-                                                                class="material-icons">delete</i></a>
+                                                <a @if ($delete==0)
 
-                                                </td>
-                                            </tr>
-                                        <?php $i++; ?>
-                                        @endforeach
+                                                   class="dis-none"
 
-                                    
+                                                   @endif class="btn btn-xs btn-danger waves-effect"
+                                                   href="{{ route($ParentRouteName.'.destroy',['id'=>$item->id]) }}"
+                                                   data-toggle="tooltip"
+                                                   data-placement="top" title="Trash"> <i
+                                                            class="material-icons">delete</i></a>
+
+                                            </td>
+                                        </tr>
+                                    <?php $i++; ?>
+                                    @endforeach
                                     <thead>
                                     <tr>
                                         <th class="checkbox_custom_style text-center">
@@ -208,10 +194,8 @@ $trash_show = config('role_manage.Department.TrashShow');
                                             <label for="md_checkbox_footer"></label>
                                         </th>
 
-                                        <th>Department Name</th>
-                                        <th>Department code</th>
-                                        <th>Head of Department</th>
-                                        <th>Status</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -312,7 +296,6 @@ $trash_show = config('role_manage.Department.TrashShow');
             toastr["error"]('{{ $error }}');
         @endforeach
         @endif
-
 
     </script>
 

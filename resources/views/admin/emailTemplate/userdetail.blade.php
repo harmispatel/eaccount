@@ -55,8 +55,8 @@ $ParentRouteName = 'user';
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="project_detail">
-                                                <p>1</p>
-                                                <p>Pending Task</p>
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
                                                 <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
@@ -69,15 +69,15 @@ $ParentRouteName = 'user';
                                         </div>
                                         <div class="col-md-6">
                                             <div class="project_detail">
-                                                <p>2</p>
-                                                <p>Overdue Task</p>
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
                                                 <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="project_detail">
-                                                <p>3</p>
-                                                <p>Complete Tasks</p>
+                                                <p>6</p>
+                                                <p>Completed Tasks</p>
                                                 <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
@@ -105,29 +105,29 @@ $ParentRouteName = 'user';
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="project_detail">
-                                                <p>2/17</p>
-                                                <p>Pending Payments</p>
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
                                                 <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="project_detail">
-                                                <p>0</p>
-                                                <p>Pending Requsitions</p>
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
                                                 <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="project_detail">
-                                                <p>0</p>
-                                                <p>Pending Settlement</p>
+                                                <p>6</p>
+                                                <p>Open Tasks</p>
                                                 <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="project_detail">
-                                                <p>0</p>
-                                                <p>Pending Desbarment</p>
+                                                <p>6</p>
+                                                <p>Completed Tasks</p>
                                                 <a href="#">More info <i class="fas fa-arrow-circle-right"></i></a>
                                             </div>
                                         </div>

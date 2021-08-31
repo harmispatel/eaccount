@@ -939,7 +939,16 @@
                     </ul> -->
                 </li>
                 {{--SETTINGS End--}}
+               
+                 {{--Email template Start--}}
+                <li @if ( config('role_manage.EmailTemplate.All')==0 and  config('role_manage.EmailTemplate.TrashShow')==0 and config('role_manage.EmailTemplate.Create')==0  ) class="dis-none" @endif  @if(Request::url() === route('emailTemplate') or Request::url() === route('emailTemplate.create') or Request::url() === route('emailTemplate.trashed') or Request::url() === route('emailTemplate.active.search') or Request::url() === route('emailTemplate.trashed.search') ) class="active " @endif >
+                    <a class="" @if (config('role_manage.EmailTemplate.All')==0) class="dis-none" @endif href="{{ route('emailTemplate') }}">
+                        <i class="fas fa-envelope-open-text"></i>
+                        <span>Email Template</span>
+                    </a>
+                </li>
 
+                {{--Email Template End--}}
             </ul>
         </div>
         <!-- #Menu -->

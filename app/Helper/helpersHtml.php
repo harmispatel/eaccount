@@ -3,8 +3,7 @@
 use App\Notification;
 
 function createActivitySelectBox($items=[],$selectedOption=""){
-    $html = '<option value="0">Main Activity</option>';
-    
+    $html = '<option value="0" class="font-custom-bold">Main Activity</option>';
     if(count($items)){
         foreach($items as $item){
            

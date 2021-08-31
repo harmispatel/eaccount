@@ -4,7 +4,7 @@
 {{--Important Variables--}}
 
 <?php
-$moduleName = " Department";
+$moduleName = " User";
 $createItemName = "Trashed" . $moduleName;
 
 $breadcrumbMainName = $moduleName;
@@ -13,19 +13,19 @@ $breadcrumbCurrentName = " Trashed";
 $breadcrumbMainIcon = "fas fa-user";
 $breadcrumbCurrentIcon = "archive";
 
-$ModelName = 'App\Department';
-$ParentRouteName = 'department';
+$ModelName = 'App\User';
+$ParentRouteName = 'user';
 
 
-$all = config('role_manage.Department.All');
-$create = config('role_manage.Department.Create');
-$delete = config('role_manage.Department.Delete');
-$edit = config('role_manage.Department.Edit');
-$pdf = config('role_manage.Department.Pdf');
-$permanently_delete = config('role_manage.Department.PermanentlyDelete');
-$restore = config('role_manage.Department.Restore');
-$show = config('role_manage.Department.Show');
-$trash_show = config('role_manage.Department.TrashShow');
+$all = config('role_manage.User.All');
+$create = config('role_manage.User.Create');
+$delete = config('role_manage.User.Delete');
+$edit = config('role_manage.User.Edit');
+$pdf = config('role_manage.User.Pdf');
+$permanently_delete = config('role_manage.User.PermanentlyDelete');
+$restore = config('role_manage.User.Restore');
+$show = config('role_manage.User.Show');
+$trash_show = config('role_manage.User.TrashShow');
 
 ?>
 @section('title')
@@ -122,12 +122,10 @@ $trash_show = config('role_manage.Department.TrashShow');
                                                 <label for="md_checkbox_p"></label>
                                             </th>
 
-                                            <th>Department Name</th>
-                                            <th>Department code</th>
-                                            <th>Head of Department</th>
-                                            <th>Status</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>User Role</th>
                                             <th>Action</th>
-
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -143,18 +141,10 @@ $trash_show = config('role_manage.Department.TrashShow');
                                                     <label for="md_checkbox_{{ $i }}"></label>
                                                 </th>
 
-                                                <td>{{ $item->departmentName }}</td>
-                                                <td>{{ $item->department_code ? $item->department_code : '' }}</td>
-                                                <td>
-                                                    {{ isset($item->hasOneHead->name) ? $item->hasOneHead->name : 'Not Assigned Yet' }}
-                                                </td>
-                                                <td> 
-                                                    @if($item->status == 0)
-                                                    <span class="label" style="background-color: #fb3737">Inactive</span>
-                                                    @else
-                                                    <span class="label" style="background-color: #308430">Active</span>
-                                                    @endif
-                                                </td>
+                                                <td>{{ $item->name }}</td>
+                                                <td>{{ $item->email }}</td>
+                                                <td>{{ App\RoleManage::withTrashed()->find($item->role_manage_id)->name }}</td>
+
                                                 <td class="tdAction ">
                                                     <a @if ($restore==0)
                                                        class="dis-none"
@@ -170,6 +160,7 @@ $trash_show = config('role_manage.Department.TrashShow');
                                                        data-toggle="tooltip"
                                                        data-placement="top" title="Preview"><i
                                                                 class="material-icons">pageview</i></a>
+
 
                                                     <a @if ($permanently_delete==0)
                                                        class="dis-none"
@@ -190,10 +181,9 @@ $trash_show = config('role_manage.Department.TrashShow');
                                                        class="chk-col-cyan"/>
                                                 <label for="md_checkbox_footer"></label>
                                             </th>
-                                            <th>Department Name</th>
-                                            <th>Department code</th>
-                                            <th>Head of Department</th>
-                                            <th>Status</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>User Role</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>

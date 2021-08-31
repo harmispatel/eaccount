@@ -130,6 +130,15 @@ class Kernel extends HttpKernel
         'settings.all' => \App\Http\Middleware\Roles\Settings\All::class,
         'settings.show' => \App\Http\Middleware\Roles\Settings\Show::class,
 
+        'emailTemplate.module_show' => \App\Http\Middleware\Roles\EmailTemplate\ModuleShow::class,
+        'emailTemplate.show' => \App\Http\Middleware\Roles\EmailTemplate\Show::class,
+        'emailTemplate.create' => \App\Http\Middleware\Roles\EmailTemplate\Create::class,
+        'emailTemplate.edit' => \App\Http\Middleware\Roles\EmailTemplate\Edit::class,
+        'emailTemplate.delete' => \App\Http\Middleware\Roles\EmailTemplate\Delete::class,
+        'emailTemplate.pdf' => \App\Http\Middleware\Roles\EmailTemplate\Pdf::class,
+        'emailTemplate.restore' => \App\Http\Middleware\Roles\EmailTemplate\Restore::class,
+        'emailTemplate.trash_show' => \App\Http\Middleware\Roles\EmailTemplate\TrashShow::class,
+        'emailTemplate.permanently_delete' => \App\Http\Middleware\Roles\EmailTemplate\PermanentlyDelete::class,
 
         'branch.module_show' => \App\Http\Middleware\Roles\Branch\ModuleShow::class,
         'branch.show' => \App\Http\Middleware\Roles\Branch\Show::class,
