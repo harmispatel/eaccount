@@ -117,7 +117,6 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                     $parentActivity = $item->hasOneParentActivity ? $item->hasOneParentActivity : [];   
                                                     $subActivities = $item->hasManySubActivity ? $item->hasManySubActivity : [];   
                                                     $department = $item->hasOneDepartment ? $item->hasOneDepartment : [];   
-                                                    $parentActivityCode = $item->activity_code ? $item->activity_code : '';
                                                 @endphp
                                                 @include('admin.activity.index-tr',['item'=>$item,'index'=>$i, 'type'=>'parent'])
                                                 <?php $i++; ?>
@@ -127,7 +126,6 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                                         @php 
                                                             $i++; 
                                                             $subActivitiesOne = $item->hasManySubActivity ? $item->hasManySubActivity : [];   
-                                                            $subActivityCode = $item->activity_code ? $item->activity_code : '';
                                                         @endphp
                                                         @foreach ($subActivitiesOne as $subActivitiesTwo)
                                                             @include('admin.activity.index-tr',['item'=>$subActivitiesTwo,'index'=>$i,'type'=>'subOne'])
@@ -166,7 +164,7 @@ $trash_show = config('role_manage.Activity.TrashShow');
                                 <div class="container">
                                     <div class="activity-main-btn">
                                         <a class="btn btn-xs btn-info waves-effect"
-                                       href="@if(!empty($project)){{ route($ParentRouteName,['projectId'=>$project->id])  }}@else {{ route($ParentRouteName)  }} @endif">All({{ $ModelName::all()->count() }})</a>
+                                       href="@if(!empty($project)){{ route($ParentRouteName,['projectId'=>$project->id])  }}@else {{ route($ParentRouteName)  }} @endif">All({{ $ModelName::where('project_id',$project->id)->get()->count() }})</a>
                                     
                                     <a @if ( $trash_show==0)
                                        class="dis-none"

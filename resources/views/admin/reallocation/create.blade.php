@@ -99,13 +99,13 @@ $activityId = Request::get('activityId');
                                                         <select data-live-search="true" class="form-control show-tick"
                                                                 name="sub_activity_id"
                                                                 id="sub_activity_id">
-                                                                @if(!empty($selectedActivity))
+                                                                {{-- @if(!empty($selectedActivity))
                                                                     @foreach($activitys as $activity)
                                                                         @if ($activity->parent_id != 0 && ($activity->parent_id == $selectedActivity->parent_id || $activity->parent_id == $selectedActivity->id))
                                                                             <option value="{{ $activity->id }}" @if($activity->id == $selectedActivity->id) selected @endif>{{ $activity->title }}</option>
                                                                         @endif
                                                                     @endforeach
-                                                                @endif
+                                                                @endif --}}
                                                         </select>
                                                     </div>
                                                 </div>
@@ -286,13 +286,16 @@ $activityId = Request::get('activityId');
             var showBudgetItem = jQuery("#showBudgetItems").val();
             if(showBudgetItem == 1){
                 jQuery("#addNewBudgetItem").show();
+                getSubActivity();
             }
             else if(showBudgetItem == 2){
                 jQuery("#addToExistingBudgetItem").show();
             }
         }
+        
         function getSubActivity(){
             var main_act_id = $('#main_activity_id').val();
+            // alert(main_act_id);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -301,7 +304,7 @@ $activityId = Request::get('activityId');
             $.ajax({
                 type: "POST",
                 url: "{{ route('cost_item.get_sub_activity') }}",
-                data: {'main_act_id':main_act_id},     
+                data: {'main_act_id':main_act_id,'projectId':"{{$projectId}}"},     
                 success: function (data) {
                     $('#sub_activity_id').html(data.result);
                     $('#sub_activity_id').selectpicker('refresh');           

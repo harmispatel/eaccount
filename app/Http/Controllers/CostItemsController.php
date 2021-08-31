@@ -48,8 +48,9 @@ class CostItemsController extends Controller
      */
     public function create(Request $request)
     {  
-        $activitys = Activity::all();
         $activityId = $request->activityId ?  $request->activityId : 0;
+        $projectId = $request->projectId ?  $request->projectId : 0;
+        $activitys = Activity::where('project_id',$projectId)->get();
         $selectedActivity = Activity::find($activityId);
         return view($this->parentView . '.create',['activitys'=>$activitys,'selectedActivity'=>$selectedActivity]);
         // return view($this->parentView . '.create');
@@ -148,19 +149,21 @@ class CostItemsController extends Controller
     public function edit($id)
     {
         $items = $this->parentModel::find($id);        
-        $activitys = Activity::all();
+        $activitys = Activity::where('project_id',$projectId)->get();
         return view($this->parentView . '.edit',['item'=> $items,'activitys'=>$activitys]);
     }
 
     public function get_sub_activity(Request $request)
     {
         $main_act_id = $request->main_act_id;
-        $activitys = Activity::where('parent_id', $main_act_id)->get();
+        $projectId = $request->projectId;
+        $activitys = Activity::where('parent_id', $main_act_id)->where('project_id',$projectId)->get();
         $html = "";
         if($main_act_id != "0" || $main_act_id != 0){
-            foreach($activitys as $activity){
-                $html .= "<option value='".$activity->id."' >".$activity->title."</option>";
-            } 
+            $html .= createSubActivity($activitys, $type = "sub");
+            // foreach($activitys as $activity){
+            //     $html .= "<option value='".$activity->id."' >".$activity->title."</option>";
+            // } 
         }
         return response()->json(['success'=>'Got Simple Ajax Request.', 'result'=> $html]);
     }

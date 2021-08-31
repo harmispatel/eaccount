@@ -270,7 +270,7 @@ $activityId = Request::get('activityId');
             $.ajax({
                 type: "POST",
                 url: "{{ route('cost_item.get_sub_activity') }}",
-                data: {'main_act_id':main_act_id},     
+                data: {'main_act_id':main_act_id,'projectId':"{{$projectId}}"},     
                 success: function (data) {
                     $('#sub_activity_id').html(data.result);
                     $('#sub_activity_id').selectpicker('refresh');           

@@ -880,6 +880,85 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
     
 
+    //    EmailTemplate start
+    Route::get('/emailTemplate', [
+        'uses' => 'EmailTemplateController@index',
+        'as' => 'emailTemplate'
+    ])->middleware('emailTemplate.module_show');
+
+    Route::get('/emailTemplate/create', [
+        'uses' => 'EmailTemplateController@create',
+        'as' => 'emailTemplate.create'
+    ])->middleware('emailTemplate.create');
+
+    Route::post('/emailTemplate/store', [
+        'uses' => 'EmailTemplateController@store',
+        'as' => 'emailTemplate.store'
+    ])->middleware('emailTemplate.create');
+
+
+    Route::get('/emailTemplate/edit/{id}', [
+        'uses' => 'EmailTemplateController@edit',
+        'as' => 'emailTemplate.edit'
+    ])->middleware('emailTemplate.edit');
+
+    Route::post('/emailTemplate/update/{id}', [
+        'uses' => 'EmailTemplateController@update',
+        'as' => 'emailTemplate.update'
+    ])->middleware('emailTemplate.edit');
+
+    Route::get('/emailTemplate/show/{id}', [
+        'uses' => 'EmailTemplateController@show',
+        'as' => 'emailTemplate.show'
+    ]);
+
+    Route::get('/emailTemplate/destroy/{id}', [
+        'uses' => 'EmailTemplateController@destroy',
+        'as' => 'emailTemplate.destroy'
+    ])->middleware('emailTemplate.delete');
+
+    Route::get('/emailTemplate/trashed', [
+        'uses' => 'EmailTemplateController@trashed',
+        'as' => 'emailTemplate.trashed'
+    ])->middleware('emailTemplate.trash_show');
+
+    Route::post('/emailTemplate/trashed/show', [
+        'uses' => 'EmailTemplateController@trashedShow',
+        'as' => 'emailTemplate.trashed.show'
+    ]);
+
+
+    Route::get('/emailTemplate/restore/{id}', [
+        'uses' => 'EmailTemplateController@restore',
+        'as' => 'emailTemplate.restore'
+    ])->middleware('emailTemplate.restore');
+
+    Route::get('/emailTemplate/kill/{id}', [
+        'uses' => 'EmailTemplateController@kill',
+        'as' => 'emailTemplate.kill'
+    ])->middleware('emailTemplate.permanently_delete');
+
+    Route::get('/emailTemplate/active/search', [
+        'uses' => 'EmailTemplateController@activeSearch',
+        'as' => 'emailTemplate.active.search'
+    ]);
+
+    Route::get('/emailTemplate/trashed/search', [
+        'uses' => 'EmailTemplateController@trashedSearch',
+        'as' => 'emailTemplate.trashed.search'
+    ]);
+
+    Route::get('/emailTemplate/active/action', [
+        'uses' => 'EmailTemplateController@activeAction',
+        'as' => 'emailTemplate.active.action'
+    ]);
+
+    Route::get('/emailTemplate/trashed/action', [
+        'uses' => 'EmailTemplateController@trashedAction',
+        'as' => 'emailTemplate.trashed.action'
+    ]);
+    
+    //    EmailTemplate End
 
     //    Role Manage
     Route::get('/role-manage', [

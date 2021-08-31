@@ -68,9 +68,9 @@ $projectId = Request::get('projectId');
                                             <div class="form-group form-float">
                                                 <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick search-choice" name="project_id"
-                                                            id="project_id">
+                                                            id="project_id" onchange="getactivitybasedondepartment()">
                                                         <option value="0" class="font-custom-bold">Select Project</option>
-                                                        @foreach(App\Projects::all() as $project)
+                                                        @foreach(App\Projects::where('status',8)->get() as $project)
                                                             <option @if ($item->project_id==$project->id)
                                                                     selected
                                                                     @endif value="{{$project->id}}"> {{ $project->projectName }}
@@ -99,7 +99,6 @@ $projectId = Request::get('projectId');
                                             <div class="form-group form-float">
                                                 <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick" name="parent_id" id="parent_id">
-                                                        <option value="0" class="font-custom-bold">Main Activity</option>
                                                         {!! createActivitySelectBox($activitys,$item->parent_id) !!}
                                                     </select>
                                                 </div>
@@ -261,7 +260,7 @@ $projectId = Request::get('projectId');
             $.ajax({
                 type: "POST",
                 url: "{{ route('activity.get_activity_to_department') }}",
-                data: {'department_id':department_id,'projectId':"{{$projectId}}"},     
+                data: {'department_id':department_id,'projectId':jQuery("#project_id").val()},     
                 success: function (data) {
                     $('#parent_id').html(data.result);
                     $('#parent_id').selectpicker('refresh');           
