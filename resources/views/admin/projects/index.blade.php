@@ -161,15 +161,22 @@ $trash_show = config('role_manage.Project.TrashShow');
                                                     </th>
                                                     <?php 
                                                     $getdonor = isset($project->hasManyProjecttodonor) ? $project->hasManyProjecttodonor : []; 
+                                                    $getregion = isset($project->hasManyProjecttoregion) ? $project->hasManyProjecttoregion : []; 
                                                     $donor = [];
+                                                    $region = [];
                                                     if(count($getdonor)){
                                                         foreach($getdonor as $key => $getdonorone){
                                                             isset($getdonorone->hasOneSupportDonor->supportDonor) ? array_push($donor,$getdonorone->hasOneSupportDonor->supportDonor) : '';
                                                         }
                                                     }
+                                                    if(count($getregion)){
+                                                        foreach($getregion as $key => $getregionone){
+                                                            isset($getregionone->hasOneRegion->name) ? array_push($region,$getregionone->hasOneRegion->name) : '';
+                                                        }
+                                                    }
                                                     ?>
                                                     <td class="w-csm-40"><a href="{{ route('activity',['projectId'=>$project->id]) }}">{{$project->projectName ? $project->projectName : '' }}</a></td>
-                                                    <td>{{ isset($project->hasOneRegion->name) ? $project->hasOneRegion->name : '' }}</td>
+                                                    <td>{{ implode(',',$region) }}</td>
                                                     <td>{{ implode(',',$donor) }}</td>
                                                     <td>{{ $project->start_date }} <br/>{{ $project->end_date }}</td>
                                                     <td>

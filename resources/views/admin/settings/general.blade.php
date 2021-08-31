@@ -1396,7 +1396,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
                                                         Update
                                                     </button>
-                                                    @else()
+                                                    @else
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
                                                         Add New
                                                     </button>
@@ -1613,12 +1613,13 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                           action="{{ route($ParentRouteNameorgenozationLeader.'.update') }}">
 
                                         {{ csrf_field() }}
+                                        <input value="@if(!empty($orgenizationleaderedit)) {{ $orgenizationleaderedit->id }} @endif" name="orgid" type="hidden" >
                                         <div class="row clearfix">
 
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input value="" name="orgenizationLeader" type="text"
+                                                        <input value="@if(!empty($orgenizationleaderedit)) {{ $orgenizationleaderedit->name }} @endif" name="orgenizationLeader" type="text"
                                                                class="form-control">
                                                         <label class="form-label">Organization Leadership</label>
                                                     </div>
@@ -1628,7 +1629,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input value="" name="order" type="text"
+                                                        <input value="@if(!empty($orgenizationleaderedit)) {{ $orgenizationleaderedit->order }} @endif" name="order" type="text"
                                                                class="form-control">
                                                         <label class="form-label">Order</label>
                                                     </div>
@@ -1637,16 +1638,22 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
 
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
                                                 <div class="form-group form-float" style="margin-top:10px">
-                                                    <input type="checkbox" id="budget_approval" name="budget_approval" class="filled-in">
+                                                    <input type="checkbox" id="budget_approval" name="budget_approval" @if((!empty($orgenizationleaderedit)) && ($orgenizationleaderedit->budget_approval == "1")) checked @endif class="filled-in">
                                                     <label for="budget_approval">Budget Approval</label>
                                                 </div>
                                             </div>
       
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
+                                                    @if(!empty($orgenizationleaderedit)) 
+                                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                        Update
+                                                    </button>
+                                                    @else
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
                                                         Add New
                                                     </button>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -1680,6 +1687,10 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                 <td>{{ $orgenization->budget_approval == "1" ? "Yes" : "No" }}</td>
                                                 <td>{{ $orgenization->order }}</td>
                                                 <td class="tdTrashAction">
+                                                    <a class="btn btn-xs btn-info waves-effect"
+                                                       href="{{ route($ParentRouteNameorgenozationLeader.'.edit',['id'=>$orgenization->id]) }}/#orgenizationLeader" data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                                class="material-icons">mode_edit</i></a>      
+
                                                     <a 
                                                         class="btn btn-xs btn-danger waves-effect" onclick="return confirm('Do you want to Delete?');"
                                                        href="{{ route($ParentRouteNameorgenozationLeader.'.destroy',['id'=>$orgenization->id]) }}"
