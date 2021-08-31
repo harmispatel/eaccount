@@ -14,9 +14,9 @@
     </td>
     <td class="w-csm-40">
         @if($type == 'sub')
-            {{$parentActivityCode.'-'}}
+            -
         @elseif($type == 'subOne')
-            {{$parentActivityCode.' - '.$subActivityCode.' - '}}
+             -  -
         @endif
         <a href="@if(!empty($project)){{ route('cost_item',['activityId'=>$item->id,'projectId'=>$project->id])}}@else{{ route('cost_item')}}@endif"> {{$item->title }}</a><span style="color:#ff0000;margin-left: 10px;">@if($type != 'parent')({{count($costItems)}})@endif</span>
     </td>

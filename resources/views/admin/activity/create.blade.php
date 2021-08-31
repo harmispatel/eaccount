@@ -66,10 +66,10 @@ $projectId = Request::get('projectId');
                                             <div class="form-group form-float">
                                                 <div class="form-line">
                                                     <select data-live-search="true" class="form-control show-tick search-choice" name="project_id"
-                                                            id="project_id">
+                                                            id="project_id" onchange="getactivitybasedondepartment()">
                                                         <option value="0" class="font-custom-bold">Select Project</option>
                                                         
-                                                        @foreach(App\Projects::all() as $project)
+                                                        @foreach(App\Projects::where('status',8)->get() as $project)
                                                             <option value="{{$project->id}}" @if($projectId == $project->id) selected @endif> {{ $project->projectName }}
                                                             </option>
                                                         @endforeach
@@ -275,7 +275,7 @@ $projectId = Request::get('projectId');
             $.ajax({
                 type: "POST",
                 url: "{{ route('activity.get_activity_to_department') }}",
-                data: {'department_id':department_id,'projectId':"{{$projectId}}"},     
+                data: {'department_id':department_id,'projectId':jQuery("#project_id").val()},     
                 success: function (data) {
                     $('#parent_id').html(data.result);
                     $('#parent_id').selectpicker('refresh');           

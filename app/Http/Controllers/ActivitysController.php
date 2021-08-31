@@ -43,7 +43,8 @@ class ActivitysController extends Controller
      */
     public function create()
     {  
-        $Activity = $this->parentModel::where('parent_id',0)->get();
+        $projectId = $request->projectId;    
+        $Activity = $this->parentModel::where('parent_id',0)->where('project_id',$projectId)->get();
         return view($this->parentView . '.create')->with('items', $Activity);
         // return view($this->parentView . '.create');
     }
@@ -165,7 +166,7 @@ class ActivitysController extends Controller
         $departments = Department::with(['hasManyActivity'=>function ($query) use ($projectId) {
             $query->where('project_id', $projectId);
         }])->find($department_id);
-        $html = "<option value='0'>Main Activity</option>";
+        $html = "<option value='0' class='font-custom-bold'>Main Activity</option>";
         if(!empty($departments)){
             $activities = $departments->hasManyActivity ? $departments->hasManyActivity : [];
             if(count($activities)){

@@ -3,20 +3,17 @@
 {{--Important Variables--}}
 
 <?php
-$moduleName = " Budget_items";
+$moduleName = " Email Template";
 $createItemName = "Create" . $moduleName;
 
 $breadcrumbMainName = $moduleName;
-$breadcrumbCurrentName = " All";
+$breadcrumbCurrentName = " Create";
 
-$breadcrumbMainIcon = "fas fa-money-bill";
+$breadcrumbMainIcon = "fas fa-envelope-open-text";
 $breadcrumbCurrentIcon = "archive";
 
-$ModelName = 'App\Cost_item';
-$ParentRouteName = 'cost_item';
-
-$projectId = Request::get('projectId');
-$activityId = Request::get('activityId');
+$ModelName = 'App\EmailTemplate';
+$ParentRouteName = 'emailTemplate';
 
 ?>
 
@@ -59,7 +56,7 @@ $activityId = Request::get('activityId');
 
                             <div class="body">
                                 <form class="form" id="form_validation" method="post"
-                                      action="{{ route($ParentRouteName.'.store') }}">
+                                      action="{{ route($ParentRouteName.'.store') }}" enctype="multipart/form-data">
 
                                     {{ csrf_field() }}
                                     <div class="row clearfix">
@@ -67,45 +64,9 @@ $activityId = Request::get('activityId');
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick"
-                                                            name="main_activity_id"
-                                                            id="main_activity_id" onchange="getSubActivity()">
-                                                        <option value="0" class="font-custom-bold">Select Activity</option>
-                                                        @foreach($activitys as $activity)
-                                                            @if ($activity->parent_id == 0 )
-                                                                <option value="{{ $activity->id }}" @if($selectedActivity->parent_id == $activity->id || $selectedActivity->id == $activity->id) selected @endif>{{ $activity->title }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick"
-                                                            name="sub_activity_id"
-                                                            id="sub_activity_id">
-                                                            @if(!empty($selectedActivity))
-                                                                @foreach($activitys as $activity)
-                                                                    @if ($activity->parent_id != 0 && ($activity->parent_id == $selectedActivity->parent_id || $activity->parent_id == $selectedActivity->id))
-                                                                        <option value="{{ $activity->id }}" @if($activity->id == $selectedActivity->id) selected @endif>{{ $activity->title }}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            @endif
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    {{-- <label for="cars">Choose a car:</label> --}}
-                                                    <input autofocus value="{{ old('title')  }}" name="title" type="text"
-                                                           class="form-control" required aria-required="true">
-                                                    <label class="form-label">Title</label> 
+                                                    <input autofocus value="{{ old('type')  }}" name="type" type="text"
+                                                           class="form-control">
+                                                    <label class="form-label">Type</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,7 +76,7 @@ $activityId = Request::get('activityId');
                                                 <div class="form-line">
                                                     <input autofocus value="{{ old('description')  }}" name="description" type="text"
                                                            class="form-control">
-                                                    <label class="form-label">Memo</label>
+                                                    <label class="form-label">Description</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,35 +84,25 @@ $activityId = Request::get('activityId');
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ old('unit')  }}" name="unit" type="number"
+                                                    <input autofocus value="{{ old('subject')  }}" name="subject" type="text"
                                                            class="form-control">
-                                                    <label class="form-label">Unit</label>
+                                                    <label class="form-label">Subject</label>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ old('cost')  }}" name="cost" type="number"
-                                                           class="form-control">
-                                                    <label class="form-label">Cost</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <input autofocus value="{{ old('frequency')  }}" name="frequency" type="number"
-                                                    class="form-control">
-                                                    <label class="form-label">Frequency</label>
+                                                    <textarea name="body" class="form-control" id="ckeditor" rows="15">
+                                                        {{ old('body')  }}
+                                                    </textarea>
+                                                    <label class="form-label">Body</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <input value="" name="submitType" id="submitType" type="hidden" value="">
-                                        <input name="selectedProjectId" id="selectedProjectId" type="hidden" value="{{$projectId}}">
-                                        <input name="selectedActivityId" id="selectedActivityId" type="hidden" value="{{$activityId}}">
+
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
                                                 <button type="button" onclick="changeSubmitType('save')" class="btn-csm-save m-t-15 waves-effect"> <i class="fa fa-edit"></i> Save</button>
@@ -160,8 +111,12 @@ $activityId = Request::get('activityId');
                                                 <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn-new-style m-t-15 waves-effect"><span><i class="far fa-check-circle last_csm_btn"></i></span> Save & Close</button>
                                             </div>
                                         </div>
+
+
                                     </div>
+
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -213,7 +168,10 @@ $activityId = Request::get('activityId');
 
 @push('include-js')
 
-
+<!-- CKEDITOR Plugin Js -->
+    <script src="{{ asset('asset/plugins/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('asset/plugins/tinymce/tinymce.js') }}"></script>
+    <script src="{{ asset('asset/js/pages/forms/editors.js') }}"></script>
     <!-- Moment Plugin Js -->
     <script src="{{ asset('asset/plugins/momentjs/moment.js') }}"></script>
 
@@ -234,7 +192,11 @@ $activityId = Request::get('activityId');
     <script src="{{ asset('asset/js/pages/forms/basic-form-elements.js') }}"></script>
 
 
-    <script>
+    <script> 
+        function changeSubmitType(submitType){
+            jQuery("#submitType").val(submitType);
+            $("#form_validation").submit();
+        }
         @if(Session::has('success'))
             toastr["success"]('{{ Session::get('success') }}');
         @endif
@@ -249,30 +211,7 @@ $activityId = Request::get('activityId');
         @endforeach
         @endif
 
-    function changeSubmitType(submitType){
-        jQuery("#submitType").val(submitType);
-        $("#form_validation").submit();
-    }
-    function getSubActivity(){
-        var main_act_id = $('#main_activity_id').val();
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type: "POST",
-            url: "{{ route('cost_item.get_sub_activity') }}",
-            data: {'main_act_id':main_act_id,'projectId':"{{$projectId}}"},     
-            success: function (data) {
-                $('#sub_activity_id').html(data.result);
-                $('#sub_activity_id').selectpicker('refresh');           
-            },
-            error: function (data) {
-                console.log(data);
-            }
-        });
-    }
+
 
         // Validation and calculation
         var UiController = (function () {
@@ -282,10 +221,6 @@ $activityId = Request::get('activityId');
                 name: 'input[name=name]',
                 email: 'input[name=email]',
                 password: 'input[name=password]',
-                confirm_password: 'input[name=password_confirmation]',
-                role_manage_id: 'role_manage_id',
-
-
             };
 
             return {
@@ -297,24 +232,14 @@ $activityId = Request::get('activityId');
                         get_form: document.querySelector(DOMString.submit_form),
                         get_name: document.querySelector(DOMString.name),
                         get_password: document.querySelector(DOMString.password),
-                        get_confirm_password: document.querySelector(DOMString.confirm_password),
-                        get_email: document.querySelector(DOMString.email),
-                        get_role_manage_id: document.getElementById(DOMString.role_manage_id),
-
-
                     }
                 },
                 getInputsValue: function () {
                     var Fields = this.getFields();
                     return {
-
                         name: Fields.get_name.value == "" ? 0 : Fields.get_name.value,
                         email: Fields.get_email.value == "" ? 0 : Fields.get_email.value,
                         password: Fields.get_password.value,
-                        confirm_password: Fields.get_confirm_password.value,
-                        role_manage_id: Fields.get_role_manage_id.value == "" ? 0 : Fields.get_role_manage_id.value,
-
-
                     }
                 },
 
@@ -338,30 +263,10 @@ $activityId = Request::get('activityId');
                 Fields = UICnt.getFields();
 
                 var FieldName1 = " Name";
-
-
                 if (input_values.role_manage_id == 0) {
                     toastr["error"]('Select Any Role');
                     e.preventDefault();
                 }
-
-
-                if (input_values.password != input_values.confirm_password) {
-                    toastr["error"]('Password Does Not Match');
-                    e.preventDefault();
-                }
-
-                if (input_values.email == 0) {
-                    toastr["error"]('Email Is Required');
-                    e.preventDefault();
-                }
-
-                if (input_values.name == 0) {
-                    toastr["error"]('Name is Required');
-                    e.preventDefault();
-                }
-
-
             };
 
             return {

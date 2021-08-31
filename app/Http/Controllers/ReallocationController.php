@@ -27,9 +27,11 @@ class ReallocationController extends Controller
     public function create(Request $request)
     {  
         $costItemId = $request->id ?  $request->id : 0;
-        $costItems = Cost_item::where('is_reallocation',0)->get();
-        $activitys = Activity::all();
         $activityId = $request->activityId ?  $request->activityId : 0;
+        $projectId = $request->projectId ?  $request->projectId : 0;
+        $costItemId = $request->id ?  $request->id : 0;
+        $costItems = Cost_item::where('is_reallocation',0)->where(function ($query) use ($activityId) {$query->where('sub_activity_id',$activityId)->orwhere('main_activity_id',$activityId);})->get();
+        $activitys = Activity::where('project_id',$projectId)->get();
         $selectedActivity = Activity::find($activityId);
         return view($this->parentView . '.create',['activitys'=>$activitys,'selectedActivity'=>$selectedActivity,'costItems'=>$costItems]);
     }
