@@ -910,7 +910,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/emailTemplate/show/{id}', [
         'uses' => 'EmailTemplateController@show',
         'as' => 'emailTemplate.show'
-    ]);
+    ]); 
 
     Route::get('/emailTemplate/destroy/{id}', [
         'uses' => 'EmailTemplateController@destroy',
