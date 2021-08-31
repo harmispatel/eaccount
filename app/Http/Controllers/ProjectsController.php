@@ -7,6 +7,7 @@ use App\Profile;
 use App\SupportDonor;
 use App\Projecttodonor;
 use App\Projecttoregion;
+use App\Notification;
 use App\Region;
 use App\User;
 use App\Tasks;
@@ -235,11 +236,36 @@ class ProjectsController extends Controller
             return redirect()->route($this->parentRoute.'.edit',['id'=>$object->id]);
         }
     }
-    public function update_status($id,$status)
+    public function update_status(Request $request,$id,$status,$type="")
     {
+        //echo '<pre>'; print_r($type); die;
         $projects = Projects::find(decrypt($id));
         $projects->status = $status;
         $projects->save();
+
+        //echo '<pre>'; print_r($projects->user_id); die;
+
+        if($type == "approve"){
+            $getData = User::where('id',$projects->user_id)->get();
+            $message = "Executive Approved project";
+        }elseif($type == "reject"){
+            $getData = User::where('id',$projects->user_id)->get();
+            $message = "Executive rejected project";
+        }else{
+            $getData = User::where('position_id',11)->get();
+            $message = "user submitted project";
+        }
+        if(count($getData)>0){
+            foreach($getData as $key => $one){
+                $newnotification = new Notification;
+                $newnotification->title = $message;
+                $newnotification->sender_id = Auth()->user()->id;
+                $newnotification->receiver_id = $one->id;
+                $newnotification->type_id = 1;
+                $newnotification->save();
+            }
+        }
+
         Session::flash('success', "Update Successfully");
         return redirect()->back();
     }

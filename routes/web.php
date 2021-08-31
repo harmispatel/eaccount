@@ -235,7 +235,7 @@ Route::group(['middleware' => 'auth'], function () {
         'uses' => 'ProjectsController@trashedAction',
         'as' => 'project.trashed.action'
     ]);
-    Route::get('/project/update_status/{id}/{status}', [
+    Route::get('/project/update_status/{id}/{status}/{type?}', [
         'uses' => 'ProjectsController@update_status',
         'as' => 'project.update_status'
     ]);

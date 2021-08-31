@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use App\Notification;
 
 function createActivitySelectBox($items=[],$selectedOption=""){
     $html = '<option value="0">Main Activity</option>';
@@ -44,4 +46,43 @@ function createSubActivity($items=[], $type = "subOne",$selectedOption=""){
         }
     }
     return $html;
+}
+
+function getUserNotification(){
+    $id = Auth()->user()->id;
+    $getlist = Notification::where('receiver_id',$id)->where('is_read',0)->get();
+    $html = '';
+
+    if(count($getlist)>0){
+        foreach($getlist as $getlistone){
+            $icon = "fa fa-mail";
+            $bgcolor = "grey";
+            $getType = $getlistone->hasOneType ? $getlistone->hasOneType : []; 
+            if(!empty($getType)){
+                $icon = $getType->icon;
+                $bgcolor = $getType->bg_color;
+            }
+
+            $html .= '<li>
+                    <a href="javascript:void(0);">
+                        <div class="icon-circle bg-light-green">
+                            <i class="'.$icon.'"></i>
+                        </div>
+                        <div class="menu-info">
+                            <h4>'.$getlistone->title.'</h4>
+                            <p>
+                                <i class="material-icons">access_time</i> '.$getlistone->created_at.'
+                            </p>
+                        </div>
+                    </a>
+                </li>';
+        }
+    }
+    return $html;
+}
+
+function getUserNotificationCount(){
+    $id = Auth()->user()->id;
+    $getlist = Notification::where('receiver_id',$id)->where('is_read',0)->count();
+    return $getlist;
 }

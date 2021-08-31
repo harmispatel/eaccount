@@ -184,11 +184,11 @@ $trash_show = config('role_manage.Project_approval.TrashShow');
                                                         ?>
                                                     @if($checkrole == 1)
                                                       <a class="btn btn-xs btn-info waves-effect"
-                                                        href="{{ route('project.update_status',['id'=>encrypt($project->id),'status'=>'9']) }}"
+                                                        href="{{ route('project.update_status',['id'=>encrypt($project->id),'status'=>'9','type'=>'approve']) }}"
                                                         data-toggle="tooltip" data-placement="top" title="Approve"><i class="material-icons">check_circle_outline</i></a>
                                                       
                                                         <a class="btn btn-xs btn-danger waves-effect"
-                                                        href="{{ route('project.update_status',['id'=>encrypt($project->id),'status'=>'8']) }}" data-toggle="tooltip" data-placement="top" title="Reject"><i class="material-icons" style="color:#fff">cancel</i></a>
+                                                        href="{{ route('project.update_status',['id'=>encrypt($project->id),'status'=>'8','type'=>'reject']) }}" data-toggle="tooltip" data-placement="top" title="Reject"><i class="material-icons" style="color:#fff">cancel</i></a>
                                                     @else
                                                        
                                                         <span class="btn btn-xs waves-effect" style="background-color:#808080;cursor: not-allowed;"><i class="material-icons" style="color:#fff">check_circle_outline</i></span>
