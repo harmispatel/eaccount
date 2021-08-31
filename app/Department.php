@@ -20,7 +20,7 @@ class Department extends Model
         'departmentName',
         'parent_id',
         'status',
-        
+        'department_code',
         'created_by',
         'updated_by',
         'deleted_at'
@@ -34,6 +34,10 @@ class Department extends Model
     public function hasManyActivity()
     {
         return $this->hasMany('App\Activity','department_id','id');
+    }
+    public function hasManyDepartmentStatus()
+    { 
+        return $this->hasMany('App\DepartmentStatus','department_id','id');
     }
     
 

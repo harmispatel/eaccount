@@ -7,9 +7,12 @@ use App\Orgenizationleader;
 use App\Bankaccount;
 use App\Region;
 use App\Projects;
+use App\User;
 use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Route;
+
 
 use App\Http\Controllers\RoleManageController;
 use DB;
@@ -17,9 +20,10 @@ use DB;
 class SettingsController extends Controller
 {
 
-    public function general_show($allId="")
+    public function general_show(Request $request,$allId="")
     {
-        // echo "dsdsg".$allId; 
+        // echo "dsdsg".$allId;  die; 
+       
         $general_settings_info = Setting::where('settings_name', 'General Settings')->get()->first();
 
         $generaldata = json_decode($general_settings_info->content, true);
@@ -43,9 +47,16 @@ class SettingsController extends Controller
         // $orgenizationleader = DB::table('orgenizationleader')->get();    
 
         $orgenizationleader = Orgenizationleader::get();
+        $currentPath= Route::getFacadeRoot()->current()->uri();
+        if ((isset($currentPath)) && ($request->is('settings/organizationLeader/edit/*')) && ($allId != "")) {
+            $orgenizationleaderedit = Orgenizationleader::where('id',$allId)->first();    
+        }else{
+            $orgenizationleader = Orgenizationleader::get();
+            $orgenizationleaderedit = array();
+        }
 
         $Bankaccounts = Bankaccount::get();
-        if($allId != ""){
+        if((isset($currentPath)) && ($request->is('settings/bankaccount/edit/*')) && ($allId != "")){
             $Bankaccountsedit = Bankaccount::where('id',$allId)->first();    
         } else {
             $Bankaccounts = Bankaccount::get();
@@ -58,7 +69,7 @@ class SettingsController extends Controller
         // echo"<pre>"; print_r($Bankaccounts); exit;
         
         // return view('admin.settings.general')->with('settings', $data);
-        return view('admin.settings.general')->with(array('generalsettings'=>$generaldata, 'systemdata'=>$systemdata, 'quarterdata'=>$quarterdata, 'bankAccountdata'=>$bankAccountdata, 'supportdonor'=>$supportdonor, 'orgenizationleader'=>$orgenizationleader, 'Bankaccounts'=>$Bankaccounts, 'Bankaccountsedit'=>$Bankaccountsedit,'region'=>$region));
+        return view('admin.settings.general')->with(array('generalsettings'=>$generaldata, 'systemdata'=>$systemdata, 'quarterdata'=>$quarterdata, 'bankAccountdata'=>$bankAccountdata, 'supportdonor'=>$supportdonor, 'orgenizationleader'=>$orgenizationleader, 'Bankaccounts'=>$Bankaccounts, 'Bankaccountsedit'=>$Bankaccountsedit,'region'=>$region,'orgenizationleaderedit'=>$orgenizationleaderedit));
 
     }
 

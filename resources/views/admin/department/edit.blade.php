@@ -87,12 +87,8 @@ $ParentRouteName = 'department';
                                             <div class="form-line">
                                                 <select data-live-search="true" class="form-control show-tick" name="status" id="status">
                                                     <option value="0">Select Status</option>
-                                                    <option @if($item->status == "1") {{ "selected" }} @endif value="1">Started</option>
-                                                    <option @if($item->status == "2") {{ "selected" }} @endif value="2">In Progress</option>
-                                                    <option @if($item->status == "3") {{ "selected" }} @endif value="3">Cancel</option>
-                                                    <option @if($item->status == 4) {{ "selected" }} @endif value="4">On Hold</option>
-                                                    <option @if($item->status == "5") {{ "selected" }} @endif value="5">Completed</option>
-                                                
+                                                    <option @if($item->status == "1") {{ "selected" }} @endif value="1">Active</option>
+                                                    <option @if($item->status == "0") {{ "selected" }} @endif value="0">Inactive</option>
                                                 </select>
                                             </div>
                                         </div>

@@ -1,0 +1,1 @@
+CREATE TABLE `eaccount`.`projects_to_region` ( `id` INT NOT NULL AUTO_INCREMENT , `project_id` INT NOT NULL , `region_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

@@ -72,21 +72,6 @@ $ParentRouteName = 'project';
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                                            <div class="form-group form-float">
-                                                <div class="form-line">
-                                                    <select data-live-search="true" class="form-control show-tick" name="region">
-                                                        <option value="0" class="font-custom-bold">Select Region</option>
-                                                        @if(count($region))
-                                                            @foreach ($region as $oneregion)
-                                                            <option value="{{$oneregion->id}}" @if($item->region == $oneregion->id) selected @endif >{{$oneregion->name ? $oneregion->name : ''}}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
                                         <?php 
                                             $people = [];
                                             if(count($item->hasManyProjecttodonor)>0){
@@ -94,8 +79,30 @@ $ParentRouteName = 'project';
                                                     array_push($people,$one->donor_id);
                                                 }
                                             }
+
+                                            $checkregion = [];
+                                            if(count($item->hasManyProjecttoregion)>0){
+                                                foreach($item->hasManyProjecttoregion as $key => $two){
+                                                    array_push($checkregion,$two->region_id);
+                                                }
+                                            }
                                         ?>
 
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                            <div class="form-group form-float">
+                                                <div class="form-line">
+                                                    <select data-live-search="true" multiple class="form-control show-tick" name="region[]">
+                                                        <option value="0" class="font-custom-bold">Select Region</option>
+                                                        @if(count($region))
+                                                            @foreach ($region as $oneregion)
+                                                            <option value="{{$oneregion->id}}" @if (in_array($oneregion->id,$checkregion )) selected @endif >{{$oneregion->name ? $oneregion->name : ''}}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
@@ -139,7 +146,7 @@ $ParentRouteName = 'project';
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                                             <div class="form-group form-float">
                                                 <div class="form-line">
-                                                    <input autofocus value="{{ $item->total_budget }}" name="total_budget" type="number"
+                                                    <input autofocus id="total_budget" value="{{ number_format($item->total_budget) }}" name="total_budget" type="text"
                                                            class="form-control">
                                                     <label class="form-label">Total Budget</label>
                                                 </div>
@@ -182,10 +189,10 @@ $ParentRouteName = 'project';
 
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="form-line">
-                                                <button type="button" onclick="changeSubmitType('save')" class="btn-csm-save m-t-15 waves-effect"> <i class="fa fa-edit"></i> Save</button>
-                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn-new-style m-t-15 waves-effect"><span><i class="fa fa-plus"></i></span> Save & New</button>
-                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn-new-style m-t-15 waves-effect"><span><i class="fa fa-copy"></i></span> Save & Copy</button>
-                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn-new-style m-t-15 waves-effect"><span><i class="far fa-check-circle last_csm_btn"></i></span> Save & Close</button>
+                                                <button type="button" onclick="changeSubmitType('save')" class="btn-csm-save m-t-15 waves-effect chgnumber"> <i class="fa fa-edit"></i> Save</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndNew')" class="btn-new-style m-t-15 waves-effect chgnumber"><span><i class="fa fa-plus"></i></span> Save & New</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndCopy')" class="btn-new-style m-t-15 waves-effect chgnumber"><span><i class="fa fa-copy"></i></span> Save & Copy</button>
+                                                <button type="button" onclick="changeSubmitType('saveAndClose')" class="btn-new-style m-t-15 waves-effect chgnumber"><span><i class="far fa-check-circle last_csm_btn"></i></span> Save & Close</button>
                                             </div>
                                         </div>
 
@@ -269,19 +276,20 @@ $ParentRouteName = 'project';
             toastr["success"]('{{ Session::get('success') }}');
         @endif
 
-                @if(Session::has('error'))
+        @if(Session::has('error'))
             toastr["error"]('{{ Session::get('error') }}');
         @endif
 
-
-                @if ($errors->any())
-                @foreach ($errors->all() as $error)
-            toastr["error"]('{{ $error }}');
-        @endforeach
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                toastr["error"]('{{ $error }}');
+            @endforeach
         @endif
 
         function changeSubmitType(submitType){
             jQuery("#submitType").val(submitType);
+            total = jQuery("#total_budget").val();
+            jQuery("#total_budget").val(parseFloat(total.replace(/,/g, '')));
             $("#form_validation").submit();
         }
 
