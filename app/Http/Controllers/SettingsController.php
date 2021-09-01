@@ -7,7 +7,12 @@ use App\Orgenizationleader;
 use App\Bankaccount;
 use App\Region;
 use App\Projects;
+use App\SupportDonor;
 use App\User;
+use App\Projecttoregion;
+use App\Bankaccounttodonor;
+use App\CostType;
+use App\Cost_item;
 use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -40,37 +45,38 @@ class SettingsController extends Controller
 
         $bankAccountdata = json_decode($bankAccount_settings_info->content, true);
 
-        
-        $supportdonor = DB::table('supportdonor')->get();  
-
-        $region = Region::get();    
-        // $orgenizationleader = DB::table('orgenizationleader')->get();    
-
-        $orgenizationleader = Orgenizationleader::get();
         $currentPath= Route::getFacadeRoot()->current()->uri();
+        $orgenizationleader = Orgenizationleader::get();
+        $orgenizationleaderedit = array();
         if ((isset($currentPath)) && ($request->is('settings/organizationLeader/edit/*')) && ($allId != "")) {
             $orgenizationleaderedit = Orgenizationleader::where('id',$allId)->first();    
-        }else{
-            $orgenizationleader = Orgenizationleader::get();
-            $orgenizationleaderedit = array();
+        }
+
+        $costType = CostType::get();
+        $costTypeedit = array();
+        if ((isset($currentPath)) && ($request->is('settings/costType/edit/*')) && ($allId != "")) {
+            $costTypeedit = CostType::where('id',$allId)->first();    
+        }
+        
+        $supportdonor = SupportDonor::get();  
+        $supportdonoredit = array();
+        if ((isset($currentPath)) && ($request->is('settings/supportDonor/edit/*')) && ($allId != "")) {
+            $supportdonoredit = SupportDonor::where('id',$allId)->first();    
+        }
+
+        $region = Region::get(); 
+        $regionedit = array();   
+        if ((isset($currentPath)) && ($request->is('settings/region/edit/*')) && ($allId != "")) {
+            $regionedit = Region::where('id',$allId)->first();    
         }
 
         $Bankaccounts = Bankaccount::get();
+        $Bankaccountsedit = array();
         if((isset($currentPath)) && ($request->is('settings/bankaccount/edit/*')) && ($allId != "")){
             $Bankaccountsedit = Bankaccount::where('id',$allId)->first();    
-        } else {
-            $Bankaccounts = Bankaccount::get();
-            $Bankaccountsedit = array();
         }
         
-        // $orgenizationleader = DB::table('orgenizationleader')->get();    
-        
-
-        // echo"<pre>"; print_r($Bankaccounts); exit;
-        
-        // return view('admin.settings.general')->with('settings', $data);
-        return view('admin.settings.general')->with(array('generalsettings'=>$generaldata, 'systemdata'=>$systemdata, 'quarterdata'=>$quarterdata, 'bankAccountdata'=>$bankAccountdata, 'supportdonor'=>$supportdonor, 'orgenizationleader'=>$orgenizationleader, 'Bankaccounts'=>$Bankaccounts, 'Bankaccountsedit'=>$Bankaccountsedit,'region'=>$region,'orgenizationleaderedit'=>$orgenizationleaderedit));
-
+        return view('admin.settings.general')->with(array('generalsettings'=>$generaldata, 'systemdata'=>$systemdata, 'quarterdata'=>$quarterdata, 'bankAccountdata'=>$bankAccountdata, 'supportdonor'=>$supportdonor, 'orgenizationleader'=>$orgenizationleader, 'Bankaccounts'=>$Bankaccounts, 'Bankaccountsedit'=>$Bankaccountsedit,'region'=>$region,'orgenizationleaderedit'=>$orgenizationleaderedit,'supportdonoredit'=>$supportdonoredit,'regionedit'=>$regionedit,'costType'=>$costType,'costTypeedit'=>$costTypeedit));
     }
 
     public function general_update(Request $request)
@@ -367,13 +373,6 @@ class SettingsController extends Controller
 
     public function smtp_update(Request $request)
     { 
-
-        // echo "<pre>"; print_r($request->all()); die;
-        // $request->validate([
-        //     'company_name' => 'required',
-        //     'company_logo' => 'image'
-        // ]);
-
         $setting_general = Setting::where('settings_name', 'SMTP Settings')->get()->first();
 
         $setting_general_data = json_decode($setting_general->content, true);
@@ -392,49 +391,23 @@ class SettingsController extends Controller
             'company_logo' => $company_new_logo,
         );
 
-        // echo"<pre>"; print_r($data); exit;
-
         $json_data = json_encode($data);
         $setting_general->content = $json_data;
         $setting_general->save();
-
         Session::flash('success', 'Successfully Update');
-
-        // return redirect()->back();
         return redirect('settings/general#smtpsetting');
 
     }
 
-
     public function bankaccount_show()
     {
-
         $bankAccount_settings_info = Setting::where('settings_name', 'Bank Account')->get()->first();
-
         $bankAccountdata = json_decode($bankAccount_settings_info->content, true);
-
-        // echo"<pre>"; print_r($bankAccountdata); exit;
-        
-        // return view('admin.settings.general')->with('settings', $data);
         return view('admin.settings.general')->with(array('bankAccountdata'=>$bankAccountdata ));
-
     }
 
     public function bankaccount_update(Request $request)
     { 
-
-        // echo "<pre>"; print_r($request->all()); die;
-        // $request->validate([
-        //     'company_name' => 'required',
-        //     'company_logo' => 'image'
-        // ]);
-
-        // $setting_general = Setting::where('settings_name', 'Bank Account')->get()->first();
-
-        // $setting_general_data = json_decode($setting_general->content, true);
-
-        // $setting_general = Bankaccount::where('settings_name', 'Bank Account')->get()->first();
-
         if ($request->bankid != "") {
             $Bankaccount = Bankaccount::find($request->bankid);
         } else {
@@ -442,116 +415,79 @@ class SettingsController extends Controller
         }
         
         $Bankaccount->bankName = $request->bankName;
-        $Bankaccount->donors = $request->donors;
         $Bankaccount->bankCode = $request->bankCode;
         $Bankaccount->bankcurrency_code = $request->bankcurrency_code;
         $Bankaccount->bankStatus = $request->bankStatus;
         $Bankaccount->save();
-        
+
+        if((isset($request->donors)) && (count($request->donors)>0)){
+            $del = Bankaccounttodonor::where('bankaccount_id',$Bankaccount->id)->delete();
+            foreach($request->donors as $key => $donorsone){
+                $reg = new Bankaccounttodonor;
+                $reg->bankaccount_id = $Bankaccount->id;
+                $reg->donor_id = $donorsone;
+                $reg->save();
+            }
+        }
     
-        // $data = array(
-        //     'bankName' => $request->bankName,
-        //     'donors' => $request->donors,
-        //     'bankCode' => $request->bankCode,
-        //     'bankcurrency_code' => $request->bankcurrency_code,
-        //     'bankStatus' => $request->bankStatus,
-        // );
-
-
-        // $json_data = json_encode($data);
-        // $setting_general->content = $json_data;
-        // $setting_general->save();
-
         Session::flash('success', 'Successfully Update');
-
-        // return redirect()->back();
         return redirect('settings/general#bankaccountsetting');
+    }
 
+    public function bankaccount_destroy($id)
+    { 
+        Bankaccount::where('id',$id)->delete();
+        Session::flash('success', 'Successfully Delete');
+        return redirect('settings/general#bankaccountsetting');
     }
 
     public function supportDonor_show()
     {
-
         $supportdonor = DB::table('supportdonor')->get();
-
-        // echo"<pre>"; print_r($bankAccountdata); exit;
-        
-        // return view('admin.settings.general')->with('settings', $data);
         return view('admin.settings.general')->with(array('supportdonor'=>$supportdonor ));
-
     }
 
     public function supportDonor_addnew(Request $request)
     { 
 
-        // echo "<pre>"; print_r($request->all()); die;
         $request->validate([
             'supportDonor' => 'required',
-        
         ]);
-
-        // $setting_general = Setting::where('settings_name', 'Bank Account')->get()->first();
-
-        // $setting_general_data = json_decode($setting_general->content, true);
-
-    
-        // $data = array(
-        //     'supportDonor' => $request->supportDonor,
-        // );
 
         DB::table('supportdonor')->insert([
             'supportDonor' => $request->supportDonor,
         ]);
 
-        // echo"<pre>"; print_r($data); exit;
-
-        // $json_data = json_encode($data);
-        // $setting_general->content = $json_data;
-        // $setting_general->save();
-
         Session::flash('success', 'Successfully Update');
-        // return redirect()->back();
         return redirect('settings/general#supportDonorsetting');
-
     }
 
 
     public function supportDonor_update(Request $request)
     { 
-
-        echo "<pre>"; print_r($request->all()); die;
-        
-
-       DB::table('supportdonor')->where('id',$id)->delete();
-
+        if ($request->donor_id != "") {
+            $create = SupportDonor::find($request->donor_id);
+        } else {
+            $create = new SupportDonor;
+        }
+        $create->supportDonor = $request->supportDonor;
+        $create->save();
 
         Session::flash('success', 'Successfully Update');
-
-        return redirect()->back();
-
+        return redirect('settings/general#supportDonorsetting');
     }
 
     public function supportDonor_destroy($id)
     { 
-
-        $getDonor = DB::table('bankaccount')->where('donors',$id)->first();
-        
+        $getDonor = Bankaccounttodonor::where('donor_id',$id)->first();
         if(isset($getDonor->id)){
             Session::flash('error', 'This Donor also used in Bank Account ');
         }
         else{
-            // echo "null";
             DB::table('supportdonor')->where('id',$id)->delete();
             Session::flash('success', 'Successfully Delete');
         }
-        
-        // echo "<pre>"; print_r($getDonor); die;
         return redirect('settings/general#supportDonorsetting');
-
-
-
-        // return redirect()->back();
-
     }
 
     public function region_show()
@@ -579,17 +515,20 @@ class SettingsController extends Controller
     public function region_update(Request $request)
     { 
         //echo "<pre>"; print_r($request->all()); die;
-        $reg = Region::find($request->id);
-        $reg->name = $request->supportDonor;
-        $reg->save();
-
-        Session::flash('success', 'Successfully Update');
-        return redirect()->back();
+        if ($request->regionid != "") {
+            $create = Region::find($request->regionid);
+        } else {
+            $create = new Region;
+        }
+        $create->name = $request->regionName;
+        $create->save();
+        Session::flash('success', 'Update Successfully');
+        return redirect('settings/general#region');
     }
 
     public function region_destroy($id)
     { 
-        $getProject = Projects::where('region',$id)->first();
+        $getProject = Projecttoregion::where('region_id',$id)->first();
         if(isset($getProject->id)){
             Session::flash('error', 'This Region also used in Project');
         }
@@ -648,11 +587,41 @@ class SettingsController extends Controller
         return redirect('settings/general#orgenizationLeader');
     }
 
-    public function bankaccount_destroy($id)
-    { 
-        // echo "<pre>"; print_r($id); die;
-        Bankaccount::where('id',$id)->delete();
-        Session::flash('success', 'Successfully Delete');
-        return redirect('settings/general#bankaccountsetting');
+    public function costType_show()
+    {
+        $costType = CostType::get();
+        return view('admin.settings.general')->with(array('costType'=>$costType ));
     }
+
+    public function costType_update(Request $request)
+    { 
+        $request->validate([
+            'costType' => 'required',
+        ]);
+        
+        if ($request->costType_id != "") {
+            $create = CostType::find($request->costType_id);
+        } else {
+            $create = new CostType;
+        }
+        $create->name = $request->costType;
+        $create->save();
+
+        Session::flash('success', 'Successfully Update');
+        return redirect('settings/general#costType');
+    }
+
+    public function costType_destroy($id)
+    { 
+        $getUser = Cost_item::where('cost_type_id',$id)->first();
+        if(isset($getUser->id)){
+            Session::flash('error', 'This Type also used in Project in Activites');
+        }
+        else{
+            $del = CostType::where('id',$id)->delete();
+            Session::flash('success', 'Successfully Delete');
+        }
+        return redirect('settings/general#costType');
+    }
+
 }

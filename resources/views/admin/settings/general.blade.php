@@ -77,7 +77,11 @@ $createItemNameorgenozationLeader = "Update" . $moduleNameorgenozationLeader;
 $breadcrumbMainName = $moduleNameorgenozationLeader;
 $breadcrumbCurrentName = " Update";
 
+$moduleNamecostType = "Cost Type";
+$createItemNamecostType = "Update " . $moduleNamecostType;
+
 $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
+$ParentRouteNamecostType = 'settings.costType';
 
 
 
@@ -128,6 +132,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                             <li><a data-toggle="tab" href="#supportDonorsetting">Support Donors</a></li>
                             <li><a data-toggle="tab" href="#orgenizationLeader">Organization Leader</a></li>
                             <li><a data-toggle="tab" href="#region">Region</a></li>
+                            <li><a data-toggle="tab" href="#costType">Cost Type</a></li>
                         </ul>
                     <div class="tab-content">
                          <!-- general setting start -->
@@ -1314,26 +1319,27 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                     </div>
                                                 </div>
                                             </div>
+                                            <?php
+                                                $people = [];
+                                                if((!empty($Bankaccountsedit)) && (count($Bankaccountsedit->hasManyBanktoDonor)>0)){
+                                                    foreach($Bankaccountsedit->hasManyBanktoDonor as $key => $one){
+                                                        array_push($people,$one->donor_id);
+                                                    }
+                                                }
+                                            ?>
 
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
                                                         <label class="form-label">Supporting donors</label>
-                                                        <select name="donors" data-live-search="true"
-                                                                class="form-control show-tick"
-                                                        >
+                                                        <select name="donors[]" multiple data-live-search="true" class="form-control show-tick">
                                                         <option value="0">Select Donor</option>
-                                                        @if($supportdonor) 
-                                                        
-                                                            @foreach($supportdonor as $donor)
-                                                                <option value="{{ $donor->id }}" @if(!empty($Bankaccountsedit)) @if($Bankaccountsedit->donors == $donor->id)) {{ "Selected" }} @endif @endif>{{ $donor->supportDonor }}</option>
-                                                            @endforeach
-                                                        @endif
-
+                                                            @if($supportdonor) 
+                                                                @foreach($supportdonor as $donor)
+                                                                    <option value="{{ $donor->id }}" @if ((!empty($Bankaccountsedit)) && (in_array($donor->id,$people ))) selected @endif>{{ $donor->supportDonor }}</option>
+                                                                @endforeach
+                                                            @endif
                                                         </select>
-
-                                                        <!-- <input value="{{ $bankAccountdata['donors']  }}" name="donors" type="text" class="form-control"> -->
-                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -1431,17 +1437,19 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                          $i = 1; ?>
                                         @if(!empty($Bankaccounts))
                                             @foreach($Bankaccounts as $Bankaccount)
-                                                    
+                                            <?php
+                                                $getdonor = isset($Bankaccount->hasManyBanktoDonor) ? $Bankaccount->hasManyBanktoDonor : []; 
+                                                $donor = [];
+                                                if(count($getdonor)>0){
+                                                    foreach($getdonor as $key => $getdonorone){
+                                                        isset($getdonorone->hasOneSupportDonor->supportDonor) ? array_push($donor,$getdonorone->hasOneSupportDonor->supportDonor) : '';
+                                                    }
+                                                }
+                                            ?> 
                                             <tr>
                                                 <td> {{ $Bankaccount->id }}</td>
-                                                <td><!-- <input name="supportDonor" type="text" class="form-control" value="{{ $donor->supportDonor }}"> -->{{ $Bankaccount->bankName }} </td>
-                                                <td> 
-                                                    @foreach($supportdonor as $donor)
-                                                    @if($Bankaccount->donors == $donor->id)
-                                                        {{ $donor->supportDonor }}
-                                                    @endif
-                                                    @endforeach
-                                                </td>
+                                                <td> {{ $Bankaccount->bankName }} </td>
+                                                <td> {{ implode(',',$donor) }}</td>
                                                 <td> {{ $Bankaccount->bankCode }}</td>
                                                 <td> {{ $Bankaccount->bankcurrency_code }}</td>
                                                 <td> 
@@ -1509,16 +1517,16 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                 <br>
                                 <div class="body">
                                     <form enctype="multipart/form-data" class="form" id="form_validation" method="post"
-                                          action="{{ route($ParentRouteNamesupportDonor.'.addnew') }}">
+                                          action="{{ route($ParentRouteNamesupportDonor.'.update') }}">
 
                                         {{ csrf_field() }}
+                                        <input value="@if(!empty($supportdonoredit)) {{ $supportdonoredit->id }} @endif" name="donor_id" type="hidden" >
                                         <div class="row clearfix">
 
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="supportDonor" type="text"
-                                                               class="form-control" value="">
+                                                        <input name="supportDonor" type="text" class="form-control" value="@if(!empty($supportdonoredit)){{ $supportdonoredit->supportDonor }}@endif">
                                                         <label class="form-label">Support Donor</label>
                                                     </div>
                                                 </div>
@@ -1528,7 +1536,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                        Add New
+                                                        {{ (!empty($supportdonoredit)) ? "Update" : "Add New" }}
                                                     </button>
                                                 </div>
                                             </div>
@@ -1558,8 +1566,12 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                     
                                             <tr>
                                                 <td> {{ $donor->id }}</td>
-                                                <td><!-- <input name="supportDonor" type="text" class="form-control" value="{{ $donor->supportDonor }}"> -->{{ $donor->supportDonor }} </td>
+                                                <td>{{ $donor->supportDonor }} </td>
                                                 <td class="tdTrashAction">
+                                                    <a class="btn btn-xs btn-info waves-effect"
+                                                       href="{{ route($ParentRouteNamesupportDonor.'.edit',['id'=>$donor->id]) }}/#supportDonorsetting" data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                                class="material-icons">mode_edit</i></a>      
+
                                                     <a 
                                                         class="btn btn-xs btn-danger waves-effect" onclick="return confirm('Do you want to Delete?');"
                                                        href="{{ route($ParentRouteNamesupportDonor.'.destroy',['id'=>$donor->id]) }}"
@@ -1644,16 +1656,10 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             </div>
       
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <div class="form-line">
-                                                    @if(!empty($orgenizationleaderedit)) 
+                                                <div class="form-line">                     
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                        Update
+                                                        {{ (!empty($orgenizationleaderedit)) ? "Update" : "Add New" }}
                                                     </button>
-                                                    @else
-                                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                        Add New
-                                                    </button>
-                                                    @endif
                                                 </div>
                                             </div>
 
@@ -1734,16 +1740,16 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                 <br>
                                 <div class="body">
                                     <form enctype="multipart/form-data" class="form" id="form_validation" method="post"
-                                          action="{{ route($ParentRouteNameregion.'.addnew') }}">
+                                          action="{{ route($ParentRouteNameregion.'.update') }}">
 
                                         {{ csrf_field() }}
+                                        <input value="@if(!empty($regionedit)) {{ $regionedit->id }} @endif" name="regionid" type="hidden" >
                                         <div class="row clearfix">
 
                                             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
                                                 <div class="form-group form-float">
                                                     <div class="form-line">
-                                                        <input name="region" type="text"
-                                                               class="form-control" value="">
+                                                        <input name="regionName" type="text" class="form-control" value="@if(!empty($regionedit)){{ $regionedit->name }}@endif">
                                                         <label class="form-label">Region</label>
                                                     </div>
                                                 </div>
@@ -1753,7 +1759,7 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                 <div class="form-line">
                                                     <button type="submit" class="btn btn-primary m-t-15 waves-effect">
-                                                        Add New
+                                                        {{ (!empty($regionedit)) ? "Update" : "Add New" }}
                                                     </button>
                                                 </div>
                                             </div>
@@ -1783,8 +1789,12 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                                                     
                                             <tr>
                                                 <td> {{ $regionone->id }}</td>
-                                                <td><!-- <input name="supportDonor" type="text" class="form-control" value="{{ $donor->supportDonor }}"> -->{{ $regionone->name }} </td>
+                                                <td>{{ $regionone->name }} </td>
                                                 <td class="tdTrashAction">
+                                                    <a class="btn btn-xs btn-info waves-effect"
+                                                       href="{{ route($ParentRouteNameregion.'.edit',['id'=>$regionone->id]) }}/#region" data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                                class="material-icons">mode_edit</i></a>
+
                                                     <a 
                                                         class="btn btn-xs btn-danger waves-effect" onclick="return confirm('Do you want to Delete?');"
                                                        href="{{ route($ParentRouteNameregion.'.destroy',['id'=>$regionone->id]) }}"
@@ -1822,6 +1832,100 @@ $ParentRouteNameorgenozationLeader = 'settings.organizationLeader';
                         </div>
 
                         <!-- Region setting end -->
+
+                        <!-- Cost type setting start -->
+
+                        <div id="costType" class="tab-pane fade ">
+                            <div class="header">
+                                <h2>
+                                    {{ $createItemNamecostType  }}
+                                </h2>
+                                <br>
+                                <div class="body">
+                                    <form enctype="multipart/form-data" class="form" id="form_validation" method="post"
+                                          action="{{ route($ParentRouteNamecostType.'.update') }}">
+
+                                        {{ csrf_field() }}
+                                        <input value="@if(!empty($costTypeedit)) {{ $costTypeedit->id }} @endif" name="costType_id" type="hidden" >
+                                        <div class="row clearfix">
+
+                                            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-4">
+                                                <div class="form-group form-float">
+                                                    <div class="form-line">
+                                                        <input value="@if(!empty($costTypeedit)){{ $costTypeedit->name }}@endif" name="costType" type="text"
+                                                               class="form-control">
+                                                        <label class="form-label">Cost Type</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+      
+                                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="form-line">                     
+                                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">
+                                                        {{ (!empty($costTypeedit)) ? "Update" : "Add New" }}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+
+                                </div>
+
+
+                                <div>
+                                    <table class="table table-hover table-bordered table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        <?php $i = 1; ?>
+                                        @if(!empty($costType))
+                                            @foreach($costType as $costTypeone)
+                                                    
+                                            <tr>
+                                                <td>{{ $costTypeone->id }}</td>
+                                                <td>{{ $costTypeone->name }}</td>
+                                                <td class="tdTrashAction">
+                                                    <a class="btn btn-xs btn-info waves-effect"
+                                                       href="{{ route($ParentRouteNamecostType.'.edit',['id'=>$costTypeone->id]) }}/#costType" data-toggle="tooltip" data-placement="top" title="Edit"><i
+                                                                class="material-icons">mode_edit</i></a>      
+
+                                                    <a 
+                                                        class="btn btn-xs btn-danger waves-effect" onclick="return confirm('Do you want to Delete?');"
+                                                       href="{{ route($ParentRouteNamecostType.'.destroy',['id'=>$costTypeone->id]) }}"
+                                                       data-toggle="tooltip"
+                                                       data-placement="top" title="Delete"> <i
+                                                                class="material-icons">delete</i></a>
+
+
+                                                </td>
+                                            </tr>
+                                        <?php $i++; ?>
+                                            @endforeach
+                                        @endif
+                                        <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Cost type setting end -->
 
 
 

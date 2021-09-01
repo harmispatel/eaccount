@@ -896,59 +896,40 @@
                 {{--role-manage End--}}
 
                 {{--SETTINGSStart--}}
-                <li @if(Request::url() === route('settings.system')
-                    or Request::url() === route('settings.general')
-                 )
-                    class="active"
-                    @endif
-                    @if( config('role_manage.Settings.All') ==0 and config('role_manage.Settings.Show') ==0 )
 
-                    class="dis-none"
-
-                        @endif >
-                    <!-- <a class="menu-toggle " href="javascript:void(0);">
-                        <i class="material-icons">settings</i>
-                        <span>Settings</span>
-                    </a> -->
-                    <a href="{{ route('settings.general')  }}">
-                        <i class="material-icons">settings</i>
+                <li @if( config('role_manage.Settings.All') ==0 and config('role_manage.Settings.Show') ==0 ) class="dis-none" @endif 
+                 class="{{ Request::segment('2') == 'general' || Request::segment('1') == 'emailTemplate' ? 'active' : '' }}" >
+                    <a class="menu-toggle" href="javascript:void(0);">
+                    <i class="material-icons">settings</i>
                         <span>Settings</span>
                     </a>
-                    <!-- <ul class="ml-menu">
 
+                    <ul class="ml-menu">
 
-                        <li @if ( config('role_manage.Settings.All') ==0 )
-                            class="dis-none"
-                            @endif
+                        {{--Genral  Start--}}
+                            <li @if ( config('role_manage.Settings.All') ==0 )  class="dis-none" @endif @if(Request::url() === route('settings.general')) class="active" @endif>
+                                <a class="" @if ( config('role_manage.Branch.All')==0 ) class="dis-none" @endif href="{{ route('settings.general') }}">
+                                    <i class="fas fa-code-branch"></i>
+                                    <span>General</span>
+                                </a>
+                            </li>
+                        {{--Genral End--}}
 
-                            @if(Request::url() === route('settings.general'))
-                            class="active"
-                                @endif >
-                            <a href="{{ route('settings.general')  }}"> General </a>
-                        </li>
+                        {{--Email template Start--}}
+                            <li @if ( config('role_manage.EmailTemplate.All') ==0 ) class="dis-none" @endif @if(Request::url() === route('emailTemplate')) class="active" @endif>
+                                <a  @if ( config('role_manage.EmailTemplate.All')==0 ) class="dis-none" @endif href="{{ route('emailTemplate') }}">
+                                    <i class="fas fa-envelope-open-text"></i>
+                                    <span>Email Template</span>
+                                </a>
+                            </li>
+                        {{--Email Template End--}}
 
-
-                        <li @if ( config('role_manage.Settings.Show') ==0 )
-                            class="dis-none"
-                            @endif
-                            @if(Request::url() === route('settings.system'))
-                            class="active"
-                                @endif >
-                            <a href="{{ route('settings.system')  }}">System</a>
-                        </li>
-                    </ul> -->
+                    </ul>
                 </li>
+
                 {{--SETTINGS End--}}
                
-                 {{--Email template Start--}}
-                <li @if ( config('role_manage.EmailTemplate.All')==0 and  config('role_manage.EmailTemplate.TrashShow')==0 and config('role_manage.EmailTemplate.Create')==0  ) class="dis-none" @endif  @if(Request::url() === route('emailTemplate') or Request::url() === route('emailTemplate.create') or Request::url() === route('emailTemplate.trashed') or Request::url() === route('emailTemplate.active.search') or Request::url() === route('emailTemplate.trashed.search') ) class="active " @endif >
-                    <a class="" @if (config('role_manage.EmailTemplate.All')==0) class="dis-none" @endif href="{{ route('emailTemplate') }}">
-                        <i class="fas fa-envelope-open-text"></i>
-                        <span>Email Template</span>
-                    </a>
-                </li>
-
-                {{--Email Template End--}}
+                 
             </ul>
         </div>
         <!-- #Menu -->
