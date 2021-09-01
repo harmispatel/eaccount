@@ -25,15 +25,10 @@ $ParentRouteNamesystem = 'settings.system';
 $moduleNamesystem = " System Settings Manage";
 $createItemNamesystem = "Update" . $moduleNamesystem;
 
-$breadcrumbMainName = $moduleNamesystem;
-$breadcrumbCurrentName = " Update";
-
 
 $moduleNamequater = " Quater Settings Manage";
 $createItemNamequater = "Update" . $moduleNamequater;
 
-$breadcrumbMainName = $moduleNamequater;
-$breadcrumbCurrentName = " Update";
 
 $ParentRouteNamequarter = 'settings.quater';
 
@@ -41,8 +36,6 @@ $ParentRouteNamequarter = 'settings.quater';
 $moduleNamesmtp = " SMTP Settings Manage";
 $createItemNamesmtp = "Update" . $moduleNamesmtp;
 
-$breadcrumbMainName = $moduleNamesmtp;
-$breadcrumbCurrentName = " Update";
 
 $ParentRouteNamesmtp = 'settings.smtp';
 
@@ -50,8 +43,6 @@ $ParentRouteNamesmtp = 'settings.smtp';
 $moduleNamebankaccount = " Bank Account Settings Manage";
 $createItemNamebankaccount = "Update" . $moduleNamebankaccount;
 
-$breadcrumbMainName = $moduleNamebankaccount;
-$breadcrumbCurrentName = " Update";
 
 $ParentRouteNamebankaccount = 'settings.bankaccount';
 
@@ -63,8 +54,6 @@ $createItemNamesupportDonor = "Update" . $moduleNamesupportDonor;
 $moduleNameregion = " Region Settings Manage";
 $createItemNameregion = "Update" . $moduleNameregion;
 
-$breadcrumbMainName = $moduleNamesupportDonor;
-$breadcrumbCurrentName = " Update";
 
 $ParentRouteNamesupportDonor = 'settings.supportDonor';
 
@@ -74,8 +63,6 @@ $ParentRouteNameregion = 'settings.region';
 $moduleNameorgenozationLeader = " Organization Leadership Settings Manage";
 $createItemNameorgenozationLeader = "Update" . $moduleNameorgenozationLeader;
 
-$breadcrumbMainName = $moduleNameorgenozationLeader;
-$breadcrumbCurrentName = " Update";
 
 $moduleNamecostType = "Cost Type";
 $createItemNamecostType = "Update " . $moduleNamecostType;
@@ -111,9 +98,6 @@ $ParentRouteNamecostType = 'settings.costType';
                 <li class="active"><i
                             class="material-icons">{{ $breadcrumbCurrentIcon  }}</i> {{ $breadcrumbCurrentName  }}</li>
             </ol>
-
-
-            
 
             <!-- Inline Layout | With Floating Label -->
             <div class="row clearfix">

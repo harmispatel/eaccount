@@ -140,6 +140,16 @@ class Kernel extends HttpKernel
         'emailTemplate.trash_show' => \App\Http\Middleware\Roles\EmailTemplate\TrashShow::class,
         'emailTemplate.permanently_delete' => \App\Http\Middleware\Roles\EmailTemplate\PermanentlyDelete::class,
 
+        'notificationset.module_show' => \App\Http\Middleware\Roles\Notificationset\ModuleShow::class,
+        'notificationset.show' => \App\Http\Middleware\Roles\Notificationset\Show::class,
+        'notificationset.create' => \App\Http\Middleware\Roles\Notificationset\Create::class,
+        'notificationset.edit' => \App\Http\Middleware\Roles\Notificationset\Edit::class,
+        'notificationset.delete' => \App\Http\Middleware\Roles\Notificationset\Delete::class,
+        'notificationset.pdf' => \App\Http\Middleware\Roles\Notificationset\Pdf::class,
+        'notificationset.restore' => \App\Http\Middleware\Roles\Notificationset\Restore::class,
+        'notificationset.trash_show' => \App\Http\Middleware\Roles\Notificationset\TrashShow::class,
+        'notificationset.permanently_delete' => \App\Http\Middleware\Roles\Notificationset\PermanentlyDelete::class,
+
         'branch.module_show' => \App\Http\Middleware\Roles\Branch\ModuleShow::class,
         'branch.show' => \App\Http\Middleware\Roles\Branch\Show::class,
         'branch.create' => \App\Http\Middleware\Roles\Branch\Create::class,

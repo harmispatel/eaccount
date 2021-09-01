@@ -101,6 +101,7 @@ $trash_show = config('role_manage.Project_approval.TrashShow');
                                                 <option value="requisiting">Payment Requisiting</option>
                                                 <option value="voucher">Payment Voucher</option>
                                                 <option value="settlement">Payment Settlement</option>
+                                                <option value="transfter">Payment transfer</option>
                                             </select>
                                         </div>
                                     </div>

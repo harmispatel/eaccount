@@ -1513,47 +1513,30 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/settings/general', [
-
         'uses' => 'SettingsController@general_show',
-
         'as' => 'settings.general'
-
     ])->middleware('settings.all');
 
-
-
     Route::post('/settings/general/update', [
-
         'uses' => 'SettingsController@general_update',
-
         'as' => 'settings.general.update'
-
     ]);
-
-
-
-
 
     Route::get('/settings/system', [
-
         'uses' => 'SettingsController@system_show',
-
         'as' => 'settings.system'
-
     ])->middleware('settings.show');
 
-
-
     Route::post('/settings/system/update', [
-
         'uses' => 'SettingsController@system_update',
-
         'as' => 'settings.system.update'
-
     ]);
 
+    Route::get('/settings/smtp', ['uses' => 'SettingsController@smtp_show','as' => 'settings.smtp']);
+    Route::post('/settings/smtp/update', ['uses' => 'SettingsController@smtp_update','as' => 'settings.smtp.update']);
 
-
+    Route::get('/activity/import', [ 'uses' => 'ActivitysController@import', 'as' => 'activity.import']);
+    Route::get('/activity/export', [ 'uses' => 'ActivitysController@exportdata', 'as' => 'activity.export']);
 
 
     Route::get('/settings/quater', [
@@ -1850,6 +1833,26 @@ Route::group(['middleware' => 'auth'], function () {
     
 
     //    EmailTemplate End
+
+    //    Notification start
+
+    Route::get('/notificationset', ['uses' => 'NotificationsetController@index','as' => 'notificationset'])->middleware('notificationset.module_show');
+    Route::get('/notificationset/create', ['uses' => 'NotificationsetController@create','as' => 'notificationset.create'])->middleware('notificationset.create');
+    Route::post('/notificationset/store', ['uses' => 'NotificationsetController@store','as' => 'notificationset.store'])->middleware('notificationset.create');
+    Route::get('/notificationset/edit/{id}', ['uses' => 'NotificationsetController@edit','as' => 'notificationset.edit'])->middleware('notificationset.edit');
+    Route::post('/notificationset/update/{id}', ['uses' => 'NotificationsetController@update','as' => 'notificationset.update'])->middleware('notificationset.edit');
+    Route::get('/notificationset/show/{id}', [ 'uses' => 'NotificationsetController@show','as' => 'notificationset.show']); 
+    Route::get('/notificationset/destroy/{id}', [ 'uses' => 'NotificationsetController@destroy','as' => 'notificationset.destroy'])->middleware('notificationset.delete');
+    Route::get('/notificationset/trashed', ['uses' => 'NotificationsetController@trashed','as' => 'notificationset.trashed'])->middleware('notificationset.trash_show');
+    Route::post('/notificationset/trashed/show', [ 'uses' => 'NotificationsetController@trashedShow','as' => 'notificationset.trashed.show']);
+    Route::get('/notificationset/restore/{id}', ['uses' => 'NotificationsetController@restore','as' => 'notificationset.restore'])->middleware('notificationset.restore');
+    Route::get('/notificationset/kill/{id}', ['uses' => 'NotificationsetController@kill','as' => 'notificationset.kill'])->middleware('notificationset.permanently_delete');
+    Route::get('/notificationset/active/search', ['uses' => 'NotificationsetController@activeSearch','as' => 'notificationset.active.search']);
+    Route::get('/notificationset/trashed/search', ['uses' => 'NotificationsetController@trashedSearch','as' => 'notificationset.trashed.search']);
+    Route::get('/notificationset/active/action', ['uses' => 'NotificationsetController@activeAction','as' => 'notificationset.active.action']);
+    Route::get('/notificationset/trashed/action', ['uses' => 'NotificationsetController@trashedAction','as' => 'notificationset.trashed.action']);
+
+    //    notification End
 
 
 

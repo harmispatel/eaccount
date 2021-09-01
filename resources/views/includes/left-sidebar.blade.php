@@ -818,10 +818,10 @@
                 {{-- Department stop --}}
                 
                 {{-- Approval Start --}}
-                    <li class="{{ Request::segment('1') == 'branch' || Request::segment('1') == 'ledger' || Request::segment('1') == 'bank-cash' || Request::segment('1') =='cr-voucher' ? 'active' : '' }}" >
+                    <li class="{{ Request::segment('1') == 'project_approval' ? 'active' : '' }}" >
                         <a class="menu-toggle" href="javascript:void(0);">
                         <i class="fas fa-check-circle"></i>
-                            <span>Approval</span>
+                            <span>To do list</span>
                         </a>
 
                         <ul class="ml-menu">
@@ -849,11 +849,34 @@
                                     <a class="" @if ( config('role_manage.Project_approval.All')==0 )
                                                 class="dis-none"
                                                 @endif href="{{ route('project_approval') }}">
-                                        <i class="fas fa-project-diagram"></i>
-                                        <span>Project</span>
+                                        <span>Projects</span>
                                     </a>
                                 </li>
-                            {{--project  approve End--}}
+                            {{--project approve End--}}
+
+                            {{--Finance approve Start--}}
+                                <li>
+                                    <a class="" href="javascript:void(0);">
+                                        <span>Finance</span>
+                                    </a>
+                                </li>
+                            {{--Finance approve End--}}
+
+                            {{--Accounts approve Start--}}
+                                <li >
+                                    <a class="" href="javascript:void(0);">
+                                        <span>Accounts</span>
+                                    </a>
+                                </li>
+                            {{--Accounts approve End--}}
+
+                            {{--Procurements approve Start--}}
+                                <li>
+                                    <a class="" href="javascript:void(0);">
+                                        <span>Procurements</span>
+                                    </a>
+                                </li>
+                            {{--Procurements approve End--}}
                         </ul>
                     </li>
                 {{-- Approval stop --}}
@@ -875,10 +898,6 @@
 
                 {{--User End--}}
 
-                
-
-
-                
 
                 {{--role-manage Start--}}
                 <li @if(Request::url() === route('role-manage') or Request::url() === route('role-manage.create') or Request::url() === route('role-manage.trashed') or Request::url() === route('role-manage.active.search') or Request::url() === route('role-manage.trashed.search') )
@@ -898,7 +917,7 @@
                 {{--SETTINGSStart--}}
 
                 <li @if( config('role_manage.Settings.All') ==0 and config('role_manage.Settings.Show') ==0 ) class="dis-none" @endif 
-                 class="{{ Request::segment('2') == 'general' || Request::segment('1') == 'emailTemplate' ? 'active' : '' }}" >
+                 class="{{ Request::segment('2') == 'general' || Request::segment('2') == 'notification' || Request::segment('1') == 'emailTemplate' ? 'active' : '' }}" >
                     <a class="menu-toggle" href="javascript:void(0);">
                     <i class="material-icons">settings</i>
                         <span>Settings</span>
@@ -909,7 +928,6 @@
                         {{--Genral  Start--}}
                             <li @if ( config('role_manage.Settings.All') ==0 )  class="dis-none" @endif @if(Request::url() === route('settings.general')) class="active" @endif>
                                 <a class="" @if ( config('role_manage.Branch.All')==0 ) class="dis-none" @endif href="{{ route('settings.general') }}">
-                                    <i class="fas fa-code-branch"></i>
                                     <span>General</span>
                                 </a>
                             </li>
@@ -918,11 +936,18 @@
                         {{--Email template Start--}}
                             <li @if ( config('role_manage.EmailTemplate.All') ==0 ) class="dis-none" @endif @if(Request::url() === route('emailTemplate')) class="active" @endif>
                                 <a  @if ( config('role_manage.EmailTemplate.All')==0 ) class="dis-none" @endif href="{{ route('emailTemplate') }}">
-                                    <i class="fas fa-envelope-open-text"></i>
-                                    <span>Email Template</span>
+                                    <span>Email</span>
                                 </a>
                             </li>
                         {{--Email Template End--}}
+
+                        {{--notification template Start--}}
+                            <li @if ( config('role_manage.Notificationset.Show') ==0 ) class="dis-none" @endif @if(Request::url() === route('notificationset')) class="active" @endif >
+                                <a @if(config('role_manage.Notificationset.All')==0 ) class="dis-none" @endif href="{{ route('notificationset') }}">
+                                    <span>Notification</span>
+                                </a>
+                            </li>
+                        {{--notification Template End--}}
 
                     </ul>
                 </li>

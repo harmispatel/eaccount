@@ -139,6 +139,33 @@ class SettingsController extends Controller
 
     }
 
+    //    smtp/system
+    public function smtp_show()
+    {
+        $system_settings_info = Setting::where('settings_name', 'SMTP')->get()->first();
+        $data = json_decode($system_settings_info->content, true);
+        return view('admin.settings.smtp')->with('settings', $data);
+    }
+
+    public function smtp_update(Request $request)
+    {
+        $setting_system = Setting::where('settings_name', 'SMTP')->get()->first();
+        $data = array(
+            'MAIL_DRIVER' => $request->mail_driver,
+            'MAIL_HOST' => $request->mail_host,
+            'MAIL_PORT' => $request->mail_port,
+            'MAIL_USERNAME' => $request->mail_username,
+            'MAIL_PASSWORD' => $request->mail_password,
+            'MAIL_ENCRYPTION' => $request->mail_encryption
+        );
+
+        $json_data = json_encode($data);
+        $setting_system->content = $json_data;
+        $setting_system->save();
+        Session::flash('success', 'Successfully Update');
+        return redirect()->back();
+    }
+    
 
 //    settings/system
     public function system_show()
@@ -348,56 +375,6 @@ class SettingsController extends Controller
 
     }
 
-
-    public function smtp_show()
-    {
-
-        $general_settings_info = Setting::where('settings_name', 'Quarter Settings')->get()->first();
-
-        $generaldata = json_decode($general_settings_info->content, true);
-
-        $system_settings_info = Setting::where('settings_name', 'System Settings')->get()->first();
-
-        $systemdata = json_decode($system_settings_info->content, true);
-
-        $quarter_settings_info = Setting::where('settings_name', 'Quarter Settings')->get()->first();
-
-        $quarterdata = json_decode($quarter_settings_info->content, true);
-
-
-        // echo"<pre>"; print_r($data); exit;
-        // return view('admin.settings.general')->with('settings', $data);
-        return view('admin.settings.general')->with(array('generalsettings'=>$generaldata, 'systemdata'=>$systemdata, 'quarterdata'=>$quarterdata));
-
-    }
-
-    public function smtp_update(Request $request)
-    { 
-        $setting_general = Setting::where('settings_name', 'SMTP Settings')->get()->first();
-
-        $setting_general_data = json_decode($setting_general->content, true);
-
-        $company_new_logo = $setting_general_data['company_logo'];
-    
-        $data = array(
-            'Quarter1_Start' => $request->Quarter1_Start,
-            'Quarter1_End' => $request->Quarter1_End,
-            'Quarter2_Start' => $request->Quarter2_Start,
-            'Quarter2_End' => $request->Quarter2_End,
-            'Quarter3_Start' => $request->Quarter3_Start,
-            'Quarter3_End' => $request->Quarter3_End,
-            'Quarter4_Start' => $request->Quarter4_Start,
-            'Quarter4_End' => $request->Quarter4_End,
-            'company_logo' => $company_new_logo,
-        );
-
-        $json_data = json_encode($data);
-        $setting_general->content = $json_data;
-        $setting_general->save();
-        Session::flash('success', 'Successfully Update');
-        return redirect('settings/general#smtpsetting');
-
-    }
 
     public function bankaccount_show()
     {
